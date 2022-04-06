@@ -1,6 +1,5 @@
 #pipenv install --dev
-from flask import Flask, request, jsonify
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, request, jsonify, render_template
 from flask_marshmallow import Marshmallow
 import os
 
