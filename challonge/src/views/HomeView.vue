@@ -1,18 +1,43 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <ArtistesComponent
+      v-for="art in ArtisteData"
+      :key="art[0]"
+      :artiste-name="art[1]"
+    />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-
+import ArtistesComponent from "@/components/ArtistesComponent.vue";
+import axios from "axios";
 export default {
   name: "HomeView",
   components: {
-    HelloWorld,
+    ArtistesComponent,
+  },
+  data() {
+    return {
+      ArtisteData: [],
+    };
+  },
+  methods: {
+    getResponse() {
+      const path = "http://localhost:5000/Artistes";
+      axios
+        .get(path)
+        .then((res) => {
+          console.log(res.data);
+          this.ArtisteData = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
+  created() {
+    this.getResponse();
   },
 };
 </script>

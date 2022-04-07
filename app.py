@@ -33,20 +33,16 @@ class Database:
 @app.route('/', methods=['GET'])
 def get():
     return render_template("home.html")
-# def get():
-#     return jsonify({'msg':'Hello World'})
 
 @app.route('/Artistes', methods=['GET'])
 def getArtistes():
     def db_query():
         db= Database()
         Artistes = db.list_Artistes()
-        
         return Artistes
 
     res= db_query()
-    print(res)
-    return render_template("artistes.html", result = res)
+    return jsonify(res)
 #Run server
 if __name__ == '__main__':
     app.run(debug=True)

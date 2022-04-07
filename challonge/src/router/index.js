@@ -1,6 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import TournoiView from "../views/TournoiView.vue";
+import CreateTournoiView from "../views/CreateTournoiView.vue";
+import ProfileView from "../views/ProfileView.vue";
+import ProfileSettingsView from "../views/ProfileSettingsView.vue";
+import RegisterView from "../views/RegisterView.vue";
+import SignInView from "../views/SignInView.vue";
 
 Vue.use(VueRouter);
 
@@ -11,13 +17,34 @@ const routes = [
     component: HomeView,
   },
   {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+    path: "/profile",
+    name: "profile",
+    component: ProfileView,
+  },
+  {
+    path: "/tournois",
+    name: "tournois",
+    component: TournoiView,
+  },
+  {
+    path: "/creerTournois",
+    name: "creerTournois",
+    component: CreateTournoiView,
+  },
+  {
+    path: "/profileSettings",
+    name: "profileSettings",
+    component: ProfileSettingsView,
+  },
+  {
+    path: "/register",
+    name: "register",
+    component: RegisterView,
+  },
+  {
+    path: "/signIn",
+    name: "signIn",
+    component: SignInView,
   },
 ];
 
