@@ -25,28 +25,24 @@ class Database:
         self.cur=self.con.cursor()
 
 
-    def list_Artistes(self):
-        self.cur.execute("SELECT * FROM Artistes")
+    def list_Users(self):
+        self.cur.execute("SELECT * FROM Utilisateur")
         result = self.cur.fetchall()
         return result
 
 @app.route('/', methods=['GET'])
 def get():
     return render_template("home.html")
-# def get():
-#     return jsonify({'msg':'Hello World'})
 
-@app.route('/Artistes', methods=['GET'])
-def getArtistes():
+@app.route('/Utilisateurs', methods=['GET'])
+def getUsers():
     def db_query():
         db= Database()
-        Artistes = db.list_Artistes()
-        
+        Artistes = db.list_Users()
         return Artistes
 
     res= db_query()
-    print(res)
-    return render_template("artistes.html", result = res)
+    return jsonify(res)
 #Run server
 if __name__ == '__main__':
     app.run(debug=True)
