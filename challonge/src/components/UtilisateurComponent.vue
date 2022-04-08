@@ -1,14 +1,14 @@
 <template>
   <div>
-    {{ ArtisteName }}
+    {{ UtilisateurName }}
   </div>
 </template>
 
 <script>
 export default {
-  name: "ArtistesComponent",
+  name: "UtilisateurComponent",
   props: {
-    ArtisteName: String,
+    UtilisateurName: String,
   },
 };
 </script>

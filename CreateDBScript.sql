@@ -22,23 +22,43 @@ Logo varchar(100),
 PRIMARY KEY(idGame)
 );
 
-Create table if not exists Utilisateur(
-IdJoueur int NOT NULL,
-Username varchar(20) NOT NULL UNIQUE,
--- password
-Prenom varchar(50),
-Nom varchar(50),
-Telephone varchar(20),
-Courriel varchar(75),
-Adresse varchar(200),
-Presentation varchar(1000),
-Avatar varchar(100),
-idPays int,
-IdGame int,
-PRIMARY KEY (IdJoueur),
-FOREIGN KEY (IdGame) REFERENCES Game (IdGame),
-FOREIGN KEY (IdPays) REFERENCES Pays (IdPays)
+CREATE TABLE IF NOT EXISTS Utilisateur (
+	IdJoueur INT,
+	Username VARCHAR(50),
+	Password VARCHAR(50),
+	Courriel VARCHAR(50),
+	Prenom VARCHAR(50),
+	Nom VARCHAR(50),
+	Ville VARCHAR(50),
+	Presentation TEXT,
+	Avatar VARCHAR(50),
+	IdPays INT,
+	IdGame INT,
+	DateJoined VARCHAR(20),
+    PRIMARY KEY (IdJoueur)
+    -- FOREIGN KEY (IdGame) REFERENCES Game (IdGame),
+    -- FOREIGN KEY (IdPays) REFERENCES Pays (IdPays)
 );
+
+-- Create table if not exists Utilisateur(
+-- IdJoueur int NOT NULL,
+-- Username varchar(20) NOT NULL UNIQUE,
+-- Password varchar(100) NOT NULL,
+-- Prenom varchar(50),
+-- Nom varchar(50),
+-- Telephone varchar(20),
+-- Courriel varchar(75),
+-- Ville varchar(200),  --remplace adresse
+-- Presentation TEXT,  --remplace varchar(1000)
+-- Avatar varchar(100),
+-- Pays varchar(40), --remplace idPays
+-- IdGame int,   --pourquoi?
+-- DateJoined Date, --pas sur que ca marche
+-- PRIMARY KEY (IdJoueur),
+-- FOREIGN KEY (IdGame) REFERENCES Game (IdGame),
+-- FOREIGN KEY (IdPays) REFERENCES Pays (IdPays)
+-- );
+
 
 Create table if not exists Equipe(
 IdEquipe int NOT NULL,
@@ -86,6 +106,4 @@ FOREIGN KEY (IdEquipe) REFERENCES Equipe (IdEquipe),
 FOREIGN KEY (IdTournoi) REFERENCES Tournoi (IdTournoi)
 );
 
-
-
-
+SOURCE Utilisateur.sql;

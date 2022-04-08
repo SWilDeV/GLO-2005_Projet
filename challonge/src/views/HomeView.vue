@@ -1,35 +1,35 @@
 <template>
   <div class="home">
-    <ArtistesComponent
-      v-for="art in ArtisteData"
-      :key="art[0]"
-      :artiste-name="art[1]"
+    <UtilisateurComponent
+      v-for="util in UtilisateurData"
+      :key="util[0]"
+      :utilisateur-name="util[4]"
     />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import ArtistesComponent from "@/components/ArtistesComponent.vue";
+import UtilisateurComponent from "@/components/UtilisateurComponent.vue";
 import axios from "axios";
 export default {
   name: "HomeView",
   components: {
-    ArtistesComponent,
+    UtilisateurComponent,
   },
   data() {
     return {
-      ArtisteData: [],
+      UtilisateurData: [],
     };
   },
   methods: {
     getResponse() {
-      const path = "http://localhost:5000/Artistes";
+      const path = `${process.env.VUE_APP_API_BASE_URL}/Utilisateurs`;
       axios
         .get(path)
         .then((res) => {
-          console.log(res.data);
-          this.ArtisteData = res.data;
+          this.UtilisateurData = res.data;
+          console.log(this.UtilisateurData);
         })
         .catch((err) => {
           console.log(err);
