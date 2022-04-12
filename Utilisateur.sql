@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS Utilisateur (
 	IdJoueur INT,
 	Username VARCHAR(50),
-	Password VARCHAR(50),
+	Password VARCHAR(100),
 	Courriel VARCHAR(50),
 	Prenom VARCHAR(50),
 	Nom VARCHAR(50),
