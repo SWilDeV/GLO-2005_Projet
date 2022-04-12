@@ -8,14 +8,14 @@ Use ChallongeII;
 Create table if not exists Pays(
 IdPays int NOT NULL,
 NomPays varchar(50) NOT NULL,
-Drapeau varchar(100) NOT NULL,
+Drapeau varchar(100),
 Primary key (IdPays)
 );
 
 Create table if not exists Game(
-idGame int NOT NULL,
+IdGame int NOT NULL,
 Nom varchar(50) NOT NULL,
-DateSortie int,
+DateSortie varchar(50),
 TypeJeu varchar(50),
 DescriptionJeu varchar(1000),
 Logo varchar(100),
@@ -67,20 +67,22 @@ Presentation varchar(1000),
 Logo varchar(100),
 IdOwner int NOT NULL,
 IdPays int,
-idGame int,
+IdGame int,
 PRIMARY KEY (IdEquipe),
 FOREIGN KEY (IdOwner) REFERENCES Utilisateur (IdJoueur),
 FOREIGN KEY (IdPays) REFERENCES Pays (IdPays),
 FOREIGN KEY (IdGame) REFERENCES Game (IdGame)
 );
 
+
 CREATE TABLE IF NOT EXISTS Tournoi(
 IdTournoi int NOT NULL,
+nomTournoi varchar(50),
+dateDebut varchar(50),
 minEquipe int,
 maxEquipe int,
 minJoueur int,
 maxJoueur int,
-typeTournoi int,
 IdGame int,
 IdOwner int NOT NULL,
 PRIMARY KEY (IdTournoi),
@@ -91,8 +93,8 @@ FOREIGN KEY (IdGame) REFERENCES Game (IdGame)
 CREATE TABLE IF NOT EXISTS MembresEquipe(
 IdJoueur int NOT NULL,
 IdEquipe int NOT NULL,
-DateJoined datetime NOT NULL,
-DateLeft datetime,
+DateJoined varchar(50) NOT NULL,
+DateLeft varchar(50),
 PRIMARY KEY(IdJoueur, IdEquipe),
 FOREIGN KEY (IdEquipe) REFERENCES Equipe (IdEquipe),
 FOREIGN KEY (IdJoueur) REFERENCES Utilisateur (IdJoueur)
