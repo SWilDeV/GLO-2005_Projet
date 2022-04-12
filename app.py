@@ -1,5 +1,6 @@
 #pipenv install --dev
-from flask import Flask, request, jsonify, render_template
+import json
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import pymysql, pymysql.cursors
 import random
@@ -46,7 +47,7 @@ class Database:
                 return result
     def getUserByUserName(self, Username):
         try:
-            sql ="SELECT IdJoueur, Username, Prenom, Nom, Ville, Presentation, Courriel,IdPays, DateJoined FROM Utilisateur WHERE Utilisateur.Username = %s"
+            sql ="SELECT IdJoueur, Username,Password, Prenom,Avatar, Nom, Ville, Presentation, Courriel,IdPays, DateJoined FROM Utilisateur WHERE Utilisateur.Username = %s"
             self.cur.execute(sql,(Username))
         except:
             print("Oops!", sys.exc_info()[0], "occurred.")
@@ -54,15 +55,12 @@ class Database:
             return "error with getUserByUserName"
         else:
             result = self.cur.fetchone()
-            if result ==None:
-                return "User not found"
-            else:
-                return result
+            return result
 
-    def register_User(self,Username,Password,Email,FirstName,LastName,Ville,IdJoueur,Presentation,Avatar,IdPays,IdGame,DateJoined):
+    def register_User(self,Username,Password,Courriel,FirstName,LastName,Ville,IdJoueur,Presentation,Avatar,IdPays,IdGame,DateJoined):
         try:
             sql = "insert into Utilisateur (IdJoueur, Username, Password, Courriel, Prenom, Nom, Ville, Presentation, Avatar, IdPays, IdGame, DateJoined) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-            self.cur.execute(sql, (IdJoueur, Username, Password, Email, FirstName, LastName, Ville, Presentation, Avatar, IdPays, IdGame, DateJoined))
+            self.cur.execute(sql, (IdJoueur, Username, Password, Courriel, FirstName, LastName, Ville, Presentation, Avatar, IdPays, IdGame, DateJoined))
 
             self.con.commit()
         except:
@@ -80,7 +78,7 @@ def registerpage():
     try:
         Username = request.json["Username"]
         Password = bcrypt.generate_password_hash(request.json['Password'])
-        Email = request.json['Email']
+        Courriel = request.json['Courriel']
         FirstName = request.json['FirstName']
         LastName = request.json['LastName']
         Ville = request.json['Ville']
@@ -91,7 +89,7 @@ def registerpage():
         IdGame = None
         DateJoined = date.today()
         db=Database()
-        Reg = db.register_User(Username,Password,Email,FirstName,LastName,Ville,IdJoueur,Presentation,Avatar,IdPays,IdGame,DateJoined)
+        Reg = db.register_User(Username,Password,Courriel,FirstName,LastName,Ville,IdJoueur,Presentation,Avatar,IdPays,IdGame,DateJoined)
     except:
             print("Oops!", sys.exc_info()[0], "occurred.")
             print("error with registerpage")
@@ -108,7 +106,25 @@ def authenticateUser():
     Password = request.json['Password']
     db=Database()
     response= db.getUserByUserName(Username)
-    return jsonify(response)
+    if response ==None:
+        return None
+    else:
+        if bcrypt.check_password_hash(response["Password"], Password) != True:
+            return "Mot de passe incorrect"
+        else:
+            user={
+                "Username" : response["Username"],
+                "Courriel" : response["Courriel"],
+                "Prenom": response["Prenom"],
+                "LastName" : response["Nom"],
+                "Ville" : response["Ville"],
+                "IdJoueur": response["IdJoueur"],
+                "Presentation" : response["Presentation"],
+                "Avatar" : response["Avatar"],
+                "IdPays" : response["IdPays"],
+                "DateJoined" : response["DateJoined"]
+            }
+            return jsonify(user)
 
 
 @app.route('/Utilisateurs', methods=['GET'])
