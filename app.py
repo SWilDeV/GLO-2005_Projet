@@ -17,9 +17,6 @@ basedir =os.path.abspath(os.path.dirname(__file__))
 #Database
 class Database:
     def __init__(self):
-        host='localhost',
-        user=os.environ.get('USER'), 
-        password=os.environ.get('PASSWORD'),
         db=os.environ.get('DB')
         self.con = pymysql.connect(host='localhost',user=os.environ.get('USER'), password=os.environ.get('PASSWORD'),db=os.environ.get('DB'))
         self.cur=self.con.cursor()
@@ -31,15 +28,29 @@ class Database:
         return result
 
 @app.route('/', methods=['GET'])
+
 def get():
     return render_template("home.html")
+
+@app.route('/register', methods=['POST'])
+def registerpage():
+    Username = request.form['Username']
+    Password = request.form['Password']
+    Email = request.form['Email']
+    FirstName = request.form['FirstName']
+    LastName = request.form['LastName']
+    City = request.form['City']
+    db=Database()
+
+
+
 
 @app.route('/Utilisateurs', methods=['GET'])
 def getUsers():
     def db_query():
         db= Database()
-        Artistes = db.list_Users()
-        return Artistes
+        Users = db.list_Users()
+        return Users
 
     res= db_query()
     return jsonify(res)
