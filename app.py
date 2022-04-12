@@ -37,10 +37,13 @@ class Database:
         except:
             print("Oops!", sys.exc_info()[0], "occurred.")
             print("error with find_User_by_ID")
-            return "User not found"
+            return "error with find_User_by_ID"
         else:
             result = self.cur.fetchone()
-            return result
+            if result ==None:
+                return "User not found"
+            else:
+                return result
     def getUserByUserName(self, Username):
         try:
             sql ="SELECT IdJoueur, Username, Prenom, Nom, Ville, Presentation, Courriel,IdPays, DateJoined FROM Utilisateur WHERE Utilisateur.Username = %s"
@@ -48,10 +51,13 @@ class Database:
         except:
             print("Oops!", sys.exc_info()[0], "occurred.")
             print("error with getUserByUserName")
-            return "User not found"
+            return "error with getUserByUserName"
         else:
             result = self.cur.fetchone()
-            return result
+            if result ==None:
+                return "User not found"
+            else:
+                return result
 
     def register_User(self,Username,Password,Email,FirstName,LastName,Ville,IdJoueur,Presentation,Avatar,IdPays,IdGame,DateJoined):
         try:
@@ -88,7 +94,8 @@ def registerpage():
         Reg = db.register_User(Username,Password,Email,FirstName,LastName,Ville,IdJoueur,Presentation,Avatar,IdPays,IdGame,DateJoined)
     except:
             print("Oops!", sys.exc_info()[0], "occurred.")
-            print("registerpage")
+            print("error with registerpage")
+            return "error with registerpage"
     else:
         
         print(bcrypt.check_password_hash("$2b$12$LmAGSs3s4NI8w8aEX6BhNefexfWCuNptcR0OrRRa4MQeUlSWvB/XK", 'PzctZ6f'))
