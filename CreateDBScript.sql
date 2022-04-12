@@ -105,5 +105,3 @@ PRIMARY KEY (IdEquipe, IdTournoi),
 FOREIGN KEY (IdEquipe) REFERENCES Equipe (IdEquipe),
 FOREIGN KEY (IdTournoi) REFERENCES Tournoi (IdTournoi)
 );
-
-SOURCE Utilisateur.sql;
