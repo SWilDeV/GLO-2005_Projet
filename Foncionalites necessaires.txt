@@ -1,0 +1,55 @@
+L'application "INSERT NAME HERE" a pour but d'être utilisée par le public général. Tous les utilisateurs, que ce soient des particuliers où des entreprises, doivent pouvoir créer des équipes ainsi que des tournois.
+
+Le but est principalement d'avoir un endroit centralisé pour avoir les informations du tournoi. Il n'est donc pas nécéssaire d'avoir des informations détaillées sur chaque match, mais plutôt avoir un accès rapide à des informations importantes telles que les matchs à venir et les résultats des derniers matchs.
+
+
+Voici les spécifications des fonctionnalités nécéssaires.
+
+
+Utilisateur :
+Chaque utilisateur doit pouvoir se créer un compte avec un mot de passe sécuritaire.
+Chaque utilisateur doit pouvoir se connecter à son compte en utilisant son mot de passe.
+Chaque utilisateur doit pouvoir modifier ses propres informations de base.
+Les informations de base de chaque utilisateur doivent être accessible en appuyant sur son profil. Ces informations ne doivent être modifiables que par l'utilisateur lui-même.
+Sur la page de l'utilisateur, on doit aussi pouvoir voir si l'utilisateur fait partie d'une équipe, ainsi que ses résultats récents et matchs à venir. Ces données ne peuvent pas être modifiées, puisqu'elles sont obtenues à partir d'autres pages.
+Chaque utilisateur doit pouvoir effectuer une recherche afin de pouvoir trouver le profil d'un utilisateur.
+
+
+Équipe :
+Chaque utilisateur doit pouvoir créer une équipe. Il en devient alors le propriétaire.
+Chaque utilisateur doit pouvoir consulter les informations de base d'une équipe. Celles-ci peuvent être modifiées par le propriétaire de l'équipe.
+Le propriétaire de l'équipe doit avoir la possibilité de transférer la propriété à un autre utilisateur.
+Chaque propriétaire d'équipe doit pouvoir ajouter ou retirer des joueurs (qui sont des utilisateurs) à son équipe.
+Les joueurs de l'équipe sont affichée sur la page de l'équipe, avec un lien vers leur profil d'utilisateur.
+Sur la page de l'équipe, on doit aussi pouvoir voir les tournois auxquels l'équipe est inscrite ainsi que ses résultats récents et matchs à venir.
+Chaque utilisateur doit pouvoir effectuer une recherche afin de trouver la page d'une équipe.
+
+
+Tournoi :
+Chaque utilisateur doit pouvoir créer un tournoi. Il en devient alors le propriétaire.
+Chaque utilisateur doit pouvoir consulter les informations de base d'un tournoi. Celles-ci peuvent être modifiées par le propriétaire du tournoi.
+Le propriétaire du tournoi doit avoir la possibilité de transférer la propriété à un autre utilisateur.
+Les équipes participant au tournoi sont affichés sur la page du tournoi, avec un lien vers leur page d'équipe.
+Sur la page du tournoi, on doit pouvoir voir tous les résultats des matchs ainsi que les matchs à venir de ce tournoi.
+
+Chaque propriétaire d'équipe doit pouvoir inscrire son équipe à un tournoi selon les conditions suivantes :
+	-Son équipe respecte le nombre minimum et maximum de joueur du tournoi
+	-Aucun joueur de son équipe n'est déjà inscrit dans une autre équipe de ce même tournoi
+	-Le nombre maximal d'équipe pour ce tournoi n'est pas déjà atteint
+
+
+Match :
+Chaque propriétaire de tournoi peu ajouter un match à son tournoi.
+Chaque propriétaire de tournoi doit pouvoir entrer le score final du match.
+
+
+
+Voici les informations qui sont considérées "de base" dans les spécifications ci-hautes :
+
+Informations de base de l'utilisateur : Nom d'utilisateur, courriel, prénom, nom, ville d'origine, une courte présentation, son avatar, son pays d'origine, son jeu préféré, la date à laquelle il a joint.
+Informations de base de l'équipe : Nom de l'équipe, courte présentation, logo de l'équipe, pays représenté, jeu principal.
+Informations de base du tournoi : Nombre de joueur minimum et maximum, nombre d'équipes minimum et maximum, jeu ou sport du tournoi, Propriétaire du tournoi.
+
+
+
+Ainsi, on voit que ces spécifications techniques sont définitivement axées par l'utilisation générale. La plateforme n'est donc pas du tout adapté à un sport ou jeu spécifique, mais plutôt à la création de tournoi généraux.
