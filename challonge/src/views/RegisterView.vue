@@ -19,7 +19,7 @@
         >
           <b-form-input
             id="input-1"
-            v-model="form.courriel"
+            v-model="form.Courriel"
             type="email"
             placeholder="Entrez votre Courriel"
             required
@@ -33,7 +33,7 @@
         >
           <b-form-input
             id="input-2"
-            v-model="form.username"
+            v-model="form.Username"
             placeholder="Entrez un pseudo"
             required
           ></b-form-input>
@@ -46,7 +46,7 @@
         >
           <b-form-input
             id="input-3"
-            v-model="form.password"
+            v-model="form.Password"
             type="password"
             placeholder="Entrez un mot de passe"
             required
@@ -56,7 +56,7 @@
         <b-form-group id="input-group-4" label="Prenom:" label-for="input-4">
           <b-form-input
             id="input-4"
-            v-model="form.prenom"
+            v-model="form.Prenom"
             placeholder="Entrez votre Prenom"
           ></b-form-input>
         </b-form-group>
@@ -64,7 +64,7 @@
         <b-form-group id="input-group-5" label="Nom:" label-for="input-5">
           <b-form-input
             id="input-5"
-            v-model="form.nom"
+            v-model="form.Nom"
             placeholder="Entrez votre Nom"
           ></b-form-input>
         </b-form-group>
@@ -72,7 +72,7 @@
         <b-form-group id="input-group-6" label="Ville:" label-for="input-6">
           <b-form-input
             id="input-6"
-            v-model="form.ville"
+            v-model="form.Ville"
             placeholder="Entrez votre Ville"
           ></b-form-input>
         </b-form-group>
@@ -90,14 +90,14 @@ export default {
   data() {
     return {
       form: {
-        username: "",
-        password: "",
-        courriel: "",
-        prenom: "",
-        nom: "",
-        ville: "",
-        presentation: "efwefewfwefefew",
-        avatar: null,
+        Username: "",
+        Password: "",
+        Courriel: "",
+        Prenom: "",
+        Nom: "",
+        Ville: "",
+        Presentation: "efwefewfwefefew",
+        Avatar: null,
         IdPays: 23,
       },
     };

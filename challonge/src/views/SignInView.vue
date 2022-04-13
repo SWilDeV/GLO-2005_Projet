@@ -10,7 +10,7 @@
         >
           <b-form-input
             id="input-1"
-            v-model="form.email"
+            v-model="form.Courriel"
             type="email"
             placeholder="Enter email"
             required
@@ -20,7 +20,7 @@
         <b-form-group id="input-group-3" label="Password:" label-for="input-3">
           <b-form-input
             id="input-3"
-            v-model="form.password"
+            v-model="form.Password"
             type="password"
             placeholder="Enter password"
             required
@@ -39,8 +39,8 @@ export default {
   data() {
     return {
       form: {
-        email: "",
-        password: "",
+        Courriel: "",
+        Password: "",
       },
       show: true,
     };

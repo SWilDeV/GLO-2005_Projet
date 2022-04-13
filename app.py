@@ -30,15 +30,15 @@ def registerpage():
             dataJSON = dict(json.loads(data))
         else:
             dataJSON =data
-        Username = dataJSON['username']
-        Password = bcrypt.generate_password_hash(dataJSON["password"])
-        Courriel = dataJSON['courriel']
-        FirstName = dataJSON['prenom']
-        LastName = dataJSON['nom']
-        Ville = dataJSON['ville']
+        Username = dataJSON['Username']
+        Password = bcrypt.generate_password_hash(dataJSON["Password"])
+        Courriel = dataJSON['Courriel']
+        FirstName = dataJSON['Prenom']
+        LastName = dataJSON['Nom']
+        Ville = dataJSON['Ville']
         IdJoueur= random.randint(100000000,999999999)
-        Presentation = dataJSON['presentation']
-        Avatar = dataJSON['avatar']
+        Presentation = dataJSON['Presentation']
+        Avatar = dataJSON['Avatar']
         IdPays = dataJSON['IdPays'] 
         IdGame = None
         DateJoined = date.today()
@@ -55,8 +55,8 @@ def registerpage():
 
 @app.route('/authenticate', methods=['POST'])
 def authenticateUser():
-    Username = request.json["username"]
-    Password = request.json['password']
+    Username = request.json["Username"]
+    Password = request.json['Password']
     db=Database()
     response= db.getUserByUserName(Username)
     if response ==None:
