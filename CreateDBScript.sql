@@ -36,9 +36,9 @@ CREATE TABLE IF NOT EXISTS Utilisateur (
 	IdPays INT,
 	IdGame INT,
 	DateJoined VARCHAR(20),
-    PRIMARY KEY (IdJoueur)
-    -- FOREIGN KEY (IdGame) REFERENCES Game (IdGame),
-    -- FOREIGN KEY (IdPays) REFERENCES Pays (IdPays)
+    PRIMARY KEY (IdJoueur),
+    FOREIGN KEY (IdGame) REFERENCES Game (IdGame),
+    FOREIGN KEY (IdPays) REFERENCES Pays (IdPays)
 );
 
 -- Create table if not exists Utilisateur(

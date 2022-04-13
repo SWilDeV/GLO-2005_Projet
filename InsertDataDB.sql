@@ -19,7 +19,7 @@ Insert into Game (IdGame, Nom, DateSortie, TypeJeu, DescriptionJeu, Logo) values
 Insert into Game (IdGame, Nom, DateSortie, TypeJeu, DescriptionJeu, Logo) values (9, 'Echecs', null, 'Plateau', "Jeu composé d'un plateau de 64 cases et de 32 pièces (16 pour chacun des deux joueurs). Le jeu consiste à mettre l'autre joueur échec et mat, c'est-à-dire que son roi est en prise et qu'il n'y a aucun coup possible pour l'en sortir.", null);
 
 
-insert into Utilisateur (IdJoueur, Username, Password, Courriel, Prenom, Nom, Ville, Presentation, Avatar, IdPays, IdGame, DateJoined) values (1, 'thulburd0', 'PzctZ6f', 'thulburd0@cloudflare.com', 'Talyah', 'Hulburd', 'Vinnytsya', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.', null, 23, 65, '6/17/2021');
+insert into Utilisateur (IdJoueur, Username, Password, Courriel, Prenom, Nom, Ville, Presentation, Avatar, IdPays, IdGame, DateJoined) values (1, 'thulburd0', 'PzctZ6f', 'thulburd0@cloudflare.com', 'Talyah', 'Hulburd', 'Vinnytsya', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.', null, 2, 5, '6/17/2021');
 insert into Utilisateur (IdJoueur, Username, Password, Courriel, Prenom, Nom, Ville, Presentation, Avatar, IdPays, IdGame, DateJoined) values (2, 'ehubbard1', 'nJgpHeZ9MsO', 'ehubbard1@barnesandnoble.com', 'Erin', 'Hubbard', 'Santa Fe', 'Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.
 
 Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.
