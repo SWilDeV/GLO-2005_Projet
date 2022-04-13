@@ -1,6 +1,15 @@
 <template>
   <div>
     <h2 class="d-flex page-header justify-content-center">Register</h2>
+    <b-button type="button" variant="primary" v-on:click="test"
+      >Submit</b-button
+    >
+    <!-- <router-link :to="{ name: 'signIn' }"
+      ><b-button type="button" variant="primary" v-on:click="test"
+        >Submit</b-button
+      ></router-link
+    > -->
+
     <div class="d-flex justify-content-center flex-wrap">
       <b-form @submit="onSubmit">
         <b-form-group
@@ -99,10 +108,23 @@ export default {
   methods: {
     async onSubmit(event) {
       event.preventDefault();
+      // let res = await registerUser(JSON.stringify(this.form));
       let res = await registerUser(JSON.stringify(this.form));
       console.log(res);
+      // registerUser(JSON.stringify(this.form)).then((response) => {
+      //   if (response.ok) {
+      //     this.$router.push({ name: "signIn" });
+      //   } else {
+      //     throw new Error("HTTP error " + response.status);
+      //   }
+      // });
+      // console.log(res.username);
+      // if (res.username != null) {
+      //   this.$router.push({ name: "signIn" });
+    },
 
-      // console.log(JSON.stringify(this.form));
+    test() {
+      this.$router.push({ name: "signIn" });
     },
   },
 };

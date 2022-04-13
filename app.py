@@ -54,27 +54,27 @@ def registerpage():
 
 @app.route('/authenticate', methods=['POST'])
 def authenticateUser():
-    Username = request.json["Username"]
-    Password = request.json['Password']
+    Username = request.json["username"]
+    Password = request.json['password']
     db=Database()
     response= db.getUserByUserName(Username)
     if response ==None:
         return None
     else:
-        if bcrypt.check_password_hash(response["Password"], Password) != True:
+        if bcrypt.check_password_hash(response["password"], Password) != True:
             return "Mot de passe incorrect"
         else:
             user={
-                "Username" : response["Username"],
-                "Courriel" : response["Courriel"],
-                "Prenom": response["Prenom"],
-                "LastName" : response["Nom"],
-                "Ville" : response["Ville"],
+                "Username" : response["username"],
+                "Courriel" : response["courriel"],
+                "Prenom": response["prenom"],
+                "LastName" : response["nom"],
+                "Ville" : response["ville"],
                 "IdJoueur": response["IdJoueur"],
-                "Presentation" : response["Presentation"],
-                "Avatar" : response["Avatar"],
+                "Presentation" : response["presentation"],
+                "Avatar" : response["avatar"],
                 "IdPays" : response["IdPays"],
-                "DateJoined" : response["DateJoined"]
+                "DateJoined" : response["dateJoined"]
             }
             return jsonify(user)
 

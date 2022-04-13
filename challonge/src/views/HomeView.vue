@@ -27,7 +27,6 @@ export default {
   async created() {
     try {
       this.UtilisateurData = await getUsers();
-      console.log(this.UtilisateurData);
     } catch (e) {
       console.log(e);
     }
