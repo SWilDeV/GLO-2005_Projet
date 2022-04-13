@@ -98,7 +98,7 @@ export default {
         Ville: "",
         Presentation: "efwefewfwefefew",
         Avatar: null,
-        IdPays: 23,
+        IdPays: 6,
       },
     };
   },
@@ -108,12 +108,9 @@ export default {
   methods: {
     async onSubmit(event) {
       event.preventDefault();
-      // let res = await registerUser(JSON.stringify(this.form));
-      // let res = await registerUser(JSON.stringify(this.form));
-      // console.log(res);
       registerUser(JSON.stringify(this.form)).then((response) => {
         if (response.Courriel != null) {
-          localStorage.setItem(response);
+          localStorage.setItem("user", JSON.stringify(response));
           this.$router.push({ name: "tournois" });
         } else {
           throw new Error("HTTP error " + response.status);
