@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <NavBar />
-    <nav>|</nav>
     <router-view />
   </div>
 </template>
@@ -9,6 +8,11 @@
 import NavBar from "@/components/NavBar.vue";
 export default {
   name: "app",
+  data() {
+    return {
+      isSignedIn: false,
+    };
+  },
   components: {
     NavBar,
   },

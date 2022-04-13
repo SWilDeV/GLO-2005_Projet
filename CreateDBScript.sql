@@ -22,6 +22,7 @@ Logo varchar(100),
 PRIMARY KEY(idGame)
 );
 
+
 CREATE TABLE IF NOT EXISTS Utilisateur (
 	IdJoueur INT,
 	Username VARCHAR(50),
