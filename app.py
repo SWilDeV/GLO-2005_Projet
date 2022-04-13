@@ -26,9 +26,11 @@ bcrypt = Bcrypt(app)
 def registerpage():
     try:
         data =request.json["data"]
-        dataJSON = dict(json.loads(data))
+        if type(data)!= dict:
+            dataJSON = dict(json.loads(data))
+        else:
+            dataJSON =data
         Username = dataJSON['username']
-        # Username =request.json["username"]
         Password = bcrypt.generate_password_hash(dataJSON["password"])
         Courriel = dataJSON['courriel']
         FirstName = dataJSON['prenom']
@@ -50,7 +52,6 @@ def registerpage():
         return "error with registerpage"
     else:
         return jsonify(Reg)
-        # return jsonify("hello")
 
 @app.route('/authenticate', methods=['POST'])
 def authenticateUser():
@@ -61,20 +62,20 @@ def authenticateUser():
     if response ==None:
         return None
     else:
-        if bcrypt.check_password_hash(response["password"], Password) != True:
+        if bcrypt.check_password_hash(response["Password"], Password) != True:
             return "Mot de passe incorrect"
         else:
             user={
-                "Username" : response["username"],
-                "Courriel" : response["courriel"],
-                "Prenom": response["prenom"],
-                "LastName" : response["nom"],
-                "Ville" : response["ville"],
+                "Username" : response["Username"],
+                "Courriel" : response["Courriel"],
+                "Prenom": response["Prenom"],
+                "LastName" : response["Nom"],
+                "Ville" : response["Ville"],
                 "IdJoueur": response["IdJoueur"],
-                "Presentation" : response["presentation"],
-                "Avatar" : response["avatar"],
+                "Presentation" : response["Presentation"],
+                "Avatar" : response["Avatar"],
                 "IdPays" : response["IdPays"],
-                "DateJoined" : response["dateJoined"]
+                "DateJoined" : response["DateJoined"]
             }
             return jsonify(user)
 
