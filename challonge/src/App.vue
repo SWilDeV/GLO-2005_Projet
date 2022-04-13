@@ -1,7 +1,11 @@
 <template>
   <div id="app">
-    <NavBar />
+    <NavBar :is-signed-in="this.toggleGetter" />
     <router-view />
+    <b-button type="button" variant="primary" v-on:click="toggle"
+      >Submit</b-button
+    >
+    <h1>{{ toggleGetter }}</h1>
   </div>
 </template>
 <script>
@@ -10,11 +14,21 @@ export default {
   name: "app",
   data() {
     return {
-      isSignedIn: false,
+      // isSignedIn: toggleGetter,
     };
   },
   components: {
     NavBar,
+  },
+  methods: {
+    toggle() {
+      this.$store.dispatch("toggleAction");
+    },
+  },
+  computed: {
+    toggleGetter() {
+      return this.$store.getters.toggleGetter;
+    },
   },
 };
 </script>

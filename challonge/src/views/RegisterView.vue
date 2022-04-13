@@ -4,11 +4,6 @@
     <b-button type="button" variant="primary" v-on:click="test"
       >Submit</b-button
     >
-    <!-- <router-link :to="{ name: 'signIn' }"
-      ><b-button type="button" variant="primary" v-on:click="test"
-        >Submit</b-button
-      ></router-link
-    > -->
 
     <div class="d-flex justify-content-center flex-wrap">
       <b-form @submit="onSubmit">
@@ -122,7 +117,18 @@ export default {
     },
 
     test() {
-      this.$router.push({ name: "signIn" });
+      this.form = {
+        Username: "sewfew",
+        Password: "tyhyj7yj",
+        Courriel: "trhtrh@grgreg.com",
+        Prenom: "8k8kk8",
+        Nom: "k87k78",
+        Ville: "jytjtj",
+        Presentation: "efwefewfwefefew",
+        Avatar: null,
+        IdPays: 6,
+      };
+      //this.onSubmit();
     },
   },
 };
