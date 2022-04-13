@@ -1,17 +1,24 @@
-CREATE TABLE IF NOT EXISTS Utilisateur (
-	IdJoueur INT,
-	Username VARCHAR(50),
-	Password VARCHAR(100),
-	Courriel VARCHAR(50),
-	Prenom VARCHAR(50),
-	Nom VARCHAR(50),
-	Ville VARCHAR(50),
-	Presentation TEXT,
-	Avatar VARCHAR(50),
-	IdPays INT,
-	IdGame INT,
-	DateJoined VARCHAR(50)
-);
+Insert into Pays (IdPays, NomPays, Drapeau) values (1, 'France', null);
+Insert into Pays (IdPays, NomPays, Drapeau) values (2, 'Japon', null);
+Insert into Pays (IdPays, NomPays, Drapeau) values (3, 'Espagne', null);
+Insert into Pays (IdPays, NomPays, Drapeau) values (4, 'Italie', null);
+Insert into Pays (IdPays, NomPays, Drapeau) values (5, 'Canada', null);
+Insert into Pays (IdPays, NomPays, Drapeau) values (6, 'Allemagne', null);
+Insert into Pays (IdPays, NomPays, Drapeau) values (7, 'Russie', null);
+Insert into Pays (IdPays, NomPays, Drapeau) values (8, 'Chine', null);
+Insert into Pays (IdPays, NomPays, Drapeau) values (9, 'Corée', null);
+
+Insert into Game (IdGame, Nom, DateSortie, TypeJeu, DescriptionJeu, Logo) values (1, 'Minecraft', '11/18/2011', 'PVP', 'Jeu qui consiste à placer des blocs et à partir dans des aventures pour se battre contre des monstres ou des joueurs.', null);
+Insert into Game (IdGame, Nom, DateSortie, TypeJeu, DescriptionJeu, Logo) values (2, 'Overwatch', '05/24/2016', 'FPS', 'Jeu de tir futuriste basé sur une équipe dynamique. Chaque match est une bataille acharnée qui oppose 6 héros uniques.', null);
+Insert into Game (IdGame, Nom, DateSortie, TypeJeu, DescriptionJeu, Logo) values (3, 'League Of Legends', '09/27/2009', 'MOBA', 'Jeu en équipe avec plus de 140 champions, pour des actions à couper le souffle.', null);
+Insert into Game (IdGame, Nom, DateSortie, TypeJeu, DescriptionJeu, Logo) values (4, 'Counter Strike', '08/21/2012', 'FPS', "Jeu de tir à la première personne dans lequel deux équipes s'affrontent pour perpétrer ou empêcher un acte terroriste.", null);
+Insert into Game (IdGame, Nom, DateSortie, TypeJeu, DescriptionJeu, Logo) values (5, 'World Of Warcraft ', '11/23/2004', 'MMO', "Jeu massivement multijoueur de l'univers médiéval-fantastique Warcraft.", null);
+Insert into Game (IdGame, Nom, DateSortie, TypeJeu, DescriptionJeu, Logo) values (6, 'Fortnite', '07/21/2017', 'BR', 'Jeu de battle royale avec un maximum de 100 joueurs, jouant seul, en équipe de deux, en équipe de trois ou à quatre. Les joueurs sont largués dans un Battle Bus qui traverse la carte du jeu sans aucune arme.', null);
+Insert into Game (IdGame, Nom, DateSortie, TypeJeu, DescriptionJeu, Logo) values (7, 'Apex Legends', '02/04/2019', 'BR', 'Jeu de tir de héros gratuit où des compétiteurs légendaires combattent ensemble aux confins de la Frontière pour la gloire.', null);
+Insert into Game (IdGame, Nom, DateSortie, TypeJeu, DescriptionJeu, Logo) values (8, 'Valorant', '06/2/2020', 'FPS', 'Jeu vidéo free-to-play de tir à la première personne en multijoueur développé et édité par Riot Games.', null);
+Insert into Game (IdGame, Nom, DateSortie, TypeJeu, DescriptionJeu, Logo) values (9, 'Echecs', null, 'Plateau', "Jeu composé d'un plateau de 64 cases et de 32 pièces (16 pour chacun des deux joueurs). Le jeu consiste à mettre l'autre joueur échec et mat, c'est-à-dire que son roi est en prise et qu'il n'y a aucun coup possible pour l'en sortir.", null);
+
+
 insert into Utilisateur (IdJoueur, Username, Password, Courriel, Prenom, Nom, Ville, Presentation, Avatar, IdPays, IdGame, DateJoined) values (1, 'thulburd0', 'PzctZ6f', 'thulburd0@cloudflare.com', 'Talyah', 'Hulburd', 'Vinnytsya', 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.', null, 23, 65, '6/17/2021');
 insert into Utilisateur (IdJoueur, Username, Password, Courriel, Prenom, Nom, Ville, Presentation, Avatar, IdPays, IdGame, DateJoined) values (2, 'ehubbard1', 'nJgpHeZ9MsO', 'ehubbard1@barnesandnoble.com', 'Erin', 'Hubbard', 'Santa Fe', 'Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.
 
@@ -304,6 +311,19 @@ Insert into Tournoi (IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, min
 Insert into Tournoi (IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, IdGame, IdOwner) values (7, 'AHHHHHH', '2022/05/01', 2, 4, 20, 40, 1, 46);
 Insert into Tournoi (IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, IdGame, IdOwner) values (8, 'egg hunt', '2022/06/24', 4, 6, 30, 50, 9, 6);
 Insert into Tournoi (IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, IdGame, IdOwner) values (9, 'OWL', '2022/07/01', 2, 10, 10, 80, 5, 17);
+
+INSERT INTO Partie (IdMatch, dateMatch, heureMatch, idEquipe1, idEquipe2, scoreEquipe1, scoreEquipe2, idTournoi, idGagnant) values (1, '03/04/2022', '20:00', 4, 5, null, null, 3, null);
+INSERT INTO Partie (IdMatch, dateMatch, heureMatch, idEquipe1, idEquipe2, scoreEquipe1, scoreEquipe2, idTournoi, idGagnant) values (2, '23/05/2022', '21:00', 3, 8, null, null, 6, null);
+INSERT INTO Partie (IdMatch, dateMatch, heureMatch, idEquipe1, idEquipe2, scoreEquipe1, scoreEquipe2, idTournoi, idGagnant) values (3, '24/04/2022', '19:00', 7, 2, null, null, 3, null);
+INSERT INTO Partie (IdMatch, dateMatch, heureMatch, idEquipe1, idEquipe2, scoreEquipe1, scoreEquipe2, idTournoi, idGagnant) values (4, '15/05/2022', '19:00', 7, 4, null, null, 5, null);
+INSERT INTO Partie (IdMatch, dateMatch, heureMatch, idEquipe1, idEquipe2, scoreEquipe1, scoreEquipe2, idTournoi, idGagnant) values (5, '23/05/2022', '19:00', 6, 1, null, null, 8, null);
+INSERT INTO Partie (IdMatch, dateMatch, heureMatch, idEquipe1, idEquipe2, scoreEquipe1, scoreEquipe2, idTournoi, idGagnant) values (6, '16/04/2022', '20:30', 5, 9, null, null, 8, null);
+INSERT INTO Partie (IdMatch, dateMatch, heureMatch, idEquipe1, idEquipe2, scoreEquipe1, scoreEquipe2, idTournoi, idGagnant) values (7, '23/06/2022', '19:00', 8, 2, null, null, 2, null);
+INSERT INTO Partie (IdMatch, dateMatch, heureMatch, idEquipe1, idEquipe2, scoreEquipe1, scoreEquipe2, idTournoi, idGagnant) values (8, '30/05/2022', '21:00', 7, 9, null, null, 7, null);
+INSERT INTO Partie (IdMatch, dateMatch, heureMatch, idEquipe1, idEquipe2, scoreEquipe1, scoreEquipe2, idTournoi, idGagnant) values (9, '31/05/2022', '20:00', 5, 1, null, null, 9, null);
+INSERT INTO Partie (IdMatch, dateMatch, heureMatch, idEquipe1, idEquipe2, scoreEquipe1, scoreEquipe2, idTournoi, idGagnant) values (10, '12/07/2022', '20:00', 5, 7, null, null, 7, null);
+INSERT INTO Partie (IdMatch, dateMatch, heureMatch, idEquipe1, idEquipe2, scoreEquipe1, scoreEquipe2, idTournoi, idGagnant) values (11, '13/05/2022', '10:00', 1, 2, null, null, 3, null);
+INSERT INTO Partie (IdMatch, dateMatch, heureMatch, idEquipe1, idEquipe2, scoreEquipe1, scoreEquipe2, idTournoi, idGagnant) values (12, '23/04/2022', '11:00', 9, 8, null, null, 5, null);
 
 Insert into MembresEquipe (IdJoueur, IdEquipe, DateJoined, DateLeft) values (2, 2, '3/4/2022', null);
 Insert into MembresEquipe (IdJoueur, IdEquipe, DateJoined, DateLeft) values (7, 4, '3/5/2022', null);

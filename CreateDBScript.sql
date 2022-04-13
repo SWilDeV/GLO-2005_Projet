@@ -90,6 +90,22 @@ FOREIGN KEY (IdOwner) REFERENCES Utilisateur (IdJoueur),
 FOREIGN KEY (IdGame) REFERENCES Game (IdGame)
 );
 
+CREATE TABLE IF NOT EXISTS Partie(
+IdMatch int NOT NULL,
+dateMatch varchar(50),
+heureMatch varchar(5),
+idEquipe1 int,
+idEquipe2 int,
+scoreEquipe1 int,
+scoreEquipe2 int,
+idTournoi int,
+idGagnant int,
+PRIMARY KEY (IdMatch),
+FOREIGN KEY (IdEquipe1) REFERENCES Equipe (IdEquipe),
+FOREIGN KEY (IdEquipe2) REFERENCES Equipe (IdEquipe),
+FOREIGN KEY (IdTournoi) REFERENCES Tournoi (IdTournoi)
+);
+
 CREATE TABLE IF NOT EXISTS MembresEquipe(
 IdJoueur int NOT NULL,
 IdEquipe int NOT NULL,
