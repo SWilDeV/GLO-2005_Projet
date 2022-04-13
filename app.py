@@ -8,6 +8,7 @@ import sys
 from datetime import date
 from dotenv import load_dotenv
 from Database import Database
+import json
 load_dotenv()
 import os
 
@@ -24,18 +25,23 @@ bcrypt = Bcrypt(app)
 @app.route('/register', methods=['POST'])
 def registerpage():
     try:
-        Username = request.json["Username"]
-        Password = bcrypt.generate_password_hash(request.json['Password'])
-        Courriel = request.json['Courriel']
-        FirstName = request.json['FirstName']
-        LastName = request.json['LastName']
-        Ville = request.json['Ville']
+        data =request.json["data"]
+        dataJSON = dict(json.loads(data))
+        Username = dataJSON['username']
+        # Username =request.json["username"]
+        Password = bcrypt.generate_password_hash(dataJSON["password"])
+        Courriel = dataJSON['courriel']
+        FirstName = dataJSON['prenom']
+        LastName = dataJSON['nom']
+        Ville = dataJSON['ville']
         IdJoueur= random.randint(100000000,999999999)
-        Presentation = request.json['Presentation']
-        Avatar = None
-        IdPays = request.json['IdPays'] 
+        Presentation = dataJSON['presentation']
+        Avatar = dataJSON['avatar']
+        IdPays = dataJSON['IdPays'] 
         IdGame = None
         DateJoined = date.today()
+        
+        print(dataJSON)
         db=Database()
         Reg = db.register_User(Username,Password,Courriel,FirstName,LastName,Ville,IdJoueur,Presentation,Avatar,IdPays,IdGame,DateJoined)
     except:
@@ -44,30 +50,31 @@ def registerpage():
         return "error with registerpage"
     else:
         return jsonify(Reg)
+        # return jsonify("hello")
 
 @app.route('/authenticate', methods=['POST'])
 def authenticateUser():
-    Username = request.json["Username"]
-    Password = request.json['Password']
+    Username = request.json["username"]
+    Password = request.json['password']
     db=Database()
     response= db.getUserByUserName(Username)
     if response ==None:
         return None
     else:
-        if bcrypt.check_password_hash(response["Password"], Password) != True:
+        if bcrypt.check_password_hash(response["password"], Password) != True:
             return "Mot de passe incorrect"
         else:
             user={
-                "Username" : response["Username"],
-                "Courriel" : response["Courriel"],
-                "Prenom": response["Prenom"],
-                "LastName" : response["Nom"],
-                "Ville" : response["Ville"],
+                "Username" : response["username"],
+                "Courriel" : response["courriel"],
+                "Prenom": response["prenom"],
+                "LastName" : response["nom"],
+                "Ville" : response["ville"],
                 "IdJoueur": response["IdJoueur"],
-                "Presentation" : response["Presentation"],
-                "Avatar" : response["Avatar"],
+                "Presentation" : response["presentation"],
+                "Avatar" : response["avatar"],
                 "IdPays" : response["IdPays"],
-                "DateJoined" : response["DateJoined"]
+                "DateJoined" : response["dateJoined"]
             }
             return jsonify(user)
 
