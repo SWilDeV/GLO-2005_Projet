@@ -5,15 +5,11 @@ FOR EACH ROW
 BEGIN
 
 IF NEW.scoreEquipe1 > NEW.scoreEquipe2 THEN 
-UPDATE Partie
-SET idGagnant = NEW.idEquipe1
-WHERE IdMatch = NEW.IdMatch;
+SET NEW.idGagnant = NEW.idEquipe1;
 END IF;
 
 IF NEW.scoreEquipe1 < NEW.scoreEquipe2 THEN
-UPDATE Partie
-SET idGagnant = NEW.idEquipe2
-WHERE IdMatch = NEW.IdMatch;
+SET NEW.idGagnant = NEW.idEquipe2;
 END IF;
 
 END;//
@@ -31,7 +27,7 @@ DECLARE curseur CURSOR FOR
 SELECT M.idJoueur
 FROM MembresEquipe M
 WHERE M.idEquipe = NEW.idEquipe
-AND M.DateLeft IS NOT NULL;
+AND M.DateLeft IS NULL;
 
 DECLARE CONTINUE HANDLER FOR NOT FOUND SET lecture_complete = TRUE;
 
@@ -44,9 +40,9 @@ lecteur: WHILE lecture_complete = FALSE DO
 
 IF idJoueur IN (SELECT M.idJoueur
 FROM MembresEquipe M
-INNER JOIN Inscription I ON (I.IdEquipe = MembresEquipe.idEquipe)
+INNER JOIN Inscription I ON (I.IdEquipe = M.idEquipe)
 WHERE I.IdTournoi = NEW.idTournoi
-AND MembresEquipe.DateLeft IS NOT NULL)
+AND M.DateLeft IS NULL)
 THEN
 SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Un des joueurs fait déjà partie d\'une autre équipe du même tournoi';
 END IF;
