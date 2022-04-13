@@ -3,7 +3,7 @@
     <UtilisateurComponent
       v-for="util in UtilisateurData"
       :key="util[0]"
-      :utilisateur-name="util[4]"
+      :utilisateur-name="util.Prenom"
     />
   </div>
 </template>
@@ -11,7 +11,8 @@
 <script>
 // @ is an alias to /src
 import UtilisateurComponent from "@/components/UtilisateurComponent.vue";
-import axios from "axios";
+// import axios from "axios";
+import { getUsers } from "../apiVue.js";
 export default {
   name: "HomeView",
   components: {
@@ -19,25 +20,17 @@ export default {
   },
   data() {
     return {
-      UtilisateurData: [],
+      UtilisateurData: "",
     };
   },
-  methods: {
-    getResponse() {
-      const path = `${process.env.VUE_APP_API_BASE_URL}/Utilisateurs`;
-      axios
-        .get(path)
-        .then((res) => {
-          this.UtilisateurData = res.data;
-          console.log(this.UtilisateurData);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-  },
-  created() {
-    this.getResponse();
+  methods: {},
+  async created() {
+    try {
+      this.UtilisateurData = await getUsers();
+      console.log(this.UtilisateurData);
+    } catch (e) {
+      console.log(e);
+    }
   },
 };
 </script>
