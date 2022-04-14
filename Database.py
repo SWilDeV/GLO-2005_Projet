@@ -80,6 +80,21 @@ class Database:
                 return "Tournament not found"
             else:
                 return result
+
+    def getTournamentByName(self, nomTournoi):
+        try:
+            sql ="SELECT * FROM Tournoi WHERE Tournoi.nomTournoi = %s"
+            self.cur.execute(sql,(nomTournoi))
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with getTournamentByName")
+            return "error with getTournamentByName"
+        else:
+            result = self.cur.fetchone()
+            if result ==None:
+                return "Tournament not found"
+            else:
+                return result
     
     def getTeamsByTournament(self, IdTournoi):
         try:
@@ -104,3 +119,29 @@ class Database:
         else:
             result = self.cur.fetchall()
             return result
+
+    def editTournament(self, IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, idGame, idOwner):
+        try:
+            sql ="UPDATE tournoi SET nomTournoi = %s, dateDebut = %s, minEquipe = %s, maxEquipe = %s, minJoueur = %s, maxJoueur = %s, idGame = %s, idOwner = %s WHERE idTournoi = %s"
+            self.cur.execute(sql, (nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, idGame, idOwner, IdTournoi))
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with editTournament")
+            return "error with editTournament"
+        else:
+            print("Tournament edited") 
+            Tournoi = self.getTournamentById(IdTournoi)
+            return Tournoi
+
+    def CreateTournament(self, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, idGame, idOwner):
+        try:
+            sql ="INSERT INTO tournoi (nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, idGame, idOwner) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+            self.cur.execute(sql, (nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, idGame, idOwner))
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with CreateTournament")
+            return "error with CreateTournament"
+        else:
+            print("Tournament Created")  
+            Tournoi = self.getTournamentByName(nomTournoi)
+            return Tournoi
