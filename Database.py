@@ -218,3 +218,31 @@ class Database:
         else:
             result = self.cur.fetchmany(5)
             return result
+
+    def EditEquipe(self, IdEquipe, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame):
+        try:
+            sql ="UPDATE equipe SET NomEquipe = %s, Presentation = %s, Logo = %s, IdOwner = %s, IdPays = %s, IdGame = %s WHERE IdEquipe = %s"
+            self.cur.execute(sql, (NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame, IdEquipe))
+            self.con.commit()
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with editEquipe")
+            return "error with editEquipe"
+        else:
+            print("Team edited") 
+            equipe = self.getTeamById(IdEquipe)
+            return equipe
+
+    def CreateEquipe(self, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame):
+        try:
+            sql ="INSERT INTO equipe (NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame) VALUES (%s, %s, %s, %s, %s, %s)"
+            self.cur.execute(sql, (NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame))
+            self.con.commit()
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with CreateEquipe")
+            return "error with CreateEquipe"
+        else:
+            print("Team Created")  
+            Equipe = self.getTeamByName(NomEquipe)
+            return Equipe
