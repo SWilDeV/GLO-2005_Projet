@@ -1,23 +1,20 @@
 <template>
   <div class="home">
-    <UtilisateurComponent
-      v-for="util in UtilisateurData"
-      :key="util[0]"
-      :utilisateur-name="util.Prenom"
-    />
+    <div class="jumbotron text-center">
+      <h1>Mata Tournois</h1>
+      <p class="lead">Bienvenue sur Mata Tournois</p>
+      <div>
+        <a class="btn btn-primary">Register</a>
+        <a class="btn btn-danger">Login</a>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import UtilisateurComponent from "@/components/UtilisateurComponent.vue";
-// import axios from "axios";
-import { getUsers } from "../apiVue.js";
 export default {
   name: "HomeView",
-  components: {
-    UtilisateurComponent,
-  },
+  components: {},
   data() {
     return {
       UtilisateurData: "",
@@ -26,10 +23,22 @@ export default {
   methods: {},
   async created() {
     try {
-      this.UtilisateurData = await getUsers();
+      if (localStorage.getItem("user") != null) {
+        this.$store.dispatch("changeToTrue");
+      }
     } catch (e) {
       console.log(e);
     }
   },
 };
 </script>
+
+<style scoped>
+.home {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-image: url(https://c4.wallpaperflare.com/wallpaper/717/34/508/ice-and-fire-fists-digital-art-fire-wallpaper-preview.jpg);
+}
+</style>
+home

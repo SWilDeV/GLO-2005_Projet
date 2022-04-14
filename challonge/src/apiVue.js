@@ -14,10 +14,23 @@ export async function getUsers() {
 }
 
 export async function registerUser(data) {
-  console.log(data);
   return new Promise((resolve, reject) => {
     axios
       .post(`${process.env.VUE_APP_API_BASE_URL}/register`, {
+        data,
+      })
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+export async function loginUser(data) {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(`${process.env.VUE_APP_API_BASE_URL}/authenticate`, {
         data,
       })
       .then((res) => {

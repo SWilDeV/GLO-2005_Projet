@@ -54,12 +54,17 @@ def registerpage():
 
 @app.route('/authenticate', methods=['POST'])
 def authenticateUser():
-    Username = request.json["Username"]
-    Password = request.json['Password']
+    data =request.json["data"]
+    if type(data)!= dict:
+        dataJSON = dict(json.loads(data))
+    else:
+        dataJSON =data
+    Username = dataJSON["Username"]
+    Password = dataJSON['Password']
     db=Database()
     response= db.getUserByUserName(Username)
     if response ==None:
-        return None
+        return "Utilisateur incorrect"
     else:
         if bcrypt.check_password_hash(response["Password"], Password) != True:
             return "Mot de passe incorrect"
@@ -76,7 +81,8 @@ def authenticateUser():
                 "IdPays" : response["IdPays"],
                 "DateJoined" : response["DateJoined"]
             }
-            return jsonify(user)
+            print(user)
+            return jsonify(user),{"Content-Type": "application/json"}
 
 
 @app.route('/Utilisateurs', methods=['GET'])

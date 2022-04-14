@@ -1,14 +1,7 @@
 <template>
   <div>
     <h2 class="d-flex page-header justify-content-center">Register</h2>
-    <b-button type="button" variant="primary" v-on:click="test"
-      >Submit</b-button
-    >
-    <!-- <router-link :to="{ name: 'signIn' }"
-      ><b-button type="button" variant="primary" v-on:click="test"
-        >Submit</b-button
-      ></router-link
-    > -->
+    <b-button type="button" variant="primary" v-on:click="test">Test</b-button>
 
     <div class="d-flex justify-content-center flex-wrap">
       <b-form @submit="onSubmit">
@@ -77,7 +70,9 @@
           ></b-form-input>
         </b-form-group>
 
-        <b-button type="submit" variant="primary">Submit</b-button>
+        <b-button type="button" variant="primary" v-on:click="onSubmit"
+          >Submit</b-button
+        >
       </b-form>
     </div>
   </div>
@@ -106,23 +101,31 @@ export default {
     signedIn: Boolean,
   },
   methods: {
-    async onSubmit(event) {
-      event.preventDefault();
+    async onSubmit() {
       registerUser(JSON.stringify(this.form)).then((response) => {
         if (response.Courriel != null) {
           localStorage.setItem("user", JSON.stringify(response));
-          this.$router.push({ name: "tournois" });
+          this.$store.dispatch("toggleAction");
+          this.$router.push({ name: "tournoisList" });
         } else {
           throw new Error("HTTP error " + response.status);
         }
       });
-      // console.log(res.username);
-      // if (res.username != null) {
-      //   this.$router.push({ name: "signIn" });
     },
 
     test() {
-      this.$router.push({ name: "signIn" });
+      this.form = {
+        Username: "sewfew",
+        Password: "tyhyj7yj",
+        Courriel: "trhtrh@grgreg.com",
+        Prenom: "8k8kk8",
+        Nom: "k87k78",
+        Ville: "jytjtj",
+        Presentation: "efwefewfwefefew",
+        Avatar: null,
+        IdPays: 6,
+      };
+      this.onSubmit();
     },
   },
 };
