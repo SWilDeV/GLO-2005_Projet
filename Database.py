@@ -47,6 +47,30 @@ class Database:
             result = self.cur.fetchone()
             return result
 
+    def getTeamsByUsers(self, idUser):
+        try:
+            sql ="SELECT E.* FROM Equipe E JOIN MembresEquipe ME ON ME.idEquipe = E.idEquipe WHERE ME.idJoueur = %s"
+            self.cur.execute(sql,(idUser))
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with getTeamsByUsers")
+            return "error with getTeamsByUsers"
+        else:
+            result = self.cur.fetchall()
+            return result
+
+    def getUpcomingMatchesByUsers(self, idUser):
+        try:
+            sql ="SELECT P.* FROM Partie P INNER JOIN Equipe E ON P.idEquipe1 = E.idEquipe OR P.idEquipe2 = E.idEquipe JOIN MembresEquipe ME ON ME.idEquipe = E.idEquipe WHERE ME.idJoueur = %s AND ME.dateLeft IS NULL AND P.scoreEquipe1 IS NULL ORDER BY P.dateMatch"
+            self.cur.execute(sql,(idUser))
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with getUpcomingMatchesByUsers")
+            return "error with getUpcomingMatchesByUsers"
+        else:
+            result = self.cur.fetchmany(5)
+            return result
+
     def register_User(self,Username,Password,Courriel,FirstName,LastName,Ville,IdJoueur,Presentation,Avatar,IdPays,IdGame,DateJoined):
         try:
             sql = "insert into Utilisateur (IdJoueur, Username, Password, Courriel, Prenom, Nom, Ville, Presentation, Avatar, IdPays, IdGame, DateJoined) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
