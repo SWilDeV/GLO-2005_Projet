@@ -35,7 +35,6 @@ export async function loginUser(data) {
       })
       .then((res) => {
         resolve(res.data);
-        console.log(res);
       })
       .catch((err) => {
         reject(err);

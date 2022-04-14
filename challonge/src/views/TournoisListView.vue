@@ -1,5 +1,5 @@
 <template>
-  <div><h1>Tournois Liste</h1></div>
+  <div><h1>Liste des Tournois</h1></div>
 </template>
 
 <script>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Salut {{ user.Prenom }}</h1>
+    <h1>Salut {{ user.Username }}</h1>
   </div>
 </template>
 
@@ -13,8 +13,7 @@ export default {
     };
   },
   created() {
-    this.user = localStorage.getItem(JSON.parse("user"));
-    console.log(this.user);
+    this.user = JSON.parse(localStorage.getItem("user"));
   },
 };
 </script>

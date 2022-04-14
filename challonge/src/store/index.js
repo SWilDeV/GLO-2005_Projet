@@ -15,10 +15,22 @@ export const store = new Vuex.Store({
         state.isSignedIn = true;
       }
     },
+    FalseMutation(state) {
+      state.isSignedIn = false;
+    },
+    TrueMutation(state) {
+      state.isSignedIn = true;
+    },
   },
   actions: {
     toggleAction(context) {
       context.commit("toggleMutation");
+    },
+    changeToFalse(context) {
+      context.commit("FalseMutation");
+    },
+    changeToTrue(context) {
+      context.commit("TrueMutation");
     },
   },
   getters: {
