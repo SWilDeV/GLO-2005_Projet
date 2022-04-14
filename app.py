@@ -101,14 +101,27 @@ def getListTournament():
     res= db.getAllTournaments()
     return jsonify(res)
 
-@app.route('/tournament', methods=['GET'])
+@app.route('/tournament', methods=['POST'])
 def getTournamentById():
-    db=Database()
-    idTournoi = request.json["IdTournoi"]
-    tournoi = db.getTournamentById(idTournoi)
-    equipes = db.getTeamsByTournament(idTournoi)
-    parties = db.getMatchesByTournament(idTournoi)
-    return jsonify({"Tournoi": tournoi, "Equipes": equipes, "Parties": parties})
+    try:
+        db=Database()
+        data =request.json["data"]
+        
+        if type(data)!= dict:
+            dataJSON = dict(json.loads(data))
+        else:
+            dataJSON =data
+        idTournoi = dataJSON["IdTournoi"]
+        # idTournoi = request.json["IdTournoi"]
+        tournoi = db.getTournamentById(idTournoi)
+        equipes = db.getTeamsByTournament(idTournoi)
+        parties = db.getMatchesByTournament(idTournoi)
+    except:
+        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("error with getTournamentById")
+        return "error with getTournamentById"
+    else:
+        return jsonify({"Tournoi": tournoi, "Equipes": equipes, "Parties": parties})
 
 @app.route('/tournament', methods=['PUT'])
 def editTournament():

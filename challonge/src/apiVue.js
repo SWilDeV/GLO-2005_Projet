@@ -28,7 +28,9 @@ export async function getTournaments() {
 export async function getOneTournament(data) {
   return new Promise((resolve, reject) => {
     axios
-      .get(`${process.env.VUE_APP_API_BASE_URL}/tournament`, { data })
+      .post(`${process.env.VUE_APP_API_BASE_URL}/tournament`, {
+        data,
+      })
       .then((res) => {
         resolve(res.data);
       })

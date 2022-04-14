@@ -47,7 +47,6 @@ export default {
   methods: {
     goToTournament() {
       const idTournament = this.IdTournoi;
-      console.log(idTournament);
       localStorage.setItem(
         "tournoi",
         JSON.stringify({ IdTournoi: idTournament })

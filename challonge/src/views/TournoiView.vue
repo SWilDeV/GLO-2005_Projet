@@ -1,5 +1,10 @@
 <template>
-  <div><h1>Tournoi</h1></div>
+  <div>
+    <h1>Tournoi</h1>
+    <b-button type="button" variant="primary" v-on:click="getTournoiInfo"
+      >Submit</b-button
+    >
+  </div>
 </template>
 
 <script>
@@ -9,15 +14,20 @@ export default {
   data() {
     return {
       IdTournoi: "",
-      tournament: "",
+      tournoi: "",
+      Parties: "",
+      Equipes: "",
     };
   },
   methods: {
-    getTournoiInfo() {
-      this.IdTournoi = JSON.parse(localStorage.getItem("tournoi")).IdTournoi;
-      console.log(this.IdTournoi);
-      this.tournament = getOneTournament(localStorage.getItem("tournoi"));
-      console.log(this.tournament);
+    async getTournoiInfo() {
+      const tournament = await getOneTournament(
+        localStorage.getItem("tournoi")
+      );
+      this.tournoi = tournament.Tournoi;
+      this.Parties = tournament.Parties;
+      this.Equipes = tournament.Equipes;
+      console.log(tournament);
     },
   },
   created() {
