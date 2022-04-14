@@ -20,7 +20,7 @@
         >
           <b-dropdown-item
             ><router-link
-              to="/tournois"
+              to="listTournaments"
               class="text-decoration-none text-reset"
             >
               Voir les tournois</router-link
@@ -99,7 +99,7 @@ export default {
     onLogoutClick() {
       localStorage.clear();
       console.log("you are logged out");
-      this.$store.dispatch("toggleAction");
+      this.$store.dispatch("changeToFalse");
       this.$router.push({ name: "home" });
     },
   },

@@ -24,12 +24,12 @@ const routes = [
     component: ProfileView,
   },
   {
-    path: "/tournoi",
+    path: "/tournament",
     name: "tournoi",
     component: TournoiView,
   },
   {
-    path: "/tournoisList",
+    path: "/listTournaments",
     name: "tournoisList",
     component: TournoisListView,
   },
