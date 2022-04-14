@@ -52,6 +52,7 @@ def registerpage():
     else:
         return jsonify(Reg)
 
+
 @app.route('/authenticate', methods=['POST'])
 def authenticateUser():
     data =request.json["data"]
@@ -103,6 +104,30 @@ def getUser():
     equipes = db.getTeamsByUsers(IdJoueur)
     parties = db.getUpcomingMatchesByUsers(IdJoueur)
     return jsonify({"User": joueur, "Equipes": equipes, "Parties": parties})
+
+@app.route('/User', methods=['PUT'])
+def editUser():
+    try:
+        Username = request.json['Username']
+        Password = bcrypt.generate_password_hash(request.json["Password"])
+        Courriel = request.json['Courriel']
+        FirstName = request.json['Prenom']
+        LastName = request.json['Nom']
+        Ville = request.json['Ville']
+        IdJoueur = request.json['IdJoueur']
+        Presentation = request.json['Presentation']
+        Avatar = request.json['Avatar']
+        IdPays = request.json['IdPays'] 
+        IdGame = request.json['IdGame']
+        
+        db=Database()
+        Reg = db.editUser(Username, Password, Courriel,FirstName,LastName,Ville,IdJoueur,Presentation,Avatar,IdPays,IdGame)
+    except:
+        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("error with editUser")
+        return "error with editUser"
+    else:
+        return jsonify(Reg)
 
 
 @app.route('/listTournaments', methods=['GET'])

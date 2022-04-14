@@ -84,6 +84,20 @@ class Database:
             print("User added") 
             User = self.find_User_by_ID(IdJoueur)
             return User
+
+    def editUser(self,Username, Password, Courriel,FirstName,LastName,Ville,IdJoueur,Presentation,Avatar,IdPays,IdGame):
+        try:
+            sql = "UPDATE Utilisateur SET Username = %s, Password = %s, Courriel = %s, Prenom = %s, Nom = %s, Ville = %s, Presentation = %s, Avatar = %s, IdPays = %s, IdGame = %s WHERE IdJoueur = %s"
+            self.cur.execute(sql, (Username, Password, Courriel, FirstName, LastName, Ville, Presentation, Avatar, IdPays, IdGame,IdJoueur))
+
+            self.con.commit()
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("problem with editUser")
+        else:
+            print("User edited") 
+            User = self.find_User_by_ID(IdJoueur)
+            return User
     
     def getAllTournaments(self):
         self.cur.execute("SELECT IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, idGame FROM Tournoi")
