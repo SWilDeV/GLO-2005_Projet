@@ -6,14 +6,14 @@ Create database if not exists ChallongeII;
 Use ChallongeII;
 
 Create table if not exists Pays(
-IdPays int NOT NULL,
+IdPays int NOT NULL auto_increment,
 NomPays varchar(50) NOT NULL,
 Drapeau varchar(100),
 Primary key (IdPays)
 );
 
 Create table if not exists Game(
-IdGame int NOT NULL,
+IdGame int NOT NULL auto_increment,
 Nom varchar(50) NOT NULL,
 DateSortie varchar(50),
 TypeJeu varchar(50),
@@ -24,7 +24,7 @@ PRIMARY KEY(idGame)
 
 
 CREATE TABLE IF NOT EXISTS Utilisateur (
-	IdJoueur INT,
+	IdJoueur INT auto_increment,
 	Username VARCHAR(50),
 	Password VARCHAR(100),
 	Courriel VARCHAR(50),
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS Utilisateur (
 
 
 Create table if not exists Equipe(
-IdEquipe int NOT NULL,
+IdEquipe int NOT NULL auto_increment,
 NomEquipe varchar(100) NOT NULL,
 Presentation varchar(1000),
 Logo varchar(100),
@@ -77,7 +77,7 @@ FOREIGN KEY (IdGame) REFERENCES Game (IdGame)
 
 
 CREATE TABLE IF NOT EXISTS Tournoi(
-IdTournoi int NOT NULL,
+IdTournoi int NOT NULL auto_increment,
 nomTournoi varchar(50),
 dateDebut varchar(50),
 minEquipe int,
@@ -92,7 +92,7 @@ FOREIGN KEY (IdGame) REFERENCES Game (IdGame)
 );
 
 CREATE TABLE IF NOT EXISTS Partie(
-IdMatch int NOT NULL,
+IdMatch int NOT NULL auto_increment,
 dateMatch varchar(50),
 heureMatch varchar(5),
 idEquipe1 int,

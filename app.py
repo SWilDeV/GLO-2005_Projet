@@ -95,6 +95,52 @@ def getUsers():
     res= db_query()
     return jsonify(res)
 
+@app.route('/listTournaments', methods=['GET'])
+def getListTournament():
+    db=Database()
+    res= db.getAllTournaments()
+    return jsonify(res)
+
+@app.route('/tournament', methods=['GET'])
+def getTournamentById():
+    db=Database()
+    idTournoi = request.json["IdTournoi"]
+    tournoi = db.getTournamentById(idTournoi)
+    equipes = db.getTeamsByTournament(idTournoi)
+    parties = db.getMatchesByTournament(idTournoi)
+    return jsonify({"Tournoi": tournoi, "Equipes": equipes, "Parties": parties})
+
+@app.route('/tournament', methods=['PUT'])
+def editTournament():
+    db=Database()
+    IdTournoi = request.json["IdTournoi"]
+    nomTournoi = request.json["nomTournoi"]
+    dateDebut = request.json["dateDebut"] 
+    minEquipe = request.json["minEquipe"] 
+    maxEquipe = request.json["maxEquipe"] 
+    minJoueur = request.json["minJoueur"] 
+    maxJoueur = request.json["maxJoueur"] 
+    idGame = request.json["idGame"] 
+    idOwner = request.json["idOwner"]
+    tournament = db.editTournament(IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, idGame, idOwner)
+    return jsonify(tournament)
+
+@app.route('/tournament', methods=['POST'])
+def createTournament():
+    db=Database()
+    nomTournoi = request.json["nomTournoi"]
+    dateDebut = request.json["dateDebut"] 
+    minEquipe = request.json["minEquipe"] 
+    maxEquipe = request.json["maxEquipe"] 
+    minJoueur = request.json["minJoueur"] 
+    maxJoueur = request.json["maxJoueur"] 
+    idGame = request.json["idGame"] 
+    idOwner = request.json["idOwner"]
+    tournament = db.CreateTournament(nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, idGame, idOwner)
+    return jsonify(tournament)
+
+
+
 #Run server
 if __name__ == '__main__':
     app.run(debug=True)

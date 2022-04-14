@@ -60,3 +60,88 @@ class Database:
             print("User added") 
             User = self.find_User_by_ID(IdJoueur)
             return User
+    
+    def getAllTournaments(self):
+        self.cur.execute("SELECT IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, idGame FROM Tournoi")
+        result = self.cur.fetchall()
+        return result
+
+    def getTournamentById(self, IdTournoi):
+        try:
+            sql ="SELECT * FROM Tournoi WHERE Tournoi.idTournoi = %s"
+            self.cur.execute(sql,(IdTournoi))
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with getTournamentById")
+            return "error with getTournamentById"
+        else:
+            result = self.cur.fetchone()
+            if result ==None:
+                return "Tournament not found"
+            else:
+                return result
+
+    def getTournamentByName(self, nomTournoi):
+        try:
+            sql ="SELECT * FROM Tournoi WHERE Tournoi.nomTournoi = %s"
+            self.cur.execute(sql,(nomTournoi))
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with getTournamentByName")
+            return "error with getTournamentByName"
+        else:
+            result = self.cur.fetchone()
+            if result ==None:
+                return "Tournament not found"
+            else:
+                return result
+    
+    def getTeamsByTournament(self, IdTournoi):
+        try:
+            sql ="SELECT Equipe.idEquipe, Equipe.nomEquipe, Equipe.logo FROM Equipe INNER JOIN Inscription ON Inscription.IdEquipe = Equipe.idEquipe WHERE Inscription.idTournoi = %s"
+            self.cur.execute(sql,(IdTournoi))
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with getTeamsByTournament")
+            return "error with getTeamsByTournament"
+        else:
+            result = self.cur.fetchall()
+            return result
+
+    def getMatchesByTournament(self, IdTournoi):
+        try:
+            sql ="SELECT * FROM Partie WHERE Partie.idTournoi = %s"
+            self.cur.execute(sql,(IdTournoi))
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with getMatchesByTournament")
+            return "error with getMatchesByTournament"
+        else:
+            result = self.cur.fetchall()
+            return result
+
+    def editTournament(self, IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, idGame, idOwner):
+        try:
+            sql ="UPDATE tournoi SET nomTournoi = %s, dateDebut = %s, minEquipe = %s, maxEquipe = %s, minJoueur = %s, maxJoueur = %s, idGame = %s, idOwner = %s WHERE idTournoi = %s"
+            self.cur.execute(sql, (nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, idGame, idOwner, IdTournoi))
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with editTournament")
+            return "error with editTournament"
+        else:
+            print("Tournament edited") 
+            Tournoi = self.getTournamentById(IdTournoi)
+            return Tournoi
+
+    def CreateTournament(self, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, idGame, idOwner):
+        try:
+            sql ="INSERT INTO tournoi (nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, idGame, idOwner) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+            self.cur.execute(sql, (nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, idGame, idOwner))
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with CreateTournament")
+            return "error with CreateTournament"
+        else:
+            print("Tournament Created")  
+            Tournoi = self.getTournamentByName(nomTournoi)
+            return Tournoi
