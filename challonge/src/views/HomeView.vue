@@ -1,22 +1,23 @@
 <template>
   <div class="home">
-    <UtilisateurComponent
+    <!-- <UtilisateurComponent
       v-for="util in UtilisateurData"
       :key="util[0]"
       :utilisateur-name="util.Prenom"
-    />
+    /> -->
+    <h1>Bienvenue sur Mata Tournois</h1>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import UtilisateurComponent from "@/components/UtilisateurComponent.vue";
+// import UtilisateurComponent from "@/components/UtilisateurComponent.vue";
 // import axios from "axios";
-import { getUsers } from "../apiVue.js";
+// import { getUsers } from "../apiVue.js";
 export default {
   name: "HomeView",
   components: {
-    UtilisateurComponent,
+    // UtilisateurComponent,
   },
   data() {
     return {
@@ -26,7 +27,7 @@ export default {
   methods: {},
   async created() {
     try {
-      this.UtilisateurData = await getUsers();
+      // this.UtilisateurData = await getUsers();
     } catch (e) {
       console.log(e);
     }

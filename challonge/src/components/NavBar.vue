@@ -8,11 +8,13 @@
             Home
           </router-link></b-nav-item
         >
+      </b-navbar-nav>
 
-        <!-- Tournois-->
+      <!-- Tournois-->
+      <b-navbar-nav>
         <b-nav-item-dropdown
           text="Tournois"
-          class="nav-link"
+          class="nav-link ml-auto"
           right
           v-if="isSignedIn"
         >
@@ -33,14 +35,11 @@
             ></b-dropdown-item
           >
         </b-nav-item-dropdown>
+      </b-navbar-nav>
 
-        <!-- User-->
-        <b-nav-item-dropdown
-          text="User"
-          class="nav-link"
-          right
-          v-if="isSignedIn"
-        >
+      <!-- User-->
+      <b-navbar-nav>
+        <b-nav-item-dropdown text="User" class="nav-link" v-if="isSignedIn">
           <b-dropdown-item
             ><router-link to="/profile" class="text-decoration-none text-reset">
               Profile
@@ -55,8 +54,10 @@
             </router-link></b-dropdown-item
           >
         </b-nav-item-dropdown>
+      </b-navbar-nav>
 
-        <!-- register-->
+      <!-- register-->
+      <b-navbar-nav class="ms-auto">
         <b-nav-item
           ><a
             ><router-link to="/register" class="nav-link" v-if="!isSignedIn">
@@ -64,12 +65,19 @@
             </router-link></a
           ></b-nav-item
         >
-        <!-- login-->
+      </b-navbar-nav>
+
+      <!-- login-->
+      <b-navbar-nav class="">
         <b-nav-item
-          ><router-link to="/signIn" class="nav-link" v-if="!isSignedIn">
+          ><router-link class="nav-link" to="/login" v-if="!isSignedIn">
             Sign in
           </router-link></b-nav-item
         >
+      </b-navbar-nav>
+
+      <!-- logout-->
+      <b-navbar-nav class="">
         <b-nav-item
           class="nav-link"
           v-if="isSignedIn"
@@ -91,6 +99,7 @@ export default {
     onLogoutClick() {
       localStorage.clear();
       console.log("you are logged out");
+      this.$store.dispatch("toggleAction");
       this.$router.push({ name: "home" });
     },
   },

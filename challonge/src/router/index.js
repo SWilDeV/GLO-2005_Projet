@@ -2,11 +2,13 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import TournoiView from "../views/TournoiView.vue";
+import TournoisListView from "../views/TournoisListView.vue";
 import CreateTournoiView from "../views/CreateTournoiView.vue";
 import ProfileView from "../views/ProfileView.vue";
 import ProfileSettingsView from "../views/ProfileSettingsView.vue";
 import RegisterView from "../views/RegisterView.vue";
-import SignInView from "../views/SignInView.vue";
+import LoginView from "../views/LoginView.vue";
+// import SignInView from "../views/SignInView.vue";
 
 Vue.use(VueRouter);
 
@@ -22,9 +24,14 @@ const routes = [
     component: ProfileView,
   },
   {
-    path: "/tournois",
-    name: "tournois",
+    path: "/tournoi",
+    name: "tournoi",
     component: TournoiView,
+  },
+  {
+    path: "/tournoisList",
+    name: "tournoisList",
+    component: TournoisListView,
   },
   {
     path: "/creerTournois",
@@ -42,9 +49,9 @@ const routes = [
     component: RegisterView,
   },
   {
-    path: "/signIn",
-    name: "signIn",
-    component: SignInView,
+    path: "/login",
+    name: "login",
+    component: LoginView,
   },
 ];
 
