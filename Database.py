@@ -147,3 +147,74 @@ class Database:
             print("Tournament Created")  
             Tournoi = self.getTournamentByName(nomTournoi)
             return Tournoi
+    
+    def getAllEquipes(self):
+        self.cur.execute("SELECT IdEquipe, nomEquipe, Logo, IdOwner, IdGame FROM Equipe")
+        result = self.cur.fetchall()
+        return result
+
+    def getTeamById(self, IdEquipe):
+        try:
+            sql ="SELECT * FROM Equipe WHERE Equipe.IdEquipe = %s"
+            self.cur.execute(sql,(IdEquipe))
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with getTeamById")
+            return "error with getTeamById"
+        else:
+            result = self.cur.fetchone()
+            if result ==None:
+                return "Team not found"
+            else:
+                return result
+
+    def getTeamByName(self, NomEquipe):
+        try:
+            sql ="SELECT * FROM Equipe WHERE Equipe.NomEquipe = %s"
+            self.cur.execute(sql,(NomEquipe))
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with getTeamByName")
+            return "error with getTeamByName"
+        else:
+            result = self.cur.fetchone()
+            if result ==None:
+                return "Team not found"
+            else:
+                return result
+
+    def getPlayersByTeam(self, IdEquipe):
+        try:
+            sql ="SELECT U.* FROM Utilisateur U INNER JOIN MembresEquipe M ON M.IdJoueur = U.IdJoueur WHERE M.IdEquipe = %s"
+            self.cur.execute(sql,(IdEquipe))
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with getPlayersByTeam")
+            return "error with getPlayersByTeam"
+        else:
+            result = self.cur.fetchall()
+            return result
+    
+    def getTournamentsByTeam(self, IdEquipe):
+        try:
+            sql ="SELECT T.* FROM Tournoi T INNER JOIN Inscription I ON I.IdTournoi = T.IdTournoi WHERE I.IdEquipe = %s"
+            self.cur.execute(sql,(IdEquipe))
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with getTournamentsByTeam")
+            return "error with getTournamentsByTeam"
+        else:
+            result = self.cur.fetchall()
+            return result
+
+    def getUpcomingMatchesByTeam(self, IdEquipe):
+        try:
+            sql = "SELECT * FROM Partie WHERE (IdEquipe1 = %s OR IdEquipe2 = %s) AND scoreEquipe1 IS NULL ORDER BY dateMatch"
+            self.cur.execute(sql,(IdEquipe, IdEquipe))
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with getUpcomingMatchesByTeam")
+            return "error with getUpcomingMatchesByTeam"
+        else:
+            result = self.cur.fetchmany(5)
+            return result

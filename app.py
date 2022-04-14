@@ -139,6 +139,21 @@ def createTournament():
     tournament = db.CreateTournament(nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, idGame, idOwner)
     return jsonify(tournament)
 
+@app.route('/listEquipes', methods=['GET'])
+def getListEquipes():
+    db=Database()
+    res= db.getAllEquipes()
+    return jsonify(res)
+
+@app.route('/equipe', methods=['GET'])
+def getEquipeById():
+    db=Database()
+    IdEquipe = request.json["IdEquipe"]
+    equipes = db.getTeamById(IdEquipe)
+    joueurs = db.getPlayersByTeam(IdEquipe)
+    tournoi = db.getTournamentsByTeam(IdEquipe)
+    parties = db.getUpcomingMatchesByTeam(IdEquipe)
+    return jsonify({"Tournoi": tournoi, "Joueurs": joueurs, "Equipes": equipes, "Parties": parties})
 
 
 #Run server
