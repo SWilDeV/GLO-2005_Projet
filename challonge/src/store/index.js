@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
-    isSignedIn: false,
+    isSignedIn: "",
   },
   mutations: {
     toggleMutation(state) {

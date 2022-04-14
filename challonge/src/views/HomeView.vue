@@ -35,10 +35,11 @@ export default {
 
 <style scoped>
 .home {
+  position: fixed;
+  color: white;
   width: 100%;
   height: 100%;
   background-size: cover;
   background-image: url(https://c4.wallpaperflare.com/wallpaper/717/34/508/ice-and-fire-fists-digital-art-fire-wallpaper-preview.jpg);
 }
 </style>
-home

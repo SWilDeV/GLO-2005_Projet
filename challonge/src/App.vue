@@ -25,11 +25,8 @@ export default {
 </script>
 <style scoped>
 #app {
-  position: fixed;
-
   width: 100%;
   height: 100%;
-
-  color: white;
+  color: rgb(40, 98, 153);
 }
 </style>
