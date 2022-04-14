@@ -124,6 +124,7 @@ class Database:
         try:
             sql ="UPDATE tournoi SET nomTournoi = %s, dateDebut = %s, minEquipe = %s, maxEquipe = %s, minJoueur = %s, maxJoueur = %s, idGame = %s, idOwner = %s WHERE idTournoi = %s"
             self.cur.execute(sql, (nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, idGame, idOwner, IdTournoi))
+            self.con.commit()
         except:
             print("Oops!", sys.exc_info()[0], "occurred.")
             print("error with editTournament")
@@ -137,6 +138,7 @@ class Database:
         try:
             sql ="INSERT INTO tournoi (nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, idGame, idOwner) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
             self.cur.execute(sql, (nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, idGame, idOwner))
+            self.con.commit()
         except:
             print("Oops!", sys.exc_info()[0], "occurred.")
             print("error with CreateTournament")
