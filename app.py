@@ -89,6 +89,22 @@ def getUsers():
     res= db_query()
     return jsonify(res)
 
+@app.route('/listTournaments', methods=['GET'])
+def getListTournament():
+    db=Database()
+    res= db.getAllTournaments()
+    return jsonify(res)
+
+@app.route('/tournament', methods=['GET'])
+def getTournamentById():
+    db=Database()
+    idTournoi = request.json["IdTournoi"]
+    tournoi = db.getTournamentById(idTournoi)
+    equipes = db.getTeamsByTournament(idTournoi)
+    parties = db.getMatchesByTournament(idTournoi)
+    return jsonify({"Tournoi": tournoi, "Equipes": equipes, "Parties": parties})
+
+
 #Run server
 if __name__ == '__main__':
     app.run(debug=True)
