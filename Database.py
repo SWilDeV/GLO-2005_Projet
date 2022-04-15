@@ -47,6 +47,30 @@ class Database:
             result = self.cur.fetchone()
             return result
 
+    def getTeamsByUsers(self, idUser):
+        try:
+            sql ="SELECT E.* FROM Equipe E JOIN MembresEquipe ME ON ME.idEquipe = E.idEquipe WHERE ME.idJoueur = %s"
+            self.cur.execute(sql,(idUser))
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with getTeamsByUsers")
+            return "error with getTeamsByUsers"
+        else:
+            result = self.cur.fetchall()
+            return result
+
+    def getUpcomingMatchesByUsers(self, idUser):
+        try:
+            sql ="SELECT P.* FROM Partie P INNER JOIN Equipe E ON P.idEquipe1 = E.idEquipe OR P.idEquipe2 = E.idEquipe JOIN MembresEquipe ME ON ME.idEquipe = E.idEquipe WHERE ME.idJoueur = %s AND ME.dateLeft IS NULL AND P.scoreEquipe1 IS NULL ORDER BY P.dateMatch"
+            self.cur.execute(sql,(idUser))
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with getUpcomingMatchesByUsers")
+            return "error with getUpcomingMatchesByUsers"
+        else:
+            result = self.cur.fetchmany(5)
+            return result
+
     def register_User(self,Username,Password,Courriel,FirstName,LastName,Ville,IdJoueur,Presentation,Avatar,IdPays,IdGame,DateJoined):
         try:
             sql = "insert into Utilisateur (IdJoueur, Username, Password, Courriel, Prenom, Nom, Ville, Presentation, Avatar, IdPays, IdGame, DateJoined) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
@@ -58,6 +82,20 @@ class Database:
             print("problem with register_User")
         else:
             print("User added") 
+            User = self.find_User_by_ID(IdJoueur)
+            return User
+
+    def editUser(self,Username, Password, Courriel,FirstName,LastName,Ville,IdJoueur,Presentation,Avatar,IdPays,IdGame):
+        try:
+            sql = "UPDATE Utilisateur SET Username = %s, Password = %s, Courriel = %s, Prenom = %s, Nom = %s, Ville = %s, Presentation = %s, Avatar = %s, IdPays = %s, IdGame = %s WHERE IdJoueur = %s"
+            self.cur.execute(sql, (Username, Password, Courriel, FirstName, LastName, Ville, Presentation, Avatar, IdPays, IdGame,IdJoueur))
+
+            self.con.commit()
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("problem with editUser")
+        else:
+            print("User edited") 
             User = self.find_User_by_ID(IdJoueur)
             return User
     
@@ -147,3 +185,102 @@ class Database:
             print("Tournament Created")  
             Tournoi = self.getTournamentByName(nomTournoi)
             return Tournoi
+    
+    def getAllEquipes(self):
+        self.cur.execute("SELECT IdEquipe, nomEquipe, Logo, IdOwner, IdGame FROM Equipe")
+        result = self.cur.fetchall()
+        return result
+
+    def getTeamById(self, IdEquipe):
+        try:
+            sql ="SELECT * FROM Equipe WHERE Equipe.IdEquipe = %s"
+            self.cur.execute(sql,(IdEquipe))
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with getTeamById")
+            return "error with getTeamById"
+        else:
+            result = self.cur.fetchone()
+            if result ==None:
+                return "Team not found"
+            else:
+                return result
+
+    def getTeamByName(self, NomEquipe):
+        try:
+            sql ="SELECT * FROM Equipe WHERE Equipe.NomEquipe = %s"
+            self.cur.execute(sql,(NomEquipe))
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with getTeamByName")
+            return "error with getTeamByName"
+        else:
+            result = self.cur.fetchone()
+            if result ==None:
+                return "Team not found"
+            else:
+                return result
+
+    def getPlayersByTeam(self, IdEquipe):
+        try:
+            sql ="SELECT U.* FROM Utilisateur U INNER JOIN MembresEquipe M ON M.IdJoueur = U.IdJoueur WHERE M.IdEquipe = %s"
+            self.cur.execute(sql,(IdEquipe))
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with getPlayersByTeam")
+            return "error with getPlayersByTeam"
+        else:
+            result = self.cur.fetchall()
+            return result
+    
+    def getTournamentsByTeam(self, IdEquipe):
+        try:
+            sql ="SELECT T.* FROM Tournoi T INNER JOIN Inscription I ON I.IdTournoi = T.IdTournoi WHERE I.IdEquipe = %s"
+            self.cur.execute(sql,(IdEquipe))
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with getTournamentsByTeam")
+            return "error with getTournamentsByTeam"
+        else:
+            result = self.cur.fetchall()
+            return result
+
+    def getUpcomingMatchesByTeam(self, IdEquipe):
+        try:
+            sql = "SELECT * FROM Partie WHERE (IdEquipe1 = %s OR IdEquipe2 = %s) AND scoreEquipe1 IS NULL ORDER BY dateMatch"
+            self.cur.execute(sql,(IdEquipe, IdEquipe))
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with getUpcomingMatchesByTeam")
+            return "error with getUpcomingMatchesByTeam"
+        else:
+            result = self.cur.fetchmany(5)
+            return result
+
+    def EditEquipe(self, IdEquipe, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame):
+        try:
+            sql ="UPDATE equipe SET NomEquipe = %s, Presentation = %s, Logo = %s, IdOwner = %s, IdPays = %s, IdGame = %s WHERE IdEquipe = %s"
+            self.cur.execute(sql, (NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame, IdEquipe))
+            self.con.commit()
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with editEquipe")
+            return "error with editEquipe"
+        else:
+            print("Team edited") 
+            equipe = self.getTeamById(IdEquipe)
+            return equipe
+
+    def CreateEquipe(self, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame):
+        try:
+            sql ="INSERT INTO equipe (NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame) VALUES (%s, %s, %s, %s, %s, %s)"
+            self.cur.execute(sql, (NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame))
+            self.con.commit()
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with CreateEquipe")
+            return "error with CreateEquipe"
+        else:
+            print("Team Created")  
+            Equipe = self.getTeamByName(NomEquipe)
+            return Equipe

@@ -105,7 +105,7 @@ export default {
       registerUser(JSON.stringify(this.form)).then((response) => {
         if (response.Courriel != null) {
           localStorage.setItem("user", JSON.stringify(response));
-          this.$store.dispatch("toggleAction");
+          this.$store.dispatch("changeToTrue");
           this.$router.push({ name: "tournoisList" });
         } else {
           throw new Error("HTTP error " + response.status);

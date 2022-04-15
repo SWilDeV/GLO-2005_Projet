@@ -52,6 +52,7 @@ def registerpage():
     else:
         return jsonify(Reg)
 
+
 @app.route('/authenticate', methods=['POST'])
 def authenticateUser():
     data =request.json["data"]
@@ -95,22 +96,68 @@ def getUsers():
     res= db_query()
     return jsonify(res)
 
+@app.route('/getUser', methods=['POST'])
+def getUser():
+    db = Database()
+    IdJoueur = request.json["IdUser"]
+    joueur = db.find_User_by_ID(IdJoueur)
+    equipes = db.getTeamsByUsers(IdJoueur)
+    parties = db.getUpcomingMatchesByUsers(IdJoueur)
+    return jsonify({"User": joueur, "Equipes": equipes, "Parties": parties})
+
+@app.route('/editUser', methods=['PUT'])
+def editUser():
+    try:
+        Username = request.json['Username']
+        Password = bcrypt.generate_password_hash(request.json["Password"])
+        Courriel = request.json['Courriel']
+        FirstName = request.json['Prenom']
+        LastName = request.json['Nom']
+        Ville = request.json['Ville']
+        IdJoueur = request.json['IdJoueur']
+        Presentation = request.json['Presentation']
+        Avatar = request.json['Avatar']
+        IdPays = request.json['IdPays'] 
+        IdGame = request.json['IdGame']
+        
+        db=Database()
+        Reg = db.editUser(Username, Password, Courriel,FirstName,LastName,Ville,IdJoueur,Presentation,Avatar,IdPays,IdGame)
+    except:
+        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("error with editUser")
+        return "error with editUser"
+    else:
+        return jsonify(Reg)
+
+
 @app.route('/listTournaments', methods=['GET'])
 def getListTournament():
     db=Database()
     res= db.getAllTournaments()
     return jsonify(res)
 
-@app.route('/tournament', methods=['GET'])
+@app.route('/tournament', methods=['POST'])
 def getTournamentById():
-    db=Database()
-    idTournoi = request.json["IdTournoi"]
-    tournoi = db.getTournamentById(idTournoi)
-    equipes = db.getTeamsByTournament(idTournoi)
-    parties = db.getMatchesByTournament(idTournoi)
-    return jsonify({"Tournoi": tournoi, "Equipes": equipes, "Parties": parties})
+    try:
+        db=Database()
+        data =request.json["data"]
+        
+        if type(data)!= dict:
+            dataJSON = dict(json.loads(data))
+        else:
+            dataJSON =data
+        idTournoi = dataJSON["IdTournoi"]
+        tournoi = db.getTournamentById(idTournoi)
+        equipes = db.getTeamsByTournament(idTournoi)
+        parties = db.getMatchesByTournament(idTournoi)
+    except:
+        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("error with getTournamentById")
+        return "error with getTournamentById"
+    else:
+        return jsonify({"Tournoi": tournoi, "Equipes": equipes, "Parties": parties})
 
-@app.route('/tournament', methods=['PUT'])
+@app.route('/editTournament', methods=['PUT'])
 def editTournament():
     db=Database()
     IdTournoi = request.json["IdTournoi"]
@@ -125,7 +172,7 @@ def editTournament():
     tournament = db.editTournament(IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, idGame, idOwner)
     return jsonify(tournament)
 
-@app.route('/tournament', methods=['POST'])
+@app.route('/createTournament', methods=['POST'])
 def createTournament():
     db=Database()
     nomTournoi = request.json["nomTournoi"]
@@ -139,7 +186,46 @@ def createTournament():
     tournament = db.CreateTournament(nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, idGame, idOwner)
     return jsonify(tournament)
 
+@app.route('/listEquipes', methods=['GET'])
+def getListEquipes():
+    db=Database()
+    res= db.getAllEquipes()
+    return jsonify(res)
 
+@app.route('/getEquipe', methods=['POST'])
+def getEquipeById():
+    db=Database()
+    IdEquipe = request.json["IdEquipe"]
+    equipes = db.getTeamById(IdEquipe)
+    joueurs = db.getPlayersByTeam(IdEquipe)
+    tournoi = db.getTournamentsByTeam(IdEquipe)
+    parties = db.getUpcomingMatchesByTeam(IdEquipe)
+    return jsonify({"Tournoi": tournoi, "Joueurs": joueurs, "Equipes": equipes, "Parties": parties})
+
+@app.route('/editEquipe', methods=['PUT'])
+def editEquipe():
+    db=Database()
+    IdEquipe = request.json["IdEquipe"]
+    NomEquipe = request.json["NomEquipe"]
+    Presentation = request.json["Presentation"] 
+    Logo = request.json["Logo"] 
+    IdOwner = request.json["IdOwner"] 
+    IdPays = request.json["IdPays"] 
+    IdGame = request.json["IdGame"] 
+    equipe = db.EditEquipe(IdEquipe, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame)
+    return jsonify(equipe)
+
+@app.route('/createEquipe', methods=['POST'])
+def createEquipe():
+    db=Database()
+    NomEquipe = request.json["NomEquipe"]
+    Presentation = request.json["Presentation"] 
+    Logo = request.json["Logo"] 
+    IdOwner = request.json["IdOwner"] 
+    IdPays = request.json["IdPays"] 
+    IdGame = request.json["IdGame"] 
+    equipe = db.CreateEquipe(NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame)
+    return jsonify(equipe)
 
 #Run server
 if __name__ == '__main__':
