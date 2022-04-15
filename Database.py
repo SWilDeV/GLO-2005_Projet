@@ -50,7 +50,7 @@ class Database:
 
     def getTeamsByUsers(self, idUser):
         try:
-            sql ="SELECT E.* FROM Equipe E JOIN MembresEquipe ME ON ME.idEquipe = E.idEquipe WHERE ME.idJoueur = %s"
+            sql ="SELECT E.*, G.nom AS nomJeu, P.NomPays FROM Equipe E LEFT JOIN Pays P ON E.idPays = P.IdPays LEFT JOIN Game G ON E.idGame = G.IdGame JOIN MembresEquipe ME ON ME.idEquipe = E.idEquipe WHERE ME.idJoueur = %s"
             self.cur.execute(sql,(idUser))
         except:
             print("Oops!", sys.exc_info()[0], "occurred.")
@@ -62,7 +62,7 @@ class Database:
 
     def getUpcomingMatchesByUsers(self, idUser):
         try:
-            sql ="SELECT P.* FROM Partie P INNER JOIN Equipe E ON P.idEquipe1 = E.idEquipe OR P.idEquipe2 = E.idEquipe JOIN MembresEquipe ME ON ME.idEquipe = E.idEquipe WHERE ME.idJoueur = %s AND ME.dateLeft IS NULL AND P.scoreEquipe1 IS NULL ORDER BY P.dateMatch"
+            sql ="SELECT P.*, E1.nomEquipe AS nomEquipe1, E2.nomEquipe as nomEquipe2, EG.nomEquipe as nomGagnant FROM Partie P LEFT JOIN Equipe E1 ON P.IdEquipe1 = E1.IdEquipe LEFT JOIN Equipe E2 ON P.IdEquipe2 = E2.IdEquipe LEFT JOIN Equipe EG ON P.IdGagnant = EG.IdEquipe INNER JOIN Equipe E ON P.idEquipe1 = E.idEquipe OR P.idEquipe2 = E.idEquipe JOIN MembresEquipe ME ON ME.idEquipe = E.idEquipe WHERE ME.idJoueur = %s AND ME.dateLeft IS NULL AND P.scoreEquipe1 IS NULL ORDER BY P.dateMatch"
             self.cur.execute(sql,(idUser))
         except:
             print("Oops!", sys.exc_info()[0], "occurred.")
@@ -149,7 +149,7 @@ class Database:
 
     def getMatchesByTournament(self, IdTournoi):
         try:
-            sql ="SELECT * FROM Partie WHERE Partie.idTournoi = %s"
+            sql ="SELECT SELECT P.*, E1.nomEquipe AS nomEquipe1, E2.nomEquipe as nomEquipe2, EG.nomEquipe as nomGagnant FROM Partie P LEFT JOIN Equipe E1 ON P.IdEquipe1 = E1.IdEquipe LEFT JOIN Equipe E2 ON P.IdEquipe2 = E2.IdEquipe LEFT JOIN Equipe EG ON P.IdGagnant = EG.IdEquipe WHERE Partie.idTournoi = %s"
             self.cur.execute(sql,(IdTournoi))
         except:
             print("Oops!", sys.exc_info()[0], "occurred.")
@@ -224,7 +224,7 @@ class Database:
 
     def getPlayersByTeam(self, IdEquipe):
         try:
-            sql ="SELECT U.* FROM Utilisateur U INNER JOIN MembresEquipe M ON M.IdJoueur = U.IdJoueur WHERE M.IdEquipe = %s"
+            sql ="SELECT U.*, P.nomPays, G.nom AS nomJeu FROM Utilisateur U LEFT JOIN Pays P ON P.IdPays = U.IdPays LEFT JOIN Game G ON G.idGame = U.idGame INNER JOIN MembresEquipe M ON M.IdJoueur = U.IdJoueur WHERE M.IdEquipe = %s"
             self.cur.execute(sql,(IdEquipe))
         except:
             print("Oops!", sys.exc_info()[0], "occurred.")
@@ -236,7 +236,7 @@ class Database:
     
     def getTournamentsByTeam(self, IdEquipe):
         try:
-            sql ="SELECT T.* FROM Tournoi T INNER JOIN Inscription I ON I.IdTournoi = T.IdTournoi WHERE I.IdEquipe = %s"
+            sql ="SELECT T.*, G.nom AS nomJeu FROM Tournoi T LEFT JOIN Game G ON G.idGame = T.idGame INNER JOIN Inscription I ON I.IdTournoi = T.IdTournoi WHERE I.IdEquipe = %s"
             self.cur.execute(sql,(IdEquipe))
         except:
             print("Oops!", sys.exc_info()[0], "occurred.")
@@ -248,7 +248,7 @@ class Database:
 
     def getUpcomingMatchesByTeam(self, IdEquipe):
         try:
-            sql = "SELECT * FROM Partie WHERE (IdEquipe1 = %s OR IdEquipe2 = %s) AND scoreEquipe1 IS NULL ORDER BY dateMatch"
+            sql = "SELECT SELECT P.*, E1.nomEquipe AS nomEquipe1, E2.nomEquipe as nomEquipe2, EG.nomEquipe as nomGagnant FROM Partie P LEFT JOIN Equipe E1 ON P.IdEquipe1 = E1.IdEquipe LEFT JOIN Equipe E2 ON P.IdEquipe2 = E2.IdEquipe LEFT JOIN Equipe EG ON P.IdGagnant = EG.IdEquipe WHERE (IdEquipe1 = %s OR IdEquipe2 = %s) AND scoreEquipe1 IS NULL ORDER BY dateMatch"
             self.cur.execute(sql,(IdEquipe, IdEquipe))
         except:
             print("Oops!", sys.exc_info()[0], "occurred.")
