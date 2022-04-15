@@ -351,3 +351,55 @@ class Database:
         else:
             print("Inscription effectuée")  
             return "Inscription effectuée"
+    
+    def deleteTournament(self, IdTournoi):
+        try:
+            sql = "DELETE FROM Tournoi WHERE IdTournoi = %s"
+            self.cur.execute(sql, (IdTournoi))
+            self.con.commit()
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with deleteTournament")
+            return "error with deleteTournament"
+        else:
+            print("Suppression effectuée")  
+            return "Suppression effectuée"
+
+    def deleteTeam(self, IdEquipe):
+        try:
+            sql = "DELETE FROM Equipe WHERE IdEquipe = %s"
+            self.cur.execute(sql, (IdEquipe))
+            self.con.commit()
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with deleteTeam")
+            return "error with deleteTeam"
+        else:
+            print("Suppression effectuée")  
+            return "Suppression effectuée"
+
+    def deleteMatch(self, IdMatch):
+        try:
+            sql = "DELETE FROM Partie WHERE IdMatch = %s"
+            self.cur.execute(sql, (IdMatch))
+            self.con.commit()
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with deleteMatch")
+            return "error with deleteMatch"
+        else:
+            print("Suppression effectuée")  
+            return "Suppression effectuée"
+
+    def leaveTeam(self, IdTeam, IdJoueur, Date):
+        try:
+            sql = "UPDATE MembresEquipe SET DateLeft = %s WHERE IdEquipe = %s AND IdJoueur = %s"
+            self.cur.execute(sql, (Date, IdTeam, IdJoueur))
+            self.con.commit()
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with leaveTeam")
+            return "error with leaveTeam"
+        else:
+            print("Le joueur a bien quitté l'équipe")  
+            return "Le joueur a bien quitté l'équipe"
