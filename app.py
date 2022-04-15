@@ -96,7 +96,7 @@ def getUsers():
     res= db_query()
     return jsonify(res)
 
-@app.route('/getUser', methods=['POST'])
+@app.route('/getUserDataByUserID', methods=['POST'])
 def getUser():
     db = Database()
     IdJoueur = request.json["IdUser"]

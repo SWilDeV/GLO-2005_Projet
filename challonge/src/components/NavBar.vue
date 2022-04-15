@@ -37,23 +37,39 @@
         </b-nav-item-dropdown>
       </b-navbar-nav>
 
-      <!-- User-->
+      <!-- Equipes-->
       <b-navbar-nav>
-        <b-nav-item-dropdown text="User" class="nav-link" v-if="isSignedIn">
+        <b-nav-item-dropdown
+          text="Equipes"
+          class="nav-link"
+          right
+          v-if="isSignedIn"
+        >
           <b-dropdown-item
-            ><router-link to="/profile" class="text-decoration-none text-reset">
-              Profile
-            </router-link></b-dropdown-item
+            ><router-link to="equipes" class="text-decoration-none text-reset">
+              Voir les equipes</router-link
+            ></b-dropdown-item
           >
-          <b-dropdown-item href="#"
+          <b-dropdown-item
             ><router-link
-              to="/profileSettings"
+              to="/creerTournois"
               class="text-decoration-none text-reset"
             >
-              Settings
-            </router-link></b-dropdown-item
+              Creer une equipes</router-link
+            ></b-dropdown-item
           >
         </b-nav-item-dropdown>
+      </b-navbar-nav>
+
+      <!-- User-->
+      <b-navbar-nav>
+        <b-nav-item
+          ><a
+            ><router-link to="/profile" class="nav-link" v-if="isSignedIn">
+              {{ user }}
+            </router-link></a
+          ></b-nav-item
+        >
       </b-navbar-nav>
 
       <!-- register-->
@@ -92,8 +108,14 @@
 <script>
 export default {
   name: "NavBar",
+  data() {
+    return {
+      user: "Utilisateur",
+    };
+  },
   props: {
     isSignedIn: Boolean,
+    usr: String,
   },
   methods: {
     onLogoutClick() {
@@ -103,6 +125,9 @@ export default {
       this.$router.push({ name: "home" });
     },
   },
+  // mounted() {
+  //   this.user = JSON.parse(localStorage.getItem("user").Username);
+  // },
 };
 </script>
 

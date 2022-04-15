@@ -3,12 +3,14 @@ import VueRouter from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import TournoiView from "../views/TournoiView.vue";
 import TournoisListView from "../views/TournoisListView.vue";
+import TeamView from "../views/TeamView.vue";
 import EditTournament from "../views/EditTournament.vue";
 import CreateTournoiView from "../views/CreateTournoiView.vue";
 import ProfileView from "../views/ProfileView.vue";
 import ProfileSettingsView from "../views/ProfileSettingsView.vue";
 import RegisterView from "../views/RegisterView.vue";
 import LoginView from "../views/LoginView.vue";
+import TeamListView from "../views/TeamListView.vue";
 // import SignInView from "../views/SignInView.vue";
 
 Vue.use(VueRouter);
@@ -58,6 +60,16 @@ const routes = [
     path: "/login",
     name: "login",
     component: LoginView,
+  },
+  {
+    path: "/equipes",
+    name: "equipes",
+    component: TeamListView,
+  },
+  {
+    path: "/equipe",
+    name: "equipe",
+    component: TeamView,
   },
 ];
 
