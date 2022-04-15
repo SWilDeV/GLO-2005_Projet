@@ -148,7 +148,6 @@ def getTournamentById():
     try:
         db=Database()
         data =request.json["data"]
-        
         if type(data)!= dict:
             dataJSON = dict(json.loads(data))
         else:
@@ -169,7 +168,6 @@ def editTournament():
     try:
         db=Database()
         data =request.json["data"]
-        
         if type(data)!= dict:
             dataJSON = dict(json.loads(data))
         else:

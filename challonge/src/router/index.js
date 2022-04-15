@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import TournoiView from "../views/TournoiView.vue";
 import TournoisListView from "../views/TournoisListView.vue";
+import EditTournament from "../views/EditTournament.vue";
 import CreateTournoiView from "../views/CreateTournoiView.vue";
 import ProfileView from "../views/ProfileView.vue";
 import ProfileSettingsView from "../views/ProfileSettingsView.vue";
@@ -27,6 +28,11 @@ const routes = [
     path: "/tournament",
     name: "tournoi",
     component: TournoiView,
+  },
+  {
+    path: "/editTournament",
+    name: "editTournoi",
+    component: EditTournament,
   },
   {
     path: "/listTournaments",
