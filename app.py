@@ -175,14 +175,19 @@ def editTournament():
 @app.route('/createTournament', methods=['POST'])
 def createTournament():
     db=Database()
-    nomTournoi = request.json["nomTournoi"]
-    dateDebut = request.json["dateDebut"] 
-    minEquipe = request.json["minEquipe"] 
-    maxEquipe = request.json["maxEquipe"] 
-    minJoueur = request.json["minJoueur"] 
-    maxJoueur = request.json["maxJoueur"] 
-    idGame = request.json["idGame"] 
-    idOwner = request.json["idOwner"]
+    data =request.json["data"]
+    if type(data)!= dict:
+        dataJSON = dict(json.loads(data))
+    else:
+        dataJSON =data
+    nomTournoi = dataJSON["nomTournoi"]
+    dateDebut = dataJSON["dateDebut"] 
+    minEquipe = dataJSON["minEquipe"] 
+    maxEquipe = dataJSON["maxEquipe"] 
+    minJoueur = dataJSON["minJoueur"] 
+    maxJoueur = dataJSON["maxJoueur"] 
+    idGame = dataJSON["idGame"] 
+    idOwner = dataJSON["idOwner"]
     tournament = db.CreateTournament(nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, idGame, idOwner)
     return jsonify(tournament)
 
