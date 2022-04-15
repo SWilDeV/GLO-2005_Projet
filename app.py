@@ -394,6 +394,85 @@ def addTeamMember():
     else:
         return jsonify(match)
 
+@app.route('/deleteTournament', methods=['DELETE'])
+def deleteTournament():
+    try:
+        db=Database()
+        data =request.json["data"]
+        
+        if type(data)!= dict:
+            dataJSON = dict(json.loads(data))
+        else:
+            dataJSON =data
+        IdTournoi = dataJSON["IdTournoi"]
+        res = db.deleteTournament(IdTournoi)
+    except:
+        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("error with deleteTournament")
+        return "error with deleteTournament"
+    else:
+        return jsonify(res)
+
+@app.route('/deleteTeam', methods=['DELETE'])
+def deleteTeam():
+    try:
+        db=Database()
+        data =request.json["data"]
+        
+        if type(data)!= dict:
+            dataJSON = dict(json.loads(data))
+        else:
+            dataJSON =data
+        IdEquipe = dataJSON["IdEquipe"]
+        res = db.deleteTeam(IdEquipe)
+    except:
+        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("error with deleteTeam")
+        return "error with deleteTeam"
+    else:
+        return jsonify(res)
+
+@app.route('/deleteMatch', methods=['DELETE'])
+def deleteMatch():
+    try:
+        db=Database()
+        data =request.json["data"]
+        
+        if type(data)!= dict:
+            dataJSON = dict(json.loads(data))
+        else:
+            dataJSON =data
+        IdMatch = dataJSON["IdMatch"]
+        res = db.deleteMatch(IdMatch)
+    except:
+        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("error with deleteMatch")
+        return "error with deleteMatch"
+    else:
+        return jsonify(res)
+
+    
+@app.route('/leaveTeam', methods=['POST'])
+def leaveTeam():
+    try:
+        db=Database()
+        data =request.json["data"]
+        
+        if type(data)!= dict:
+            dataJSON = dict(json.loads(data))
+        else:
+            dataJSON =data
+        IdJoueur = dataJSON["IdJoueur"]
+        IdEquipe = dataJSON["IdEquipe"]
+        Date = date.today()
+        match = db.leaveTeam(IdEquipe, IdJoueur, Date)
+    except:
+        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("error with leaveTeam")
+        return "error with leaveTeam"
+    else:
+        return jsonify(match)
+
 #Run server
 if __name__ == '__main__':
     app.run(debug=True)
