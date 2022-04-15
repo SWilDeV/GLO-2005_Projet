@@ -188,7 +188,7 @@ class Database:
             return Tournoi
     
     def getAllEquipes(self):
-        self.cur.execute("SELECT IdEquipe, nomEquipe, equipe.Logo, IdOwner, nom AS nomJeu FROM Equipe LEFT JOIN Game ON Game.IdGame = Equipe.IdGame ORDER BY nomEquipe")
+        self.cur.execute("SELECT IdEquipe, nomEquipe, Equipe.Logo, IdOwner, nom AS nomJeu FROM Equipe LEFT JOIN Game ON Game.IdGame = Equipe.IdGame ORDER BY nomEquipe")
         result = self.cur.fetchall()
         return result
 

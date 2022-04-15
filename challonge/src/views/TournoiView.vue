@@ -50,7 +50,7 @@
       :key="equipe[0]"
       :nom="equipe.nomEquipe"
       :id-equipe="equipe.idEquipe"
-      :logo="equipe.logo"
+      :logo="equipe.Logo"
     />
     <h1>Parties</h1>
     <PartieComponent

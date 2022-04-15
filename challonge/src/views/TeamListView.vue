@@ -6,6 +6,7 @@
       :key="equipe.IdEquipe"
       :id-equipe="equipe.IdEquipe"
       :nom-equipe="equipe.nomEquipe"
+      :jeu="equipe.nomJeu"
     />
   </div>
 </template>

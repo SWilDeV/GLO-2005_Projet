@@ -11,8 +11,7 @@
         </div>
         <div class="col-md-8">
           <div class="card-body">
-            <p class="card-text">idMatch: {{ idMatch }}</p>
-            <p class="card-text">idGagnant: {{ idGagnant }}</p>
+            <p class="card-text">Gagnant: {{ idGagnant }}</p>
 
             <p class="card-text">
               idEquipe1: {{ idEquipe1 }} idEquipe2: {{ idEquipe2 }}
