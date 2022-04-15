@@ -1,6 +1,9 @@
 <template>
   <div>
     <h1>Salut {{ user.Username }}</h1>
+    <h1>Tournois crees</h1>
+    <h1>Tournois ou je participe</h1>
+    <h1>Mes equipes</h1>
   </div>
 </template>
 
