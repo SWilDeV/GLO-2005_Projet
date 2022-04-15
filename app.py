@@ -141,7 +141,6 @@ def getTournamentById():
     try:
         db=Database()
         data =request.json["data"]
-        
         if type(data)!= dict:
             dataJSON = dict(json.loads(data))
         else:
@@ -160,17 +159,30 @@ def getTournamentById():
 @app.route('/editTournament', methods=['PUT'])
 def editTournament():
     db=Database()
-    IdTournoi = request.json["IdTournoi"]
-    nomTournoi = request.json["nomTournoi"]
-    dateDebut = request.json["dateDebut"] 
-    minEquipe = request.json["minEquipe"] 
-    maxEquipe = request.json["maxEquipe"] 
-    minJoueur = request.json["minJoueur"] 
-    maxJoueur = request.json["maxJoueur"] 
-    idGame = request.json["idGame"] 
-    idOwner = request.json["idOwner"]
-    tournament = db.editTournament(IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, idGame, idOwner)
-    return jsonify(tournament)
+    try:
+        db=Database()
+        data =request.json["data"]
+        print(data)
+        if type(data)!= dict:
+            dataJSON = dict(json.loads(data))
+        else:
+            dataJSON =data
+        IdTournoi = dataJSON["IdTournoi"]
+        nomTournoi = dataJSON["nomTournoi"]
+        dateDebut = dataJSON["dateDebut"] 
+        minEquipe = dataJSON["minEquipe"] 
+        maxEquipe = dataJSON["maxEquipe"] 
+        minJoueur = dataJSON["minJoueur"] 
+        maxJoueur = dataJSON["maxJoueur"] 
+        idGame = dataJSON["idGame"] 
+        idOwner = dataJSON["idOwner"]
+        tournament = db.editTournament(IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, idGame, idOwner)
+    except:
+        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("error with editTournament")
+        return "error with editTournament"
+    else:
+        return jsonify(tournament)
 
 @app.route('/createTournament', methods=['POST'])
 def createTournament():

@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h2 class="d-flex page-header justify-content-center">Creer un tournoi</h2>
+    <h2 class="d-flex page-header justify-content-center">
+      Modifier un tournoi
+    </h2>
     <!-- <b-button type="button" variant="primary" v-on:click="test">Test</b-button> -->
 
     <div class="d-flex justify-content-center flex-wrap">
@@ -106,7 +108,7 @@
           variant="success"
           v-on:click="onSubmit"
           class="ms-auto"
-          >Creer</b-button
+          >Modifier</b-button
         >
         {{ erreur }}
       </b-form>
@@ -115,7 +117,7 @@
 </template>
 
 <script>
-import { CreateTournament } from "../apiVue.js";
+import { getOneTournament, UpdateTournament } from "../apiVue.js";
 export default {
   name: "CreateTournoiView",
   data() {
@@ -123,6 +125,7 @@ export default {
       IdTournoi: "",
       erreur: null,
       form: {
+        IdTournoi: "",
         nomTournoi: "",
         dateDebut: "",
         minEquipe: null,
@@ -146,48 +149,38 @@ export default {
       ],
     };
   },
+  created() {
+    this.getTournamentInfo();
+  },
   methods: {
     onSubmit() {
-      const usrId = JSON.parse(localStorage.getItem("user")).IdJoueur;
-      this.form.idOwner = usrId;
-
-      CreateTournament(JSON.stringify(this.form)).then((response) => {
-        if (response.nomTournoi != null) {
-          this.IdTournoi = response.IdTournoi;
-          this.goToTournament();
+      UpdateTournament(JSON.stringify(this.form)).then((response) => {
+        if (response.IdTournoi != null) {
+          this.$router.push({ name: "tournoi" });
         } else {
           this.erreur = response;
           throw new Error("HTTP error " + response.status);
         }
       });
     },
-    test() {
-      this.form.nomTournoi = "lololss";
-      this.form.dateDebut = "2023-12-15";
-      this.form.minEquipe = 4;
-      this.form.maxEquipe = 10;
-      this.form.minJoueur = 3;
-      this.form.maxJoueur = 67;
-      this.form.idOwner = 455729826;
-      this.form.idGame = 5;
-
-      CreateTournament(JSON.stringify(this.form)).then((response) => {
-        if (response.nomTournoi != null) {
-          this.IdTournoi = response.IdTournoi;
-          this.goToTournament();
+    getTournamentInfo() {
+      const IdTournoi = JSON.parse(localStorage.getItem("tournoi"));
+      this.form.IdTournoi = IdTournoi.IdTournoi;
+      getOneTournament(JSON.stringify(IdTournoi)).then((response) => {
+        if (response.Tournoi != null) {
+          this.form.nomTournoi = response.Tournoi.nomTournoi;
+          this.form.dateDebut = response.Tournoi.dateDebut;
+          this.form.minEquipe = response.Tournoi.minEquipe;
+          this.form.maxEquipe = response.Tournoi.maxEquipe;
+          this.form.minJoueur = response.Tournoi.minJoueur;
+          this.form.maxJoueur = response.Tournoi.maxJoueur;
+          this.form.idOwner = response.Tournoi.IdOwner;
+          this.form.idGame = response.Tournoi.IdGame;
         } else {
           this.erreur = response;
           throw new Error("HTTP error " + response.status);
         }
       });
-    },
-    goToTournament() {
-      const idTournament = this.IdTournoi;
-      localStorage.setItem(
-        "tournoi",
-        JSON.stringify({ IdTournoi: idTournament })
-      );
-      this.$router.push({ name: "tournoi" });
     },
   },
 };

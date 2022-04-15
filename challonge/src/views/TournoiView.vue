@@ -100,9 +100,8 @@ export default {
       alert("Delete tournoi");
     },
     editTournoi() {
-      const userId = JSON.parse(localStorage.getItem("tournoi")).IdTournoi;
-      alert(userId);
-      this.$router.push({ name: "tournoi" });
+      // const userId = JSON.parse(localStorage.getItem("tournoi")).IdTournoi;
+      this.$router.push({ name: "editTournoi" });
     },
     checkIfUserIsOwner() {
       const userId = JSON.parse(localStorage.getItem("user")).IdJoueur;
