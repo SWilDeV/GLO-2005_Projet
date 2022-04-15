@@ -79,7 +79,7 @@ def authenticateUser():
                 "IdJoueur": response["IdJoueur"],
                 "Presentation" : response["Presentation"],
                 "Avatar" : response["Avatar"],
-                "IdPays" : response["IdPays"],
+                "NomPays" : response["NomPays"],
                 "DateJoined" : response["DateJoined"]
             }
             print(user)

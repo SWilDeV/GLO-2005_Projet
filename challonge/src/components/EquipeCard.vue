@@ -10,7 +10,8 @@
       </div>
       <div class="col-md-8">
         <div class="card-body">
-          <h5 class="card-title">{{ NomEquipe }}</h5>
+          <h3 class="card-title">{{ NomEquipe }}</h3>
+          <h4 class="card-title">{{ jeu }}</h4>
 
           <b-button
             class="ms-auto"
@@ -31,6 +32,7 @@ export default {
   props: {
     IdEquipe: Number,
     NomEquipe: String,
+    jeu: String,
   },
   methods: {
     goToTeam() {
