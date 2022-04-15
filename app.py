@@ -147,7 +147,6 @@ def getTournamentById():
         else:
             dataJSON =data
         idTournoi = dataJSON["IdTournoi"]
-        # idTournoi = request.json["IdTournoi"]
         tournoi = db.getTournamentById(idTournoi)
         equipes = db.getTeamsByTournament(idTournoi)
         parties = db.getMatchesByTournament(idTournoi)

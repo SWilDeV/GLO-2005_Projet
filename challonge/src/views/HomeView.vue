@@ -20,15 +20,21 @@ export default {
       UtilisateurData: "",
     };
   },
-  methods: {},
-  async created() {
-    try {
-      if (localStorage.getItem("user") != null) {
-        this.$store.dispatch("changeToTrue");
+  created() {
+    this.signedInStatus();
+  },
+  methods: {
+    signedInStatus() {
+      try {
+        if (localStorage.getItem("user") != null) {
+          this.$store.dispatch("changeToTrue");
+        } else {
+          this.$store.dispatch("changeToFalse");
+        }
+      } catch (e) {
+        console.log(e);
       }
-    } catch (e) {
-      console.log(e);
-    }
+    },
   },
 };
 </script>
