@@ -96,7 +96,7 @@ def getUsers():
     res= db_query()
     return jsonify(res)
 
-@app.route('/getUser', methods=['POST'])
+@app.route('/getUserDataByUserID', methods=['POST'])
 def getUser():
     db = Database()
     IdJoueur = request.json["IdUser"]
@@ -212,7 +212,12 @@ def getListEquipes():
 @app.route('/getEquipe', methods=['POST'])
 def getEquipeById():
     db=Database()
-    IdEquipe = request.json["IdEquipe"]
+    data =request.json["data"]
+    if type(data)!= dict:
+        dataJSON = dict(json.loads(data))
+    else:
+        dataJSON =data
+    IdEquipe = dataJSON["IdEquipe"]
     equipes = db.getTeamById(IdEquipe)
     joueurs = db.getPlayersByTeam(IdEquipe)
     tournoi = db.getTournamentsByTeam(IdEquipe)
