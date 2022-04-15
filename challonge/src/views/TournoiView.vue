@@ -25,11 +25,20 @@
               <small class="text-muted">Debut: {{ Tournoi.dateDebut }}</small>
             </p>
             <b-button
+              v-if="isOwner"
               class="ms-auto"
               type="button"
               variant="danger"
               v-on:click="deleteTournoi"
-              >Delete</b-button
+              >Supprimer</b-button
+            >
+            <b-button
+              v-if="isOwner"
+              class="ms-auto"
+              type="button"
+              variant="primary"
+              v-on:click="editTournoi"
+              >Editer</b-button
             >
           </div>
         </div>
@@ -71,6 +80,7 @@ export default {
   },
   data() {
     return {
+      isOwner: false,
       Tournoi: "",
       Parties: "",
       Equipes: "",
@@ -84,9 +94,21 @@ export default {
       this.Tournoi = tournament.Tournoi;
       this.Parties = tournament.Parties;
       this.Equipes = tournament.Equipes;
+      this.checkIfUserIsOwner();
     },
     deleteTournoi() {
       alert("Delete tournoi");
+    },
+    editTournoi() {
+      const userId = JSON.parse(localStorage.getItem("tournoi")).IdTournoi;
+      alert(userId);
+      this.$router.push({ name: "tournoi" });
+    },
+    checkIfUserIsOwner() {
+      const userId = JSON.parse(localStorage.getItem("user")).IdJoueur;
+      if (userId == this.Tournoi.IdOwner) {
+        this.isOwner = true;
+      }
     },
   },
   created() {
