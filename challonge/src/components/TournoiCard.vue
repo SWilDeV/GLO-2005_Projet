@@ -11,7 +11,7 @@
       <div class="col-md-8">
         <div class="card-body">
           <h5 class="card-title">{{ NomTournoi }}</h5>
-          <p class="card-text">Jeux: {{ IdGame }}</p>
+          <p class="card-text">Game: {{ IdGame }}</p>
           <p class="card-text">
             Equipes: Max: {{ MaxEquipe }} Min: {{ MinEquipe }}
           </p>
@@ -22,8 +22,12 @@
           <p class="card-text">
             <small class="text-muted">Debut: {{ DateDebut }}</small>
           </p>
-          <b-button type="button" variant="primary" v-on:click="goToTournament"
-            >Submit</b-button
+          <b-button
+            class="ms-auto"
+            type="button"
+            variant="primary"
+            v-on:click="goToTournament"
+            >Voir</b-button
           >
         </div>
       </div>
