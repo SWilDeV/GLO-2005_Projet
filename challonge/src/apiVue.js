@@ -12,6 +12,21 @@ export async function getUsers() {
       });
   });
 }
+export async function getUserDataByUserID(data) {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(`${process.env.VUE_APP_API_BASE_URL}/getUserDataByUserID`, {
+        data,
+      })
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+
 export async function getTournaments() {
   return new Promise((resolve, reject) => {
     axios

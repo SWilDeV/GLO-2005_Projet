@@ -7,6 +7,7 @@
       :id-tournoi="tournament.IdTournoi"
       :date-debut="tournament.dateDebut"
       :id-game="tournament.idGame"
+      :nom-game="tournament.nomJeu"
       :MaxEquipe="tournament.maxEquipe"
       :max-joueur="tournament.maxJoueur"
       :min-equipe="tournament.minEquipe"

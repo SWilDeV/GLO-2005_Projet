@@ -36,7 +36,7 @@
           </div>
         </div>
       </div>
-      <h1>Joueurs</h1>
+      <h2>Membres</h2>
       <JoueurComponent
         v-for="joueur in Joueurs"
         :key="joueur[0]"
@@ -44,6 +44,7 @@
         :dateJoined="joueur.DateJoined"
         :avatar="joueur.Svatar"
         :ville="joueur.Ville"
+        :id-joueur="joueur.IdJoueur"
       />
     </div>
     <h1>Parties inscrites</h1>

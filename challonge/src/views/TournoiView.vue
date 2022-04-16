@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="card mb-3" style="max-width: 540px">
+    <div class="mb-3" style="max-width: 540px">
       <h1>Tournoi {{ Tournoi.nomTournoi }}</h1>
       <div class="row g-0">
         <div class="col-md-4">
@@ -12,7 +12,7 @@
         </div>
         <div class="col-md-8">
           <div class="card-body">
-            <p class="card-text">Game: {{ Tournoi.IdGame }}</p>
+            <h3 class="card-text">{{ Tournoi.nomJeu }}</h3>
             <p class="card-text">
               Equipes: Max: {{ Tournoi.maxEquipe }} Min:
               {{ Tournoi.minEquipe }}
@@ -44,38 +44,57 @@
         </div>
       </div>
     </div>
-    <h1>Equipes Inscrites</h1>
-    <EquipeComponent
-      v-for="equipe in Equipes"
-      :key="equipe[0]"
-      :nom="equipe.nomEquipe"
-      :id-equipe="equipe.idEquipe"
-      :logo="equipe.Logo"
-    />
-    <h1>Parties</h1>
-    <PartieComponent
-      v-for="partie in Parties"
-      :key="partie[0]"
-      :id-match="partie.IdMatch"
-      :date-match="partie.dateMatch"
-      :heure-match="partie.heureMatch"
-      :id-gagnant="partie.idGagnant"
-      :id-equipe1="partie.idEquipe1"
-      :id-equipe2="partie.idEquipe2"
-      :score-equipe-1="partie.scoreEquipe1"
-      :score-equipe-2="partie.scoreEquipe2"
-    />
+    <div class="" style="max-width: 400px">
+      <div class="row g-0">
+        <h1 class="col-md-10">Equipes Inscrites</h1>
+        <div class="col-md-2">
+          <b-button v-if="isOwner" variant="success" v-on:click="addTeam"
+            >+</b-button
+          >
+        </div>
+      </div>
+
+      <EquipeCard
+        v-for="equipe in Equipes"
+        :key="equipe[0]"
+        :nom-equipe="equipe.nomEquipe"
+        :id-equipe="equipe.idEquipe"
+        :logo="equipe.Logo"
+      />
+    </div>
+    <div class="" style="max-width: 400px">
+      <div class="row g-0">
+        <h1 class="col-md-10">Match</h1>
+        <div class="col-md-2">
+          <b-button v-if="isOwner" variant="success" v-on:click="addMatch"
+            >+</b-button
+          >
+        </div>
+      </div>
+      <PartieComponent
+        v-for="partie in Parties"
+        :key="partie[0]"
+        :id-match="partie.IdMatch"
+        :date-match="partie.dateMatch"
+        :heure-match="partie.heureMatch"
+        :id-gagnant="partie.idGagnant"
+        :id-equipe1="partie.idEquipe1"
+        :id-equipe2="partie.idEquipe2"
+        :score-equipe-1="partie.scoreEquipe1"
+        :score-equipe-2="partie.scoreEquipe2"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import EquipeComponent from "../components/EquipeComponent.vue";
+import EquipeCard from "../components/EquipeCard.vue";
 import PartieComponent from "../components/PartieComponent.vue";
 import { getOneTournament } from "../apiVue.js";
 export default {
   name: "TournoiView",
   components: {
-    EquipeComponent,
+    EquipeCard,
     PartieComponent,
   },
   data() {
@@ -94,7 +113,6 @@ export default {
       this.Tournoi = tournament.Tournoi;
       this.Parties = tournament.Parties;
       this.Equipes = tournament.Equipes;
-      console.log(tournament);
       this.checkIfUserIsOwner();
     },
     deleteTournoi() {
@@ -109,6 +127,12 @@ export default {
       if (userId == this.Tournoi.IdOwner) {
         this.isOwner = true;
       }
+    },
+    addTeam() {
+      alert(this.Tournoi.IdTournoi);
+    },
+    addMatch() {
+      alert("newMatch");
     },
   },
   created() {

@@ -1,5 +1,8 @@
 <template>
   <div>
+    <!-- <h1>{{ userProfil.Username }}</h1>
+    <h1>Tournois</h1>
+    <h1>Equipes</h1> -->
     <div class="container">
       <div class="main-body">
         <div class="row gutters-sm">
@@ -14,12 +17,12 @@
                     width="150"
                   />
                   <div class="mt-3">
-                    <h4>{{ user.Username }}</h4>
+                    <h4>{{ userProfil.Username }}</h4>
                     <p class="text-secondary mb-1">
-                      {{ user.Presentation }}
+                      {{ userProfil.Presentation }}
                     </p>
                     <p class="text-muted font-size-sm">
-                      {{ user.Ville }}, {{ user.NomPays }}
+                      {{ userProfil.Ville }}, {{ userProfil.NomPays }}
                     </p>
                   </div>
                 </div>
@@ -34,7 +37,7 @@
                     <h6 class="mb-0">UserName</h6>
                   </div>
                   <div class="col-sm-9 text-secondary">
-                    {{ user.Username }}
+                    {{ userProfil.Username }}
                   </div>
                 </div>
                 <hr />
@@ -43,7 +46,7 @@
                     <h6 class="mb-0">Email</h6>
                   </div>
                   <div class="col-sm-9 text-secondary">
-                    {{ user.Courriel }}
+                    {{ userProfil.Courriel }}
                   </div>
                 </div>
                 <hr />
@@ -52,7 +55,7 @@
                     <h6 class="mb-0">Nom</h6>
                   </div>
                   <div class="col-sm-9 text-secondary">
-                    {{ user.Prenom }} {{ user.Nom }}
+                    {{ userProfil.Prenom }} {{ userProfil.Nom }}
                   </div>
                 </div>
                 <hr />
@@ -61,7 +64,7 @@
                     <h6 class="mb-0">Pays</h6>
                   </div>
                   <div class="col-sm-9 text-secondary">
-                    {{ user.NomPays }}
+                    {{ userProfil.NomPays }}
                   </div>
                 </div>
                 <hr />
@@ -70,7 +73,7 @@
                     <h6 class="mb-0">Inscrit le:</h6>
                   </div>
                   <div class="col-sm-9 text-secondary">
-                    {{ user.DateJoined }}
+                    {{ userProfil.DateJoined }}
                   </div>
                 </div>
                 <hr />
@@ -130,21 +133,26 @@
 
 <script>
 import { getUserDataByUserID } from "../apiVue.js";
+import EquipeComponent from "../components/EquipeComponent.vue";
+import MatchComponent from "../components/MatchComponent.vue";
 export default {
-  name: "ProfileView",
+  name: "OtherUserProfile",
+  components: {
+    EquipeComponent,
+    MatchComponent,
+  },
   data() {
     return {
-      user: "",
+      userProfil: "",
       Parties: "",
       Equipes: "",
     };
   },
   async created() {
-    const user = JSON.parse(localStorage.getItem("user")).IdJoueur;
-    const userObj = { IdUser: user };
-    await getUserDataByUserID(userObj).then((response) => {
+    const userProfil = JSON.parse(localStorage.getItem("OtherUser"));
+    await getUserDataByUserID(userProfil).then((response) => {
       if (response.User != null) {
-        this.user = response.User;
+        this.userProfil = response.User;
         this.Parties = response.Parties;
         this.Equipes = response.Equipes;
       }

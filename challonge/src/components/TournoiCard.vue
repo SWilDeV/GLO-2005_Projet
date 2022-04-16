@@ -10,8 +10,8 @@
       </div>
       <div class="col-md-8">
         <div class="card-body">
-          <h5 class="card-title">{{ NomTournoi }}</h5>
-          <p class="card-text">Game: {{ IdGame }}</p>
+          <h3 class="card-title">{{ NomTournoi }}</h3>
+          <h4 class="card-text">{{ NomGame }}</h4>
           <p class="card-text">
             Equipes: Max: {{ MaxEquipe }} Min: {{ MinEquipe }}
           </p>
@@ -42,6 +42,7 @@ export default {
     IdTournoi: Number,
     DateDebut: String,
     IdGame: Number,
+    NomGame: String,
     MaxEquipe: Number,
     MaxJoueur: Number,
     MinEquipe: Number,

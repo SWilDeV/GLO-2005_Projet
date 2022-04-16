@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="card mb-3" style="max-width: 540px">
+    <!-- <div class="card mb-3" style="max-width: 540px">
       <div class="row g-0">
         <div class="col-md-4">
           <img
@@ -11,11 +11,20 @@
         </div>
         <div class="col-md-8">
           <div class="card-body">
-            <h5 class="card-title">{{ nom }}</h5>
-            <p class="card-text">idEquipe: {{ idEquipe }}</p>
+            <h5 class="card-title">{{ nomEquipe }}</h5>
           </div>
         </div>
+        <b-button
+          class="ms-auto"
+          type="button"
+          variant="primary"
+          v-on:click="goToTeam"
+          >Voir</b-button
+        >
       </div>
+    </div> -->
+    <div>
+      {{ NomEquipe }}
     </div>
   </div>
 </template>
@@ -24,9 +33,17 @@
 export default {
   name: "EquipeComponent",
   props: {
-    nom: String,
+    IdEquipe: Number,
+    NomEquipe: String,
+    jeu: String,
     logo: String,
-    idEquipe: Number,
+  },
+  methods: {
+    goToTeam() {
+      const IdEquipe = this.IdEquipe;
+      localStorage.setItem("equipe", JSON.stringify({ IdEquipe: IdEquipe }));
+      this.$router.push({ name: "equipe" });
+    },
   },
 };
 </script>
