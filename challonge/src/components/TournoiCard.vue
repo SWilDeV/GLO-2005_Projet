@@ -1,34 +1,35 @@
 <template>
-  <div class="card mb-3" style="max-width: 540px">
-    <div class="row g-0">
-      <div class="col-md-4">
-        <img
-          src="../assets/xbox.png"
-          class="img-fluid rounded-start"
-          alt="..."
-        />
-      </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h5 class="card-title">{{ NomTournoi }}</h5>
-          <p class="card-text">Game: {{ IdGame }}</p>
-          <p class="card-text">
-            Equipes: Max: {{ MaxEquipe }} Min: {{ MinEquipe }}
-          </p>
-          <p class="card-text">
-            Joueurs: Max: {{ MaxJoueur }} Min: {{ MinJoueur }}
-          </p>
-
-          <p class="card-text">
-            <small class="text-muted">Debut: {{ DateDebut }}</small>
-          </p>
-          <b-button
-            class="ms-auto"
-            type="button"
-            variant="primary"
-            v-on:click="goToTournament"
-            >Voir</b-button
-          >
+  <div class="card shadow p-3 mb-5 rounded hover">
+    <div class="card">
+      <div class="row">
+        <div class="col-md-2">
+          <img
+            src="../assets/xbox.png"
+            class="img-fluid rounded-start"
+            alt="..."
+          />
+        </div>
+        <div class="col-md-10">
+          <div class="card-body row">
+            <div>
+              <h3 class="card-title col-md-4">{{ NomTournoi }}</h3>
+              <h4 class="card-text">{{ NomGame }}</h4>
+            </div>
+            <div class="card-text col-md-4">
+              <p>
+                <small class="text-muted">Debut: {{ DateDebut }}</small>
+              </p>
+            </div>
+            <div class="card-text col-md-4">
+              <b-button
+                class="ms-auto"
+                type="button"
+                variant="primary"
+                v-on:click="goToTournament"
+                >En savoir plus</b-button
+              >
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -42,6 +43,7 @@ export default {
     IdTournoi: Number,
     DateDebut: String,
     IdGame: Number,
+    NomGame: String,
     MaxEquipe: Number,
     MaxJoueur: Number,
     MinEquipe: Number,

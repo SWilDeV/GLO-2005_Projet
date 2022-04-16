@@ -94,7 +94,7 @@ FOREIGN KEY (IdGame) REFERENCES Game (IdGame)
 CREATE TABLE IF NOT EXISTS Partie(
 IdMatch int NOT NULL auto_increment,
 dateMatch varchar(50),
-heureMatch varchar(5),
+heureMatch varchar(10),
 idEquipe1 int,
 idEquipe2 int,
 scoreEquipe1 int,

@@ -52,10 +52,10 @@
           >
           <b-dropdown-item
             ><router-link
-              to="/creerTournois"
+              to="/createTeam"
               class="text-decoration-none text-reset"
             >
-              Creer une equipes</router-link
+              Creer une equipe</router-link
             ></b-dropdown-item
           >
         </b-nav-item-dropdown>
@@ -110,7 +110,7 @@ export default {
   name: "NavBar",
   data() {
     return {
-      user: "Utilisateur",
+      user: "Mon Profil",
     };
   },
   props: {
