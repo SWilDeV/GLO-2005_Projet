@@ -1,22 +1,22 @@
 <template>
   <div>
-    <b-card class="">
-      <b-row>
-        <b-col
-          ><h5>{{ username }}</h5></b-col
-        >
-        <b-col
-          ><b-button
-            class="ms-auto"
+    <div>
+      <hr />
+      <div class="row">
+        <div class="col-sm-10">
+          <div>{{ username }}</div>
+        </div>
+        <div class="col-sm-2">
+          <b-button
+            class="p-1"
             type="button"
             variant="primary"
             v-on:click="goToOtherUserProfil"
-            >En savoir plus</b-button
-          ></b-col
-        >
-      </b-row>
-      <div class=""></div>
-    </b-card>
+            >+</b-button
+          >
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 

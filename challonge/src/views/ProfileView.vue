@@ -96,6 +96,7 @@
                         v-for="equipe in Equipes"
                         :key="equipe.IdEquipe"
                         :nom-equipe="equipe.NomEquipe"
+                        :IdEquipe="equipe.IdEquipe"
                       />
                     </div>
                   </div>

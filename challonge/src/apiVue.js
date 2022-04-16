@@ -137,6 +137,20 @@ export async function InscriptionEquipe(data) {
       });
   });
 }
+export async function InscriptionMembre(data) {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(`${process.env.VUE_APP_API_BASE_URL}/addTeamMember`, {
+        data,
+      })
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
 export async function createPartie(data) {
   return new Promise((resolve, reject) => {
     axios
