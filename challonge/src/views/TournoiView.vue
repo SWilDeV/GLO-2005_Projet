@@ -1,101 +1,160 @@
 <template>
   <div>
-    <div class="mb-3" style="max-width: 540px">
-      <h1>Tournoi {{ Tournoi.nomTournoi }}</h1>
-      <div class="row g-0">
-        <div class="col-md-4">
-          <img
-            src="../assets/xbox.png"
-            class="img-fluid rounded-start"
-            alt="..."
-          />
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h3 class="card-text">{{ Tournoi.nomJeu }}</h3>
-            <p class="card-text">
-              Equipes: Max: {{ Tournoi.maxEquipe }} Min:
-              {{ Tournoi.minEquipe }}
-            </p>
-            <p class="card-text">
-              Joueurs: Max: {{ Tournoi.maxJoueur }} Min: {{ Tournoi.minJoueur }}
-            </p>
+    <div>
+      <div class="container">
+        <div class="main-body">
+          <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div
+                    class="d-flex flex-column align-items-center text-center"
+                  >
+                    <img
+                      src="../assets/xbox.png"
+                      alt="Admin"
+                      class="rounded-circle"
+                      width="150"
+                    />
+                    <div class="mt-3">
+                      <h1>{{ Tournoi.nomTournoi }}</h1>
+                      <h3 class="text-secondary mb-1">
+                        {{ Tournoi.nomJeu }}
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <h6 class="mb-0">Nombre d'equipes Max</h6>
+                    </div>
+                    <div class="col-sm-6 text-secondary">
+                      {{ Tournoi.maxEquipe }}
+                    </div>
+                  </div>
+                  <hr />
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <h6 class="mb-0">Nombre d'equipes Min</h6>
+                    </div>
+                    <div class="col-sm-6 text-secondary">
+                      {{ Tournoi.minEquipe }}
+                    </div>
+                  </div>
+                  <hr />
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <h6 class="mb-0">Nombre de joueurs Max</h6>
+                    </div>
+                    <div class="col-sm-6 text-secondary">
+                      {{ Tournoi.maxJoueur }}
+                    </div>
+                  </div>
+                  <hr />
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <h6 class="mb-0">Nombre de joueurs Min</h6>
+                    </div>
+                    <div class="col-sm-6 text-secondary">
+                      {{ Tournoi.minJoueur }}
+                    </div>
+                  </div>
+                  <hr />
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <h6 class="mb-0">Debut le:</h6>
+                    </div>
+                    <div class="col-sm-6 text-secondary">
+                      {{ Tournoi.dateDebut }}
+                    </div>
+                  </div>
+                  <hr />
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <b-button
+                        v-if="isOwner"
+                        class="ms-auto"
+                        type="button"
+                        variant="danger"
+                        v-on:click="deleteTournoi"
+                        >Supprimer</b-button
+                      >
+                      <b-button
+                        v-if="isOwner"
+                        class="ms-auto"
+                        type="button"
+                        variant="primary"
+                        v-on:click="editTournoi"
+                        >Modifier</b-button
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-            <p class="card-text">
-              <small class="text-muted">Debut: {{ Tournoi.dateDebut }}</small>
-            </p>
-            <b-button
-              v-if="isOwner"
-              class="ms-auto"
-              type="button"
-              variant="danger"
-              v-on:click="deleteTournoi"
-              >Supprimer</b-button
-            >
-            <b-button
-              v-if="isOwner"
-              class="ms-auto"
-              type="button"
-              variant="primary"
-              v-on:click="editTournoi"
-              >Editer</b-button
-            >
+              <div class="row gutters-sm">
+                <div class="col-sm-6 mb-3">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <h6 class="d-flex align-items-center mb-3">
+                        <i class="material-icons text-info mr-2"
+                          >Equipes inscrites</i
+                        >
+                      </h6>
+
+                      <div>
+                        <EquipeComponent
+                          class="card h-100 m-1"
+                          v-for="equipe in Equipes"
+                          :key="equipe.IdEquipe"
+                          :nom-equipe="equipe.nomEquipe"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 mb-3">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <h6 class="d-flex align-items-center mb-3">
+                        <i class="material-icons text-info mr-2">Matchs</i>
+                      </h6>
+                      <div class="mb-3">
+                        <MatchComponent
+                          class="card h-100 m-1"
+                          v-for="match in Parties"
+                          :key="match.IdMatch"
+                          :NomEquipeA="match.nomEquipe1"
+                          :NomEquipeB="match.nomEquipe2"
+                          :dateMatch="match.dateMatch"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="" style="max-width: 400px">
-      <div class="row g-0">
-        <h1 class="col-md-10">Equipes Inscrites</h1>
-        <div class="col-md-2">
-          <b-button v-if="isOwner" variant="success" v-on:click="addTeam"
-            >+</b-button
-          >
-        </div>
-      </div>
-
-      <EquipeCard
-        v-for="equipe in Equipes"
-        :key="equipe[0]"
-        :nom-equipe="equipe.nomEquipe"
-        :id-equipe="equipe.idEquipe"
-        :logo="equipe.Logo"
-      />
-    </div>
-    <div class="" style="max-width: 400px">
-      <div class="row g-0">
-        <h1 class="col-md-10">Match</h1>
-        <div class="col-md-2">
-          <b-button v-if="isOwner" variant="success" v-on:click="addMatch"
-            >+</b-button
-          >
-        </div>
-      </div>
-      <PartieComponent
-        v-for="partie in Parties"
-        :key="partie[0]"
-        :id-match="partie.IdMatch"
-        :date-match="partie.dateMatch"
-        :heure-match="partie.heureMatch"
-        :id-gagnant="partie.idGagnant"
-        :id-equipe1="partie.idEquipe1"
-        :id-equipe2="partie.idEquipe2"
-        :score-equipe-1="partie.scoreEquipe1"
-        :score-equipe-2="partie.scoreEquipe2"
-      />
     </div>
   </div>
 </template>
 
 <script>
-import EquipeCard from "../components/EquipeCard.vue";
-import PartieComponent from "../components/PartieComponent.vue";
+import MatchComponent from "../components/MatchComponent.vue";
+import EquipeComponent from "../components/EquipeComponent.vue";
 import { getOneTournament } from "../apiVue.js";
 export default {
   name: "TournoiView",
   components: {
-    EquipeCard,
-    PartieComponent,
+    EquipeComponent,
+    MatchComponent,
   },
   data() {
     return {
@@ -119,7 +178,6 @@ export default {
       alert("Delete tournoi");
     },
     editTournoi() {
-      // const userId = JSON.parse(localStorage.getItem("tournoi")).IdTournoi;
       this.$router.push({ name: "editTournoi" });
     },
     checkIfUserIsOwner() {

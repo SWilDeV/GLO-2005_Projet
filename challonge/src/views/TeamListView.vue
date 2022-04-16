@@ -1,13 +1,15 @@
 <template>
   <div>
     <h1>Liste des Equipes</h1>
-    <EquipeCard
-      v-for="equipe in equipes"
-      :key="equipe.IdEquipe"
-      :id-equipe="equipe.IdEquipe"
-      :nom-equipe="equipe.nomEquipe"
-      :jeu="equipe.nomJeu"
-    />
+    <div class="row">
+      <EquipeCard
+        v-for="equipe in equipes"
+        :key="equipe.IdEquipe"
+        :id-equipe="equipe.IdEquipe"
+        :nom-equipe="equipe.nomEquipe"
+        :jeu="equipe.nomJeu"
+      />
+    </div>
   </div>
 </template>
 

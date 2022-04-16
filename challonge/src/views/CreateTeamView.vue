@@ -2,84 +2,53 @@
   <div>
     <h2 class="d-flex page-header justify-content-center">Creer une equipe</h2>
     <!-- <b-button type="button" variant="primary" v-on:click="test">Test</b-button> -->
+    <!-- NomEquipe 
+        Presentation
+        Logo 
+        IdOwner  
+        IdPays 
+        IdGame  -->
 
     <div class="d-flex justify-content-center flex-wrap">
       <b-form>
         <b-form-group
           id="input-group-1"
-          label="* Nom du Tournoi:"
+          label="* Nom de l'equipe:"
           label-for="input-1"
         >
           <b-form-input
+            v-model="form.NomEquipe"
             id="input-1"
             type="email"
-            placeholder="Entrez un nom de tournoi"
+            placeholder="Entrez un nom d'equipe'"
             required
           ></b-form-input>
         </b-form-group>
 
         <b-form-group
           id="input-group-2"
-          label="* Choisissez une date:"
+          label="Presentation:"
           label-for="input-2"
         >
-          <b-form-datepicker
+          <b-form-input
+            v-model="form.Presentation"
             id="input-2"
-            class="mb-2"
+            type="email"
             required
-          ></b-form-datepicker>
+          ></b-form-input>
         </b-form-group>
 
         <b-form-group
           id="input-group-3"
-          label="* Nombre d'equipes minimal:"
-          label-for="input-3"
+          label="* Indiquez votre pays:"
+          label-for="input-7"
         >
-          <b-form-spinbutton
-            id="input-3"
-            min="1"
-            max="10"
-            required
-          ></b-form-spinbutton>
-        </b-form-group>
-
-        <b-form-group
-          id="input-group-4"
-          label="* Nombre d'equipes maximal:"
-          label-for="input-4"
-        >
-          <b-form-spinbutton
-            id="input-4"
-            min="2"
-            max="10"
-            required
-          ></b-form-spinbutton>
-        </b-form-group>
-
-        <b-form-group
-          id="input-group-5"
-          label="* Nombre de joueurs minimal:"
-          label-for="input-5"
-        >
-          <b-form-spinbutton
-            id="input-5"
-            min="2"
-            max="100"
-            required
-          ></b-form-spinbutton>
-        </b-form-group>
-
-        <b-form-group
-          id="input-group-6"
-          label="* Nombre de joueurs maximal:"
-          label-for="input-6"
-        >
-          <b-form-spinbutton
-            id="input-6"
-            min="2"
-            max="100"
-            required
-          ></b-form-spinbutton>
+          <b-form-select
+            v-model="form.IdPays"
+            :options="options2"
+            size=""
+            class="m-1"
+          ></b-form-select>
         </b-form-group>
 
         <b-form-group
@@ -87,7 +56,12 @@
           label="* Choisissez le jeu:"
           label-for="input-7"
         >
-          <b-form-select :options="options" size="" class="m-1"></b-form-select>
+          <b-form-select
+            v-model="form.IdGame"
+            :options="options"
+            size=""
+            class="m-1"
+          ></b-form-select>
         </b-form-group>
 
         <b-button
@@ -104,23 +78,21 @@
 </template>
 
 <script>
-import { CreateTournament } from "../apiVue.js";
+import { CreateTeam } from "../apiVue.js";
 
 export default {
   name: "CreateTeamView",
   data() {
     return {
-      IdTournoi: "",
+      IdEquipe: "",
       erreur: null,
       form: {
-        nomTournoi: "",
-        dateDebut: "",
-        minEquipe: null,
-        maxEquipe: null,
-        minJoueur: null,
-        maxJoueur: null,
-        idOwner: "",
-        idGame: null,
+        NomEquipe: "",
+        Presentation: "",
+        Logo: null,
+        IdPays: "",
+        IdOwner: "",
+        IdGame: null,
       },
       options: [
         { value: null, text: "Please select an option" },
@@ -134,17 +106,29 @@ export default {
         { value: "8", text: "Valorant" },
         { value: "9", text: "Echecs" },
       ],
+      options2: [
+        { value: null, text: "Please select an option" },
+        { value: "1", text: "France" },
+        { value: "2", text: "Japon" },
+        { value: "3", text: "Espagne" },
+        { value: "4", text: "Italie" },
+        { value: "5", text: "Canada" },
+        { value: "6", text: "Allemagne" },
+        { value: "7", text: "Russie" },
+        { value: "8", text: "Chine" },
+        { value: "9", text: "Corée" },
+      ],
     };
   },
   methods: {
     onSubmit() {
       const usrId = JSON.parse(localStorage.getItem("user")).IdJoueur;
-      this.form.idOwner = usrId;
+      this.form.IdOwner = usrId;
 
-      CreateTournament(JSON.stringify(this.form)).then((response) => {
-        if (response.nomTournoi != null) {
-          this.IdTournoi = response.IdTournoi;
-          this.goToTournament();
+      CreateTeam(JSON.stringify(this.form)).then((response) => {
+        if (response.IdEquipe != null) {
+          this.IdEquipe = response.IdEquipe;
+          this.goToTeam();
         } else {
           this.erreur = response;
           throw new Error("HTTP error " + response.status);
@@ -152,32 +136,28 @@ export default {
       });
     },
     test() {
-      this.form.nomTournoi = "lololss";
-      this.form.dateDebut = "2023-12-15";
-      this.form.minEquipe = 4;
-      this.form.maxEquipe = 10;
-      this.form.minJoueur = 3;
-      this.form.maxJoueur = 67;
-      this.form.idOwner = 455729826;
-      this.form.idGame = 5;
+      this.form.NomEquipe = "TeamRocket";
+      this.form.Presentation = "Bonjour";
+      this.form.Logo = "None";
+      this.form.IdPays = 3;
+      this.form.IdOwner = 688096387;
+      this.form.IdGame = 4;
 
-      CreateTournament(JSON.stringify(this.form)).then((response) => {
-        if (response.nomTournoi != null) {
-          this.IdTournoi = response.IdTournoi;
-          this.goToTournament();
+      CreateTeam(JSON.stringify(this.form)).then((response) => {
+        console.log(response);
+        if (response != null) {
+          this.IdEquipe = response.IdEquipe;
+          //   this.goToTeam();
         } else {
           this.erreur = response;
           throw new Error("HTTP error " + response.status);
         }
       });
     },
-    goToTournament() {
-      const idTournament = this.IdTournoi;
-      localStorage.setItem(
-        "tournoi",
-        JSON.stringify({ IdTournoi: idTournament })
-      );
-      this.$router.push({ name: "tournoi" });
+    goToTeam() {
+      const IdEquipe = this.IdEquipe;
+      localStorage.setItem("equipe", JSON.stringify({ IdEquipe: IdEquipe }));
+      this.$router.push({ name: "equipe" });
     },
   },
 };

@@ -23,8 +23,19 @@
         >
       </div>
     </div> -->
-    <div>
-      {{ NomEquipe }}
+    <div class="row">
+      <div class="col-sm-11">
+        {{ NomEquipe }}
+      </div>
+      <div class="col-sm-1">
+        <b-button
+          class="p-1"
+          type="button"
+          variant="primary"
+          v-on:click="goToTeam"
+          >+</b-button
+        >
+      </div>
     </div>
   </div>
 </template>

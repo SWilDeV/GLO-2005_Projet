@@ -94,6 +94,21 @@ export async function CreateTournament(data) {
       });
   });
 }
+export async function CreateTeam(data) {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(`${process.env.VUE_APP_API_BASE_URL}/createEquipe`, {
+        data,
+      })
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+
 export async function UpdateTournament(data) {
   return new Promise((resolve, reject) => {
     axios
