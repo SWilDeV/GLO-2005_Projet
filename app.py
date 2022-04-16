@@ -42,7 +42,6 @@ def registerpage():
         IdPays = dataJSON['IdPays'] 
         IdGame = None
         DateJoined = date.today()
-        
         db=Database()
         Reg = db.register_User(Username,Password,Courriel,FirstName,LastName,Ville,IdJoueur,Presentation,Avatar,IdPays,IdGame,DateJoined)
     except:
