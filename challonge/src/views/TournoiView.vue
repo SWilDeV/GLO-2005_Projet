@@ -94,6 +94,7 @@ export default {
       this.Tournoi = tournament.Tournoi;
       this.Parties = tournament.Parties;
       this.Equipes = tournament.Equipes;
+      console.log(tournament);
       this.checkIfUserIsOwner();
     },
     deleteTournoi() {
