@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <div class="container">
+      <div class="container mt-4">
         <div class="main-body">
           <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
@@ -21,6 +21,26 @@
                       <h3 class="text-secondary mb-1">
                         {{ Tournoi.nomJeu }}
                       </h3>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <b-button
+                          v-if="isOwner"
+                          class="ms-auto"
+                          type="button"
+                          variant="danger"
+                          v-on:click="deleteTournoi"
+                          >Supprimer</b-button
+                        >
+                        <b-button
+                          v-if="isOwner"
+                          class="ms-auto"
+                          type="button"
+                          variant="primary"
+                          v-on:click="editTournoi"
+                          >Modifier</b-button
+                        >
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -74,29 +94,46 @@
                     </div>
                   </div>
                   <hr />
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <b-button
-                        v-if="isOwner"
-                        class="ms-auto"
-                        type="button"
-                        variant="danger"
-                        v-on:click="deleteTournoi"
-                        >Supprimer</b-button
-                      >
-                      <b-button
-                        v-if="isOwner"
-                        class="ms-auto"
-                        type="button"
-                        variant="primary"
-                        v-on:click="editTournoi"
-                        >Modifier</b-button
-                      >
-                    </div>
-                  </div>
                 </div>
               </div>
 
+              <b-form v-if="isOwner">
+                <div class="row gutters-sm">
+                  <div class="col-sm-12 mb-3">
+                    <div class="card h-100">
+                      <div class="card-body">
+                        <h6 class="d-flex align-items-center mb-3">
+                          <i class="material-icons text-info mr-2"
+                            >Ajouter des equipes</i
+                          >
+                        </h6>
+                        <div class="d-flex justify-content-center flex-wrap">
+                          <b-form-group
+                            id="input-group-3"
+                            label="Choisir une equipe"
+                            label-for="input-7"
+                          >
+                            <b-form-select
+                              v-model="form.IdEquipe"
+                              :options="options"
+                              size=""
+                              class="m-1"
+                            ></b-form-select>
+                          </b-form-group>
+
+                          <b-button
+                            type="button"
+                            variant="success"
+                            v-on:click="addTeam"
+                            class="ms-auto"
+                            >Ajouter</b-button
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </b-form>
               <div class="row gutters-sm">
                 <div class="col-sm-6 mb-3">
                   <div class="card h-100">
@@ -149,7 +186,7 @@
 <script>
 import MatchComponent from "../components/MatchComponent.vue";
 import EquipeComponent from "../components/EquipeComponent.vue";
-import { getOneTournament } from "../apiVue.js";
+import { getOneTournament, getTeams } from "../apiVue.js";
 export default {
   name: "TournoiView",
   components: {
@@ -162,6 +199,22 @@ export default {
       Tournoi: "",
       Parties: "",
       Equipes: "",
+      form: {
+        IdEquipe: "",
+      },
+      options: [
+        { value: null, text: "Please select an option" },
+        { value: "1", text: "Minecraft" },
+        { value: "2", text: "Overwatch" },
+        { value: "3", text: "League Of Legends" },
+        { value: "4", text: "Counter Strike" },
+        { value: "5", text: "World Of Warcraft" },
+        { value: "6", text: "Fortnite" },
+        { value: "7", text: "Apex Legends" },
+        { value: "8", text: "Valorant" },
+        { value: "9", text: "Echecs" },
+      ],
+      AllTeams: "",
     };
   },
   methods: {
@@ -173,6 +226,12 @@ export default {
       this.Parties = tournament.Parties;
       this.Equipes = tournament.Equipes;
       this.checkIfUserIsOwner();
+      if (this.isOwner) {
+        this.getEquipes().then((response) => {
+          console.log(response);
+          this.AllTeams = response;
+        });
+      }
     },
     deleteTournoi() {
       alert("Delete tournoi");
@@ -187,10 +246,22 @@ export default {
       }
     },
     addTeam() {
-      alert(this.Tournoi.IdTournoi);
+      if (this.isOwner) {
+        alert("hello");
+      }
     },
     addMatch() {
       alert("newMatch");
+    },
+    getEquipes() {
+      try {
+        getTeams().then((response) => {
+          this.equipes = response;
+          console.log(this.equipes);
+        });
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
   created() {

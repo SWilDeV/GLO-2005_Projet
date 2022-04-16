@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <h1>Liste des Tournois</h1>
     <TournoiCard
       v-for="tournament in tournaments"
