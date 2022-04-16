@@ -149,8 +149,7 @@ class Database:
 
     def getMatchesByTournament(self, IdTournoi):
         try:
-            print(IdTournoi)
-            sql ="SELECT SELECT P.*, E1.nomEquipe AS nomEquipe1, E2.nomEquipe as nomEquipe2, EG.nomEquipe as nomGagnant FROM Partie P LEFT JOIN Equipe E1 ON P.IdEquipe1 = E1.IdEquipe LEFT JOIN Equipe E2 ON P.IdEquipe2 = E2.IdEquipe LEFT JOIN Equipe EG ON P.IdGagnant = EG.IdEquipe WHERE Partie.idTournoi = %s"
+            sql ="SELECT P.*, E1.nomEquipe AS nomEquipe1, E2.nomEquipe as nomEquipe2, EG.nomEquipe as nomGagnant FROM Partie P LEFT JOIN Equipe E1 ON P.IdEquipe1 = E1.IdEquipe LEFT JOIN Equipe E2 ON P.IdEquipe2 = E2.IdEquipe LEFT JOIN Equipe EG ON P.IdGagnant = EG.IdEquipe WHERE Partie.idTournoi = %s"
             self.cur.execute(sql,(IdTournoi))
         except:
             print("Oops!", sys.exc_info()[0], "occurred.")

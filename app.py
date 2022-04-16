@@ -393,7 +393,7 @@ def addTeamMember():
     else:
         return jsonify(match)
 
-@app.route('/deleteTournament', methods=['DELETE'])
+@app.route('/deleteTournament', methods=['POST'])
 def deleteTournament():
     try:
         db=Database()
@@ -406,13 +406,13 @@ def deleteTournament():
         IdTournoi = dataJSON["IdTournoi"]
         res = db.deleteTournament(IdTournoi)
     except:
-        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("Oops!", sys.exc_info(), "occurred.")
         print("error with deleteTournament")
         return "error with deleteTournament"
     else:
         return jsonify(res)
 
-@app.route('/deleteTeam', methods=['DELETE'])
+@app.route('/deleteTeam', methods=['POST'])
 def deleteTeam():
     try:
         db=Database()
@@ -431,7 +431,7 @@ def deleteTeam():
     else:
         return jsonify(res)
 
-@app.route('/deleteMatch', methods=['DELETE'])
+@app.route('/deleteMatch', methods=['POST'])
 def deleteMatch():
     try:
         db=Database()
