@@ -22,6 +22,9 @@ bcrypt = Bcrypt(app)
 
 @app.route('/', methods=['GET'])
 
+
+################################CONNEXIONS#####################################
+
 @app.route('/register', methods=['POST'])
 def registerpage():
     try:
@@ -84,7 +87,7 @@ def authenticateUser():
             print(user)
             return jsonify(user),{"Content-Type": "application/json"}
 
-
+################################ USER #####################################
 @app.route('/Utilisateurs', methods=['GET'])
 def getUsers():
     def db_query():
@@ -97,12 +100,24 @@ def getUsers():
 
 @app.route('/getUserDataByUserID', methods=['POST'])
 def getUser():
-    db = Database()
-    IdJoueur = request.json["IdUser"]
-    joueur = db.find_User_by_ID(IdJoueur)
-    equipes = db.getTeamsByUsers(IdJoueur)
-    parties = db.getUpcomingMatchesByUsers(IdJoueur)
-    return jsonify({"User": joueur, "Equipes": equipes, "Parties": parties})
+    try:
+        db = Database()
+        data =request.json["data"]
+        
+        if type(data)!= dict:
+            dataJSON = dict(json.loads(data))
+        else:
+            dataJSON =data
+        IdJoueur = dataJSON["IdUser"]
+        joueur = db.find_User_by_ID(IdJoueur)
+        equipes = db.getTeamsByUsers(IdJoueur)
+        parties = db.getUpcomingMatchesByUsers(IdJoueur)
+    except:
+        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("error with getUser")
+        return "error with getUser"
+    else:
+        return jsonify({"User": joueur, "Equipes": equipes, "Parties": parties})
 
 @app.route('/editUser', methods=['PUT'])
 def editUser():
@@ -135,6 +150,28 @@ def editUser():
     else:
         return jsonify(Reg)
 
+@app.route('/leaveTeam', methods=['POST'])
+def leaveTeam():
+    try:
+        db=Database()
+        data =request.json["data"]
+        
+        if type(data)!= dict:
+            dataJSON = dict(json.loads(data))
+        else:
+            dataJSON =data
+        IdJoueur = dataJSON["IdJoueur"]
+        IdEquipe = dataJSON["IdEquipe"]
+        Date = date.today()
+        match = db.leaveTeam(IdEquipe, IdJoueur, Date)
+    except:
+        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("error with leaveTeam")
+        return "error with leaveTeam"
+    else:
+        return jsonify(match)
+
+################################ TOURNOIS #####################################
 
 @app.route('/listTournaments', methods=['GET'])
 def getListTournament():
@@ -207,6 +244,48 @@ def createTournament():
     tournament = db.CreateTournament(nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, idGame, idOwner)
     return jsonify(tournament)
 
+
+@app.route('/inscriptionEquipe', methods=['POST'])
+def inscription():
+    try:
+        db=Database()
+        data =request.json["data"]
+        
+        if type(data)!= dict:
+            dataJSON = dict(json.loads(data))
+        else:
+            dataJSON =data
+        IdTournoi = dataJSON["IdTournoi"]
+        IdEquipe = dataJSON["IdEquipe"]
+        match = db.Inscription(IdTournoi, IdEquipe)
+    except:
+        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("error with inscription")
+        return "error with inscription"
+    else:
+        return jsonify(match)
+
+@app.route('/deleteTournament', methods=['POST'])
+def deleteTournament():
+    try:
+        db=Database()
+        data =request.json["data"]
+        
+        if type(data)!= dict:
+            dataJSON = dict(json.loads(data))
+        else:
+            dataJSON =data
+        IdTournoi = dataJSON["IdTournoi"]
+        res = db.deleteTournament(IdTournoi)
+    except:
+        print("Oops!", sys.exc_info(), "occurred.")
+        print("error with deleteTournament")
+        return "error with deleteTournament"
+    else:
+        return jsonify(res)
+
+################################ EQUIPES #####################################
+
 @app.route('/listEquipes', methods=['GET'])
 def getListEquipes():
     db=Database()
@@ -235,6 +314,32 @@ def getEquipeById():
     else:
         return jsonify({"Tournoi": tournoi, "Joueurs": joueurs, "Equipes": equipes, "Parties": parties})
 
+
+@app.route('/createEquipe', methods=['POST'])
+def createEquipe():
+    try:
+        db=Database()
+        data =request.json["data"]
+        
+        if type(data)!= dict:
+            dataJSON = dict(json.loads(data))
+        else:
+            dataJSON =data
+        NomEquipe = dataJSON["NomEquipe"]
+        Presentation = dataJSON["Presentation"] 
+        Logo = dataJSON["Logo"] 
+        IdOwner = dataJSON["IdOwner"] 
+        IdPays = dataJSON["IdPays"] 
+        IdGame = dataJSON["IdGame"] 
+        equipe = db.CreateEquipe(NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame)
+    except:
+        print("Oops!", sys.exc_info(), "occurred.")
+        print("error with createEquipe")
+        return "error with createEquipe"
+    else:
+        return jsonify(equipe)
+
+
 @app.route('/editEquipe', methods=['PUT'])
 def editEquipe():
     try:
@@ -260,8 +365,9 @@ def editEquipe():
     else:
         return jsonify(equipe)
 
-@app.route('/createEquipe', methods=['POST'])
-def createEquipe():
+
+@app.route('/addTeamMember', methods=['POST'])
+def addTeamMember():
     try:
         db=Database()
         data =request.json["data"]
@@ -270,19 +376,39 @@ def createEquipe():
             dataJSON = dict(json.loads(data))
         else:
             dataJSON =data
-        NomEquipe = dataJSON["NomEquipe"]
-        Presentation = dataJSON["Presentation"] 
-        Logo = dataJSON["Logo"] 
-        IdOwner = dataJSON["IdOwner"] 
-        IdPays = dataJSON["IdPays"] 
-        IdGame = dataJSON["IdGame"] 
-        equipe = db.CreateEquipe(NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame)
+        IdJoueur = dataJSON["IdJoueur"]
+        IdEquipe = dataJSON["IdEquipe"]
+        DateJoined = date.today()
+        match = db.addTeamMember(IdJoueur, IdEquipe, DateJoined)
     except:
         print("Oops!", sys.exc_info()[0], "occurred.")
-        print("error with createEquipe")
-        return "error with createEquipe"
+        print("error with addTeamMember")
+        return "error with addTeamMember"
     else:
-        return jsonify(equipe)
+        return jsonify(match)
+
+
+@app.route('/deleteTeam', methods=['POST'])
+def deleteTeam():
+    try:
+        db=Database()
+        data =request.json["data"]
+        
+        if type(data)!= dict:
+            dataJSON = dict(json.loads(data))
+        else:
+            dataJSON =data
+        IdEquipe = dataJSON["IdEquipe"]
+        res = db.deleteTeam(IdEquipe)
+    except:
+        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("error with deleteTeam")
+        return "error with deleteTeam"
+    else:
+        return jsonify(res)
+
+################################ Parties #####################################
+
 
 @app.route('/getPartie', methods=['POST'])
 def getMatch():
@@ -313,11 +439,12 @@ def createMatch():
             dataJSON = dict(json.loads(data))
         else:
             dataJSON =data
-        dateMatch = dataJSON["dateMatch"]
-        heureMatch = dataJSON["heureMatch"]
-        idEquipe1 = dataJSON["idEquipe1"]
-        idEquipe2 = dataJSON["idEquipe2"]
-        idTournoi = dataJSON["idTournoi"]
+        print(dataJSON)
+        dateMatch = dataJSON["DateDebut"]
+        heureMatch = dataJSON["Heure"]
+        idEquipe1 = dataJSON["IdEquipe1"]
+        idEquipe2 = dataJSON["IdEquipe2"]
+        idTournoi = dataJSON["IdTournoi"]
         match = db.CreateGame(dateMatch, heureMatch, idEquipe1, idEquipe2, idTournoi)
     except:
         print("Oops!", sys.exc_info()[0], "occurred.")
@@ -352,84 +479,6 @@ def editMatch():
     else:
         return jsonify(match)
 
-@app.route('/inscription', methods=['POST'])
-def inscription():
-    try:
-        db=Database()
-        data =request.json["data"]
-        
-        if type(data)!= dict:
-            dataJSON = dict(json.loads(data))
-        else:
-            dataJSON =data
-        IdTournoi = dataJSON["IdTournoi"]
-        IdEquipe = dataJSON["IdEquipe"]
-        match = db.Inscription(IdTournoi, IdEquipe)
-    except:
-        print("Oops!", sys.exc_info()[0], "occurred.")
-        print("error with inscription")
-        return "error with inscription"
-    else:
-        return jsonify(match)
-
-@app.route('/addTeamMember', methods=['POST'])
-def addTeamMember():
-    try:
-        db=Database()
-        data =request.json["data"]
-        
-        if type(data)!= dict:
-            dataJSON = dict(json.loads(data))
-        else:
-            dataJSON =data
-        IdJoueur = dataJSON["IdJoueur"]
-        IdEquipe = dataJSON["IdEquipe"]
-        DateJoined = date.today()
-        match = db.addTeamMember(IdJoueur, IdEquipe, DateJoined)
-    except:
-        print("Oops!", sys.exc_info()[0], "occurred.")
-        print("error with addTeamMember")
-        return "error with addTeamMember"
-    else:
-        return jsonify(match)
-
-@app.route('/deleteTournament', methods=['POST'])
-def deleteTournament():
-    try:
-        db=Database()
-        data =request.json["data"]
-        
-        if type(data)!= dict:
-            dataJSON = dict(json.loads(data))
-        else:
-            dataJSON =data
-        IdTournoi = dataJSON["IdTournoi"]
-        res = db.deleteTournament(IdTournoi)
-    except:
-        print("Oops!", sys.exc_info(), "occurred.")
-        print("error with deleteTournament")
-        return "error with deleteTournament"
-    else:
-        return jsonify(res)
-
-@app.route('/deleteTeam', methods=['POST'])
-def deleteTeam():
-    try:
-        db=Database()
-        data =request.json["data"]
-        
-        if type(data)!= dict:
-            dataJSON = dict(json.loads(data))
-        else:
-            dataJSON =data
-        IdEquipe = dataJSON["IdEquipe"]
-        res = db.deleteTeam(IdEquipe)
-    except:
-        print("Oops!", sys.exc_info()[0], "occurred.")
-        print("error with deleteTeam")
-        return "error with deleteTeam"
-    else:
-        return jsonify(res)
 
 @app.route('/deleteMatch', methods=['POST'])
 def deleteMatch():
@@ -450,27 +499,6 @@ def deleteMatch():
     else:
         return jsonify(res)
 
-    
-@app.route('/leaveTeam', methods=['POST'])
-def leaveTeam():
-    try:
-        db=Database()
-        data =request.json["data"]
-        
-        if type(data)!= dict:
-            dataJSON = dict(json.loads(data))
-        else:
-            dataJSON =data
-        IdJoueur = dataJSON["IdJoueur"]
-        IdEquipe = dataJSON["IdEquipe"]
-        Date = date.today()
-        match = db.leaveTeam(IdEquipe, IdJoueur, Date)
-    except:
-        print("Oops!", sys.exc_info()[0], "occurred.")
-        print("error with leaveTeam")
-        return "error with leaveTeam"
-    else:
-        return jsonify(match)
 
 #Run server
 if __name__ == '__main__':

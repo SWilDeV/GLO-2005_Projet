@@ -12,6 +12,21 @@ export async function getUsers() {
       });
   });
 }
+export async function getUserDataByUserID(data) {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(`${process.env.VUE_APP_API_BASE_URL}/getUserDataByUserID`, {
+        data,
+      })
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+
 export async function getTournaments() {
   return new Promise((resolve, reject) => {
     axios
@@ -79,10 +94,53 @@ export async function CreateTournament(data) {
       });
   });
 }
+export async function CreateTeam(data) {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(`${process.env.VUE_APP_API_BASE_URL}/createEquipe`, {
+        data,
+      })
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+
 export async function UpdateTournament(data) {
   return new Promise((resolve, reject) => {
     axios
       .put(`${process.env.VUE_APP_API_BASE_URL}/editTournament`, {
+        data,
+      })
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+export async function InscriptionEquipe(data) {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(`${process.env.VUE_APP_API_BASE_URL}/inscriptionEquipe`, {
+        data,
+      })
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+export async function createPartie(data) {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(`${process.env.VUE_APP_API_BASE_URL}/createPartie`, {
         data,
       })
       .then((res) => {

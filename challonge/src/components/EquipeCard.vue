@@ -33,11 +33,12 @@ export default {
     IdEquipe: Number,
     NomEquipe: String,
     jeu: String,
+    logo: String,
   },
   methods: {
     goToTeam() {
-      const idEquipe = this.IdEquipe;
-      localStorage.setItem("equipe", JSON.stringify({ IdEquipe: idEquipe }));
+      const IdEquipe = this.IdEquipe;
+      localStorage.setItem("equipe", JSON.stringify({ IdEquipe: IdEquipe }));
       this.$router.push({ name: "equipe" });
     },
   },
