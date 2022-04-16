@@ -96,44 +96,25 @@
                   <hr />
                 </div>
               </div>
-
-              <b-form v-if="isOwner">
-                <div class="row gutters-sm">
-                  <div class="col-sm-12 mb-3">
-                    <div class="card h-100">
-                      <div class="card-body">
-                        <h6 class="d-flex align-items-center mb-3">
-                          <i class="material-icons text-info mr-2"
-                            >Ajouter des equipes</i
-                          >
-                        </h6>
-                        <div class="d-flex justify-content-center flex-wrap">
-                          <b-form-group
-                            id="input-group-3"
-                            label="Choisir une equipe"
-                            label-for="input-7"
-                          >
-                            <b-form-select
-                              v-model="form.IdEquipe"
-                              :options="options"
-                              size=""
-                              class="m-1"
-                            ></b-form-select>
-                          </b-form-group>
-
-                          <b-button
-                            type="button"
-                            variant="success"
-                            v-on:click="addTeam"
-                            class="ms-auto"
-                            >Ajouter</b-button
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              <div class="row gutters-sm">
+                <div class="col-sm-6 mb-3">
+                  <AjoutEquipe
+                    v-if="isOwner"
+                    :AllTeams="AllTeamsDictionary"
+                    :EquipesInscrites="Equipes"
+                    :IdTournoi="Tournoi.IdTournoi"
+                    @add-team-to-tournament="addTeamToTournament($event)"
+                  />
                 </div>
-              </b-form>
+                <div class="col-sm-6 mb-3">
+                  <AjoutMatch
+                    :EquipesInscrites="Equipes"
+                    :IdTournoi="Tournoi.IdTournoi"
+                    @add-match-to-tournament="addMatchToTournament($event)"
+                  />
+                </div>
+              </div>
+
               <div class="row gutters-sm">
                 <div class="col-sm-6 mb-3">
                   <div class="card h-100">
@@ -148,8 +129,9 @@
                         <EquipeComponent
                           class="card h-100 m-1"
                           v-for="equipe in Equipes"
-                          :key="equipe.IdEquipe"
+                          :key="equipe.idEquipe"
                           :nom-equipe="equipe.nomEquipe"
+                          :IdEquipe="equipe.idEquipe"
                         />
                       </div>
                     </div>
@@ -186,21 +168,38 @@
 <script>
 import MatchComponent from "../components/MatchComponent.vue";
 import EquipeComponent from "../components/EquipeComponent.vue";
-import { getOneTournament, getTeams } from "../apiVue.js";
+import AjoutEquipe from "../components/AjoutEquipe.vue";
+import AjoutMatch from "../components/AjoutMatch.vue";
+import {
+  getOneTournament,
+  getTeams,
+  InscriptionEquipe,
+  createPartie,
+} from "../apiVue.js";
 export default {
   name: "TournoiView",
   components: {
     EquipeComponent,
     MatchComponent,
+    AjoutEquipe,
+    AjoutMatch,
   },
   data() {
     return {
       isOwner: false,
       Tournoi: "",
       Parties: "",
-      Equipes: "",
+      Equipes: [],
       form: {
         IdEquipe: "",
+        IdTournoi: "",
+      },
+      form2: {
+        IdEquipe1: "",
+        IdEquipe2: "",
+        IdTournoi: "",
+        DateDebut: "",
+        Heure: "",
       },
       options: [
         { value: null, text: "Please select an option" },
@@ -214,7 +213,7 @@ export default {
         { value: "8", text: "Valorant" },
         { value: "9", text: "Echecs" },
       ],
-      AllTeams: "",
+      AllTeamsDictionary: [],
     };
   },
   methods: {
@@ -227,10 +226,7 @@ export default {
       this.Equipes = tournament.Equipes;
       this.checkIfUserIsOwner();
       if (this.isOwner) {
-        this.getEquipes().then((response) => {
-          console.log(response);
-          this.AllTeams = response;
-        });
+        this.getEquipes();
       }
     },
     deleteTournoi() {
@@ -245,25 +241,60 @@ export default {
         this.isOwner = true;
       }
     },
-    addTeam() {
-      if (this.isOwner) {
-        alert("hello");
-      }
-    },
     addMatch() {
       alert("newMatch");
     },
     getEquipes() {
       try {
         getTeams().then((response) => {
-          this.equipes = response;
-          console.log(this.equipes);
+          const AllTeams = response;
+          for (const team of AllTeams) {
+            this.AllTeamsDictionary.push({
+              id: team.IdEquipe,
+              name: team.nomEquipe,
+            });
+          }
         });
       } catch (e) {
         console.log(e);
       }
     },
+    async addTeamToTournament({ IdEquipe, IdTournoi }) {
+      try {
+        this.form.IdEquipe = IdEquipe;
+        this.form.IdTournoi = IdTournoi;
+        await InscriptionEquipe(this.form).then((response) => {
+          alert(response);
+          this.$router.go();
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    async addMatchToTournament({
+      IdEquipe1,
+      IdEquipe2,
+      DateDebut,
+      Heure,
+      IdTournoi,
+    }) {
+      try {
+        console.log(IdEquipe1, IdEquipe2, DateDebut, Heure, IdTournoi);
+        this.form2.IdEquipe1 = IdEquipe1;
+        this.form2.IdEquipe2 = IdEquipe2;
+        this.form2.DateDebut = DateDebut;
+        this.form2.Heure = Heure;
+        this.form2.IdTournoi = IdTournoi;
+        await createPartie(this.form2).then((response) => {
+          alert(response);
+          this.$router.go();
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    },
   },
+
   created() {
     this.getTournoiInfo();
   },

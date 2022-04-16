@@ -439,11 +439,12 @@ def createMatch():
             dataJSON = dict(json.loads(data))
         else:
             dataJSON =data
-        dateMatch = dataJSON["dateMatch"]
-        heureMatch = dataJSON["heureMatch"]
-        idEquipe1 = dataJSON["idEquipe1"]
-        idEquipe2 = dataJSON["idEquipe2"]
-        idTournoi = dataJSON["idTournoi"]
+        print(dataJSON)
+        dateMatch = dataJSON["DateDebut"]
+        heureMatch = dataJSON["Heure"]
+        idEquipe1 = dataJSON["IdEquipe1"]
+        idEquipe2 = dataJSON["IdEquipe2"]
+        idTournoi = dataJSON["IdTournoi"]
         match = db.CreateGame(dateMatch, heureMatch, idEquipe1, idEquipe2, idTournoi)
     except:
         print("Oops!", sys.exc_info()[0], "occurred.")
