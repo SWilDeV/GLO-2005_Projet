@@ -6,7 +6,9 @@ import TournoisListView from "../views/TournoisListView.vue";
 import TeamView from "../views/TeamView.vue";
 import EditTournament from "../views/EditTournament.vue";
 import CreateTournoiView from "../views/CreateTournoiView.vue";
+import CreateTeamView from "../views/CreateTeamView.vue";
 import ProfileView from "../views/ProfileView.vue";
+import OtherUserProfile from "../views/OtherUserProfile.vue";
 import ProfileSettingsView from "../views/ProfileSettingsView.vue";
 import RegisterView from "../views/RegisterView.vue";
 import LoginView from "../views/LoginView.vue";
@@ -25,6 +27,11 @@ const routes = [
     path: "/profile",
     name: "profile",
     component: ProfileView,
+  },
+  {
+    path: "/OtherUserProfile",
+    name: "OtherUserProfile",
+    component: OtherUserProfile,
   },
   {
     path: "/tournament",
@@ -70,6 +77,11 @@ const routes = [
     path: "/equipe",
     name: "equipe",
     component: TeamView,
+  },
+  {
+    path: "/createTeam",
+    name: "createTeam",
+    component: CreateTeamView,
   },
 ];
 
