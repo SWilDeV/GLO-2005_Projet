@@ -18,11 +18,11 @@
                   />
                   <div class="mt-3">
                     <h4>{{ userProfil.Username }}</h4>
-                    <p class="text-secondary mb-1">
-                      {{ userProfil.Presentation }}
-                    </p>
                     <p class="text-muted font-size-sm">
                       {{ userProfil.Ville }}, {{ userProfil.NomPays }}
+                    </p>
+                    <p class="text-secondary mb-1">
+                      {{ userProfil.Presentation }}
                     </p>
                   </div>
                 </div>
@@ -74,12 +74,6 @@
                   </div>
                   <div class="col-sm-9 text-secondary">
                     {{ userProfil.DateJoined }}
-                  </div>
-                </div>
-                <hr />
-                <div class="row">
-                  <div class="col-sm-12">
-                    <a class="btn btn-info" target="__blank">Edit</a>
                   </div>
                 </div>
               </div>
