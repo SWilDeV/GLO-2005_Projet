@@ -73,12 +73,6 @@
                     {{ user.DateJoined }}
                   </div>
                 </div>
-                <hr />
-                <div class="row">
-                  <div class="col-sm-12">
-                    <a class="btn btn-info" target="__blank">Edit</a>
-                  </div>
-                </div>
               </div>
             </div>
 

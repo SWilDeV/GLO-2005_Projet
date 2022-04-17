@@ -13,7 +13,7 @@
           type="button"
           variant="danger"
           v-on:click="onClickDeleteTeam"
-          >-</b-button
+          >x</b-button
         >
       </div>
     </div>
