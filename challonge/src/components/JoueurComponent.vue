@@ -10,7 +10,7 @@
         </div>
         <div class="col-sm-2">
           <b-button
-            v-if="isOwner"
+            v-if="isVisible"
             class="p-1"
             type="button"
             variant="danger"
@@ -38,6 +38,7 @@ export default {
     ville: String,
     IdJoueur: Number,
     IdEquipeOwner: Number,
+    isVisible: Boolean,
   },
   created() {
     this.checkIfUserIsOwner();
@@ -45,7 +46,6 @@ export default {
   methods: {
     goToOtherUserProfil() {
       const IdJoueur = this.IdJoueur;
-      console.log(IdJoueur);
       localStorage.setItem("OtherUser", JSON.stringify({ IdUser: IdJoueur }));
       this.$router.push({ name: "OtherUserProfile" });
     },

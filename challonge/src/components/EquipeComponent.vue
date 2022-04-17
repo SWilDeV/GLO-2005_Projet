@@ -8,7 +8,7 @@
       </div>
       <div class="col-sm-1">
         <b-button
-          v-if="isOwner"
+          v-if="isVisible"
           class="p-1"
           type="button"
           variant="danger"
@@ -37,7 +37,7 @@ export default {
     NomEquipe: String,
     jeu: String,
     logo: String,
-    isOwner: Boolean,
+    isVisible: Boolean,
   },
   methods: {
     goToTeam() {

@@ -28,20 +28,35 @@
                           v-if="isOwner"
                           class="ms-auto"
                           type="button"
-                          variant="danger"
-                          v-on:click="deleteTournoi"
-                          >Supprimer</b-button
-                        >
-                        <b-button
-                          v-if="isOwner"
-                          class="ms-auto"
-                          type="button"
-                          variant="primary"
-                          v-on:click="editTournoi"
-                          >Modifier</b-button
+                          variant="info"
+                          v-on:click="toggleEdit"
+                          >Edit</b-button
                         >
                       </div>
                     </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 mb-3 mt-1">
+                <div class="row gutters-sm">
+                  <div class="col-sm-12">
+                    <b-button
+                      v-if="isVisible"
+                      class="ms-auto"
+                      type="button"
+                      variant="danger"
+                      v-on:click="deleteTournoi"
+                      >Supprimer</b-button
+                    >
+                    <b-button
+                      v-if="isVisible"
+                      class="ms-auto"
+                      type="button"
+                      variant="primary"
+                      v-on:click="editTournoi"
+                      >Modifier</b-button
+                    >
                   </div>
                 </div>
               </div>
@@ -49,7 +64,7 @@
                 <div class="row gutters-sm">
                   <div class="col-sm-12 mb-3">
                     <AjoutEquipe
-                      v-if="isOwner"
+                      v-if="isVisible"
                       :AllTeams="AllTeamsDictionary"
                       :EquipesInscrites="Equipes"
                       :IdTournoi="Tournoi.IdTournoi"
@@ -57,7 +72,7 @@
                     />
                     <div class="col-sm-12 mb-3">
                       <AjoutMatch
-                        v-if="isOwner"
+                        v-if="isVisible"
                         :EquipesInscrites="Equipes"
                         :IdTournoi="Tournoi.IdTournoi"
                         @add-match-to-tournament="addMatchToTournament($event)"
@@ -135,7 +150,7 @@
                           :key="equipe.idEquipe"
                           :nom-equipe="equipe.nomEquipe"
                           :IdEquipe="equipe.idEquipe"
-                          :isOwner="isOwner"
+                          :isVisible="isVisible"
                           @delete-team-from-tournament="
                             deleteTeamFromTournament($event)
                           "
@@ -195,6 +210,7 @@ export default {
   data() {
     return {
       isOwner: false,
+      isVisible: false,
       Tournoi: "",
       Parties: "",
       Equipes: [],
@@ -313,6 +329,13 @@ export default {
         });
       } catch (e) {
         console.error(e);
+      }
+    },
+    toggleEdit() {
+      if (this.isVisible == false) {
+        this.isVisible = true;
+      } else {
+        this.isVisible = false;
       }
     },
   },

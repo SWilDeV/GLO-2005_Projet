@@ -28,17 +28,9 @@
                           v-if="isOwner"
                           class="ms-auto"
                           type="button"
-                          variant="danger"
-                          v-on:click="deleteTeam"
-                          >Supprimer</b-button
-                        >
-                        <b-button
-                          v-if="isOwner"
-                          class="ms-auto"
-                          type="button"
-                          variant="primary"
-                          v-on:click="editTeam"
-                          >Modifier</b-button
+                          variant="info"
+                          v-on:click="toggleEdit"
+                          >Edit</b-button
                         >
                       </div>
                     </div>
@@ -47,9 +39,31 @@
               </div>
               <div class="col-md-12 mb-3 mt-1">
                 <div class="row gutters-sm">
+                  <div class="col-sm-12">
+                    <b-button
+                      v-if="isVisible"
+                      class="ms-auto"
+                      type="button"
+                      variant="danger"
+                      v-on:click="deleteTeam"
+                      >Supprimer</b-button
+                    >
+                    <b-button
+                      v-if="isVisible"
+                      class="ms-auto"
+                      type="button"
+                      variant="primary"
+                      v-on:click="editTeam"
+                      >Modifier</b-button
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 mb-3 mt-1">
+                <div class="row gutters-sm">
                   <div class="col-sm-12 mb-3">
                     <AjoutMember
-                      v-if="isOwner"
+                      v-if="isVisible"
                       :AllUsers="AllUsersDictionary"
                       :JoueursInscrits="Joueurs"
                       :IdEquipe="Equipe.IdEquipe"
@@ -58,6 +72,7 @@
                   </div>
                 </div>
               </div>
+
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-body">
@@ -75,6 +90,7 @@
                           :ville="joueur.Ville"
                           :id-joueur="joueur.IdJoueur"
                           :IdEquipeOwner="Equipe.IdOwner"
+                          :isVisible="isVisible"
                         />
                       </div>
                     </div>
@@ -174,6 +190,7 @@ export default {
   data() {
     return {
       isOwner: false,
+      isVisible: false,
       Tournoi: "",
       Parties: "",
       Equipe: "",
@@ -236,6 +253,13 @@ export default {
         });
       } catch (e) {
         console.error(e);
+      }
+    },
+    toggleEdit() {
+      if (this.isVisible == false) {
+        this.isVisible = true;
+      } else {
+        this.isVisible = false;
       }
     },
   },
