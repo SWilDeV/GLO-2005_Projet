@@ -3,10 +3,7 @@
     <div class="jumbotron text-center">
       <h1>Mata Tournois</h1>
       <p class="lead">Bienvenue sur Mata Tournois</p>
-      <div>
-        <a class="btn btn-primary">Register</a>
-        <a class="btn btn-danger">Login</a>
-      </div>
+      <div></div>
     </div>
   </div>
 </template>

@@ -1,7 +1,6 @@
 <template>
   <div>
-    <h2 class="d-flex page-header justify-content-center">Register</h2>
-    <b-button type="button" variant="primary" v-on:click="test">Test</b-button>
+    <h2 class="d-flex page-header justify-content-center">Inscription</h2>
 
     <div class="d-flex justify-content-center flex-wrap">
       <b-form @submit="onSubmit">
@@ -70,8 +69,24 @@
           ></b-form-input>
         </b-form-group>
 
-        <b-button type="button" variant="primary" v-on:click="onSubmit"
-          >Submit</b-button
+        <b-form-group
+          id="input-group-7"
+          label="Presentation:"
+          label-for="input-6"
+        >
+          <b-form-input
+            id="input-7"
+            v-model="form.Presentation"
+            placeholder="Decrivez vous en qq mots..."
+          ></b-form-input>
+        </b-form-group>
+
+        <b-button
+          type="button"
+          class="mt-2"
+          variant="primary"
+          v-on:click="onSubmit"
+          >M'inscrire</b-button
         >
       </b-form>
     </div>
@@ -91,7 +106,7 @@ export default {
         Prenom: "",
         Nom: "",
         Ville: "",
-        Presentation: "efwefewfwefefew",
+        Presentation: "",
         Avatar: null,
         IdPays: 6,
       },
@@ -111,21 +126,6 @@ export default {
           throw new Error("HTTP error " + response.status);
         }
       });
-    },
-
-    test() {
-      this.form = {
-        Username: "sewfew",
-        Password: "tyhyj7yj",
-        Courriel: "trhtrh@grgreg.com",
-        Prenom: "8k8kk8",
-        Nom: "k87k78",
-        Ville: "jytjtj",
-        Presentation: "efwefewfwefefew",
-        Avatar: null,
-        IdPays: 6,
-      };
-      this.onSubmit();
     },
   },
 };

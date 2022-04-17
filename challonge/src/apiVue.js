@@ -165,6 +165,20 @@ export async function InscriptionMembre(data) {
       });
   });
 }
+export async function LeaveTeam(data) {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(`${process.env.VUE_APP_API_BASE_URL}/leaveTeam`, {
+        data,
+      })
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
 export async function createPartie(data) {
   return new Promise((resolve, reject) => {
     axios

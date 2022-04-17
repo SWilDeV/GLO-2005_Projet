@@ -3,6 +3,9 @@
     <div>
       <div class="container mt-4">
         <div class="main-body">
+          <h1 class="d-flex flex-column align-items-center text-center">
+            Equipe
+          </h1>
           <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
               <div class="card">
@@ -80,7 +83,7 @@
                       class="d-flex flex-column align-items-center text-center"
                     >
                       <div class="mt-3">
-                        <h3>Membres</h3>
+                        <h3>Membres de l'equipe</h3>
                         <JoueurComponent
                           v-for="joueur in Joueurs"
                           :key="joueur[0]"
@@ -91,6 +94,7 @@
                           :id-joueur="joueur.IdJoueur"
                           :IdEquipeOwner="Equipe.IdOwner"
                           :isVisible="isVisible"
+                          @delete-user-from-team="deleteUserFromTeam($event)"
                         />
                       </div>
                     </div>
@@ -159,6 +163,8 @@
                           :NomEquipeA="match.nomEquipe1"
                           :NomEquipeB="match.nomEquipe2"
                           :dateMatch="match.dateMatch"
+                          :scoreEquipe1="match.scoreEquipe1"
+                          :scoreEquipe2="match.scoreEquipe2"
                         />
                       </div>
                     </div>
@@ -178,7 +184,12 @@ import TournoiComponent from "../components/TournoiComponent.vue";
 import JoueurComponent from "../components/JoueurComponent.vue";
 import MatchComponent from "../components/MatchComponent.vue";
 import AjoutMember from "../components/AjoutMember.vue";
-import { getTeamByTeamID, getUsers, InscriptionMembre } from "../apiVue.js";
+import {
+  getTeamByTeamID,
+  getUsers,
+  InscriptionMembre,
+  LeaveTeam,
+} from "../apiVue.js";
 export default {
   name: "TeamView",
   components: {
@@ -200,12 +211,15 @@ export default {
         IdEquipe: "",
         IdJoueur: "",
       },
+      form2: {
+        IdEquipe: "",
+        IdJoueur: "",
+      },
     };
   },
   methods: {
     async getTeamInfo() {
       const team = await getTeamByTeamID(localStorage.getItem("equipe"));
-      //   console.log(team);
       this.Tournoi = team.Tournoi;
       this.Parties = team.Parties;
       this.Equipe = team.Equipes;
@@ -248,6 +262,19 @@ export default {
         this.form.IdEquipe = IdEquipe;
         this.form.IdJoueur = IdUser;
         await InscriptionMembre(this.form).then((response) => {
+          alert(response);
+          this.$router.go();
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    async deleteUserFromTeam({ IdUser }) {
+      try {
+        // this.form2.IdEquipe = IdEquipe;
+        this.form2.IdJoueur = IdUser;
+        this.form2.IdEquipe = this.Equipe.IdEquipe;
+        await LeaveTeam(this.form2).then((response) => {
           alert(response);
           this.$router.go();
         });

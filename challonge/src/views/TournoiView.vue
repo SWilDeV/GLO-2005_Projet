@@ -3,6 +3,9 @@
     <div>
       <div class="container mt-4">
         <div class="main-body">
+          <h1 class="d-flex flex-column align-items-center text-center">
+            Tournoi
+          </h1>
           <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
               <div class="card">
@@ -173,6 +176,9 @@
                           :NomEquipeA="match.nomEquipe1"
                           :NomEquipeB="match.nomEquipe2"
                           :dateMatch="match.dateMatch"
+                          :scoreEquipe1="match.scoreEquipe1"
+                          :scoreEquipe2="match.scoreEquipe2"
+                          :isVisible="isVisible"
                         />
                       </div>
                     </div>
@@ -197,7 +203,7 @@ import {
   getTeams,
   InscriptionEquipe,
   createPartie,
-  DeleteTeam,
+  // DeleteTeam,
 } from "../apiVue.js";
 export default {
   name: "TournoiView",
@@ -323,10 +329,11 @@ export default {
     async deleteTeamFromTournament({ IdEquipe }) {
       try {
         this.form3.IdEquipe = IdEquipe;
-        await DeleteTeam(this.form3).then((response) => {
-          alert(response);
-          this.$router.go();
-        });
+        alert("deleteTeam");
+        // await DeleteTeam(this.form3).then((response) => {
+        //   alert(response);
+        //   this.$router.go();
+        // });
       } catch (e) {
         console.error(e);
       }
