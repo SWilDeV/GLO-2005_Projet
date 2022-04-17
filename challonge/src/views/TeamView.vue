@@ -1,88 +1,205 @@
 <template>
   <div>
-    <div class="card mb-3" style="max-width: 540px">
-      <h1>Team {{ Equipe.NomEquipe }}</h1>
-      <div class="row g-0">
-        <div class="col-md-4">
-          <img
-            src="../assets/xbox.png"
-            class="img-fluid rounded-start"
-            alt="..."
-          />
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h4 class="card-text">Top Game: {{ Equipe.nomJeu }}</h4>
-            <p class="card-text">
-              <strong>Presentation:</strong> {{ Equipe.Presentation }}
-            </p>
+    <div>
+      <div class="container mt-4">
+        <div class="main-body">
+          <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div
+                    class="d-flex flex-column align-items-center text-center"
+                  >
+                    <img
+                      src="../assets/xbox.png"
+                      alt="Admin"
+                      class="rounded-circle"
+                      width="150"
+                    />
+                    <div class="mt-3">
+                      <h1>{{ Equipe.NomEquipe }}</h1>
+                      <h3 class="text-secondary mb-1">
+                        Top Game: {{ Equipe.nomJeu }}
+                      </h3>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <b-button
+                          v-if="isOwner"
+                          class="ms-auto"
+                          type="button"
+                          variant="info"
+                          v-on:click="toggleEdit"
+                          >Edit</b-button
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 mb-3 mt-1">
+                <div class="row gutters-sm">
+                  <div class="col-sm-12">
+                    <b-button
+                      v-if="isVisible"
+                      class="ms-auto"
+                      type="button"
+                      variant="danger"
+                      v-on:click="deleteTeam"
+                      >Supprimer</b-button
+                    >
+                    <b-button
+                      v-if="isVisible"
+                      class="ms-auto"
+                      type="button"
+                      variant="primary"
+                      v-on:click="editTeam"
+                      >Modifier</b-button
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 mb-3 mt-1">
+                <div class="row gutters-sm">
+                  <div class="col-sm-12 mb-3">
+                    <AjoutMember
+                      v-if="isVisible"
+                      :AllUsers="AllUsersDictionary"
+                      :JoueursInscrits="Joueurs"
+                      :IdEquipe="Equipe.IdEquipe"
+                      @add-user-to-team="addUserToTeam($event)"
+                    />
+                  </div>
+                </div>
+              </div>
 
-            <b-button
-              v-if="isOwner"
-              class="ms-auto"
-              type="button"
-              variant="danger"
-              v-on:click="deleteTournoi"
-              >Supprimer</b-button
-            >
-            <b-button
-              v-if="isOwner"
-              class="ms-auto"
-              type="button"
-              variant="primary"
-              v-on:click="editTournoi"
-              >Editer</b-button
-            >
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-body">
+                    <div
+                      class="d-flex flex-column align-items-center text-center"
+                    >
+                      <div class="mt-3">
+                        <h3>Membres</h3>
+                        <JoueurComponent
+                          v-for="joueur in Joueurs"
+                          :key="joueur[0]"
+                          :username="joueur.Username"
+                          :dateJoined="joueur.DateJoined"
+                          :avatar="joueur.Svatar"
+                          :ville="joueur.Ville"
+                          :id-joueur="joueur.IdJoueur"
+                          :IdEquipeOwner="Equipe.IdOwner"
+                          :isVisible="isVisible"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-8">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Presentation</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ Equipe.Presentation }}
+                    </div>
+                  </div>
+                  <hr />
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Pays</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ Equipe.IdPays }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row gutters-sm">
+                <div class="col-sm-6 mb-3">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <h6 class="d-flex align-items-center mb-3">
+                        <i class="material-icons text-info mr-2"
+                          >Tournois inscrits</i
+                        >
+                      </h6>
+
+                      <div>
+                        <TournoiComponent
+                          class="card h-100 m-1"
+                          v-for="tournoi in Tournoi"
+                          :key="tournoi.IdTournoi"
+                          :nom-tournoi="tournoi.nomTournoi"
+                          :IdTournoi="tournoi.IdTournoi"
+                          :nom-jeu="tournoi.nomJeu"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 mb-3">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <h6 class="d-flex align-items-center mb-3">
+                        <i class="material-icons text-info mr-2">Matchs</i>
+                      </h6>
+                      <div class="mb-3">
+                        <MatchComponent
+                          class="card h-100 m-1"
+                          v-for="match in Parties"
+                          :key="match.IdMatch"
+                          :NomEquipeA="match.nomEquipe1"
+                          :NomEquipeB="match.nomEquipe2"
+                          :dateMatch="match.dateMatch"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <h2>Membres</h2>
-      <JoueurComponent
-        v-for="joueur in Joueurs"
-        :key="joueur[0]"
-        :username="joueur.Username"
-        :dateJoined="joueur.DateJoined"
-        :avatar="joueur.Svatar"
-        :ville="joueur.Ville"
-        :id-joueur="joueur.IdJoueur"
-      />
     </div>
-    <h1>Parties inscrites</h1>
-    <PartieComponent
-      v-for="partie in Parties"
-      :key="partie[0]"
-      :id-match="partie.IdMatch"
-      :date-match="partie.dateMatch"
-      :heure-match="partie.heureMatch"
-      :id-gagnant="partie.idGagnant"
-      :id-equipe1="partie.idEquipe1"
-      :id-equipe2="partie.idEquipe2"
-      :score-equipe-1="partie.scoreEquipe1"
-      :score-equipe-2="partie.scoreEquipe2"
-    />
-    <h1>Tournois</h1>
   </div>
 </template>
 
 <script>
-// import EquipeComponent from "../components/EquipeComponent.vue";
-import PartieComponent from "../components/PartieComponent.vue";
+import TournoiComponent from "../components/TournoiComponent.vue";
 import JoueurComponent from "../components/JoueurComponent.vue";
-import { getTeamByTeamID } from "../apiVue.js";
+import MatchComponent from "../components/MatchComponent.vue";
+import AjoutMember from "../components/AjoutMember.vue";
+import { getTeamByTeamID, getUsers, InscriptionMembre } from "../apiVue.js";
 export default {
   name: "TeamView",
   components: {
-    // EquipeComponent,
-    PartieComponent,
+    TournoiComponent,
     JoueurComponent,
+    MatchComponent,
+    AjoutMember,
   },
   data() {
     return {
       isOwner: false,
+      isVisible: false,
       Tournoi: "",
       Parties: "",
       Equipe: "",
       Joueurs: "",
+      AllUsersDictionary: [],
+      form: {
+        IdEquipe: "",
+        IdJoueur: "",
+      },
     };
   },
   methods: {
@@ -93,20 +210,56 @@ export default {
       this.Parties = team.Parties;
       this.Equipe = team.Equipes;
       this.Joueurs = team.Joueurs;
-      console.log(team);
-      //   this.checkIfUserIsOwner();
+      this.checkIfUserIsOwner();
+      if (this.isOwner) {
+        this.getAllUsers();
+      }
     },
-    deleteTournoi() {
+    deleteTeam() {
       alert("Delete tournoi");
     },
-    editTournoi() {
+    editTeam() {
       // const userId = JSON.parse(localStorage.getItem("tournoi")).IdTournoi;
       this.$router.push({ name: "editTournoi" });
     },
     checkIfUserIsOwner() {
       const userId = JSON.parse(localStorage.getItem("user")).IdJoueur;
-      if (userId == this.Tournoi.IdOwner) {
+      if (userId == this.Equipe.IdOwner) {
         this.isOwner = true;
+      }
+    },
+    getAllUsers() {
+      try {
+        getUsers().then((response) => {
+          const AllUsers = response;
+          for (const user of AllUsers) {
+            this.AllUsersDictionary.push({
+              id: user.IdJoueur,
+              name: user.Username,
+            });
+          }
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async addUserToTeam({ IdEquipe, IdUser }) {
+      try {
+        this.form.IdEquipe = IdEquipe;
+        this.form.IdJoueur = IdUser;
+        await InscriptionMembre(this.form).then((response) => {
+          alert(response);
+          this.$router.go();
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    toggleEdit() {
+      if (this.isVisible == false) {
+        this.isVisible = true;
+      } else {
+        this.isVisible = false;
       }
     },
   },
@@ -116,4 +269,60 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+body {
+  margin-top: 20px;
+  color: #1a202c;
+  text-align: left;
+  background-color: #e2e8f0;
+}
+.main-body {
+  padding: 15px;
+}
+.card {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 0 solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
+
+.card-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1rem;
+}
+
+.gutters-sm {
+  margin-right: -8px;
+  margin-left: -8px;
+}
+
+.gutters-sm > .col,
+.gutters-sm > [class*="col-"] {
+  padding-right: 8px;
+  padding-left: 8px;
+}
+.mb-3,
+.my-3 {
+  margin-bottom: 1rem !important;
+}
+
+.bg-gray-300 {
+  background-color: #e2e8f0;
+}
+.h-100 {
+  height: 100% !important;
+}
+.shadow-none {
+  box-shadow: none !important;
+}
+</style>

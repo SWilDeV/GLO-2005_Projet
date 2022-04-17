@@ -31,7 +31,6 @@ export default {
       try {
         getTeams().then((response) => {
           this.equipes = response;
-          console.log(this.equipes);
         });
       } catch (e) {
         console.log(e);

@@ -5,15 +5,15 @@
         <div class="card h-100">
           <div class="card-body">
             <h6 class="d-flex align-items-center mb-3">
-              <i class="material-icons text-info mr-2">Ajouter des equipes</i>
+              <i class="material-icons text-info mr-2">Ajouter des membres</i>
             </h6>
             <div class="d-flex justify-content-center flex-wrap">
               <b-form-group
                 id="input-group-3"
-                label="Choisir une equipe"
-                label-for="input-7"
+                label="Choisir un utilisateur"
+                label-for="input-3"
               >
-                <b-form-select v-model="form.IdEquipe" :options="options">
+                <b-form-select v-model="form.IdUser" :options="options">
                   <template #first>
                     <b-form-select-option value="" />
                   </template>
@@ -23,7 +23,7 @@
               <b-button
                 type="button"
                 variant="success"
-                v-on:click="onClickAddTeam"
+                v-on:click="onClickAddUser"
                 class="ms-auto"
                 >Ajouter</b-button
               >
@@ -37,39 +37,38 @@
 
 <script>
 export default {
-  name: "AjoutEquipe",
+  name: "AjoutMember",
   props: {
-    AllTeams: Array,
-    EquipesInscrites: Array,
-    IdTournoi: Number,
+    AllUsers: Array,
+    JoueursInscrits: Array,
+    IdEquipe: Number,
   },
   data() {
     return {
-      selected: "",
       form: {
-        IdEquipe: "",
+        IdUser: "",
       },
     };
   },
   computed: {
     options() {
-      return this.AllTeams.filter((item) =>
-        this.EquipesInscrites.every((res) => res.id !== item.id)
+      return this.AllUsers.filter((item) =>
+        this.JoueursInscrits.every((res) => res.id !== item.id)
       )
-        .map((equipe) => ({
-          text: equipe.name,
-          value: equipe.id,
+        .map((user) => ({
+          text: user.name,
+          value: user.id,
         }))
         .sort((a, b) => (a.text >= b.text ? 1 : -1));
     },
   },
   methods: {
-    onClickAddTeam() {
-      const IdEquipe = this.form.IdEquipe;
-      const IdTournoi = this.IdTournoi;
-      this.$emit("add-team-to-tournament", { IdEquipe, IdTournoi });
+    onClickAddUser() {
+      const IdEquipe = this.IdEquipe;
+      const IdUser = this.form.IdUser;
+      this.$emit("add-user-to-team", { IdEquipe, IdUser });
 
-      this.form.IdEquipe = "";
+      this.form.IdUser = "";
     },
   },
 };

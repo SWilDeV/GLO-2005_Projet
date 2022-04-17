@@ -398,6 +398,7 @@ def deleteTeam():
             dataJSON = dict(json.loads(data))
         else:
             dataJSON =data
+        print(dataJSON)
         IdEquipe = dataJSON["IdEquipe"]
         res = db.deleteTeam(IdEquipe)
     except:

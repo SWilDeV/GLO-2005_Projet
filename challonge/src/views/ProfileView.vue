@@ -15,11 +15,11 @@
                   />
                   <div class="mt-3">
                     <h4>{{ user.Username }}</h4>
-                    <p class="text-secondary mb-1">
-                      {{ user.Presentation }}
-                    </p>
                     <p class="text-muted font-size-sm">
                       {{ user.Ville }}, {{ user.NomPays }}
+                    </p>
+                    <p class="text-secondary mb-1">
+                      {{ user.Presentation }}
                     </p>
                   </div>
                 </div>
@@ -96,6 +96,7 @@
                         v-for="equipe in Equipes"
                         :key="equipe.IdEquipe"
                         :nom-equipe="equipe.NomEquipe"
+                        :IdEquipe="equipe.IdEquipe"
                       />
                     </div>
                   </div>
@@ -129,9 +130,15 @@
 </template>
 
 <script>
+import EquipeComponent from "../components/EquipeComponent.vue";
+import MatchComponent from "../components/MatchComponent.vue";
 import { getUserDataByUserID } from "../apiVue.js";
 export default {
   name: "ProfileView",
+  components: {
+    EquipeComponent,
+    MatchComponent,
+  },
   data() {
     return {
       user: "",

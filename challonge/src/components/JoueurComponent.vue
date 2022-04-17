@@ -1,41 +1,62 @@
 <template>
   <div>
-    <b-card class="">
-      <b-row>
-        <b-col
-          ><h5>{{ username }}</h5></b-col
-        >
-        <b-col
-          ><b-button
-            class="ms-auto"
+    <div>
+      <hr />
+      <div class="row">
+        <div class="col-sm-10">
+          <b-link v-on:click="goToOtherUserProfil" class="text-decoration-none">
+            <div>{{ username }}</div>
+          </b-link>
+        </div>
+        <div class="col-sm-2">
+          <b-button
+            v-if="isVisible"
+            class="p-1"
             type="button"
-            variant="primary"
-            v-on:click="goToOtherUserProfil"
-            >En savoir plus</b-button
-          ></b-col
-        >
-      </b-row>
-      <div class=""></div>
-    </b-card>
+            variant="danger"
+            v-on:click="deleteMember"
+            >-</b-button
+          >
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: "JoueurComponent",
+  data() {
+    return {
+      isOwner: false,
+    };
+  },
   props: {
     avatar: String,
     dateJoined: String,
     username: String,
     ville: String,
     IdJoueur: Number,
+    IdEquipeOwner: Number,
+    isVisible: Boolean,
+  },
+  created() {
+    this.checkIfUserIsOwner();
   },
   methods: {
     goToOtherUserProfil() {
       const IdJoueur = this.IdJoueur;
-      console.log(IdJoueur);
       localStorage.setItem("OtherUser", JSON.stringify({ IdUser: IdJoueur }));
       this.$router.push({ name: "OtherUserProfile" });
+    },
+    deleteMember() {
+      alert("delete");
+    },
+    checkIfUserIsOwner() {
+      const userId = JSON.parse(localStorage.getItem("user")).IdJoueur;
+      if (userId == this.IdEquipeOwner) {
+        this.isOwner = true;
+      }
     },
   },
 };

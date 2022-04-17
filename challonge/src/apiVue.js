@@ -108,6 +108,20 @@ export async function CreateTeam(data) {
       });
   });
 }
+export async function DeleteTeam(data) {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(`${process.env.VUE_APP_API_BASE_URL}/deleteTeam`, {
+        data,
+      })
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
 
 export async function UpdateTournament(data) {
   return new Promise((resolve, reject) => {
@@ -127,6 +141,20 @@ export async function InscriptionEquipe(data) {
   return new Promise((resolve, reject) => {
     axios
       .post(`${process.env.VUE_APP_API_BASE_URL}/inscriptionEquipe`, {
+        data,
+      })
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+export async function InscriptionMembre(data) {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(`${process.env.VUE_APP_API_BASE_URL}/addTeamMember`, {
         data,
       })
       .then((res) => {

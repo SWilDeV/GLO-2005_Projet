@@ -28,24 +28,61 @@
                           v-if="isOwner"
                           class="ms-auto"
                           type="button"
-                          variant="danger"
-                          v-on:click="deleteTournoi"
-                          >Supprimer</b-button
-                        >
-                        <b-button
-                          v-if="isOwner"
-                          class="ms-auto"
-                          type="button"
-                          variant="primary"
-                          v-on:click="editTournoi"
-                          >Modifier</b-button
+                          variant="info"
+                          v-on:click="toggleEdit"
+                          >Edit</b-button
                         >
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+
+              <div class="col-md-12 mb-3 mt-1">
+                <div class="row gutters-sm">
+                  <div class="col-sm-12">
+                    <b-button
+                      v-if="isVisible"
+                      class="ms-auto"
+                      type="button"
+                      variant="danger"
+                      v-on:click="deleteTournoi"
+                      >Supprimer</b-button
+                    >
+                    <b-button
+                      v-if="isVisible"
+                      class="ms-auto"
+                      type="button"
+                      variant="primary"
+                      v-on:click="editTournoi"
+                      >Modifier</b-button
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 mb-3 mt-1">
+                <div class="row gutters-sm">
+                  <div class="col-sm-12 mb-3">
+                    <AjoutEquipe
+                      v-if="isVisible"
+                      :AllTeams="AllTeamsDictionary"
+                      :EquipesInscrites="Equipes"
+                      :IdTournoi="Tournoi.IdTournoi"
+                      @add-team-to-tournament="addTeamToTournament($event)"
+                    />
+                    <div class="col-sm-12 mb-3">
+                      <AjoutMatch
+                        v-if="isVisible"
+                        :EquipesInscrites="Equipes"
+                        :IdTournoi="Tournoi.IdTournoi"
+                        @add-match-to-tournament="addMatchToTournament($event)"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+
             <div class="col-md-8">
               <div class="card mb-3">
                 <div class="card-body">
@@ -97,26 +134,7 @@
                 </div>
               </div>
               <div class="row gutters-sm">
-                <div class="col-sm-6 mb-3">
-                  <AjoutEquipe
-                    v-if="isOwner"
-                    :AllTeams="AllTeamsDictionary"
-                    :EquipesInscrites="Equipes"
-                    :IdTournoi="Tournoi.IdTournoi"
-                    @add-team-to-tournament="addTeamToTournament($event)"
-                  />
-                </div>
-                <div class="col-sm-6 mb-3">
-                  <AjoutMatch
-                    :EquipesInscrites="Equipes"
-                    :IdTournoi="Tournoi.IdTournoi"
-                    @add-match-to-tournament="addMatchToTournament($event)"
-                  />
-                </div>
-              </div>
-
-              <div class="row gutters-sm">
-                <div class="col-sm-6 mb-3">
+                <div class="col-sm-4 mb-3">
                   <div class="card h-100">
                     <div class="card-body">
                       <h6 class="d-flex align-items-center mb-3">
@@ -132,12 +150,16 @@
                           :key="equipe.idEquipe"
                           :nom-equipe="equipe.nomEquipe"
                           :IdEquipe="equipe.idEquipe"
+                          :isVisible="isVisible"
+                          @delete-team-from-tournament="
+                            deleteTeamFromTournament($event)
+                          "
                         />
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-6 mb-3">
+                <div class="col-sm-8 mb-3">
                   <div class="card h-100">
                     <div class="card-body">
                       <h6 class="d-flex align-items-center mb-3">
@@ -175,6 +197,7 @@ import {
   getTeams,
   InscriptionEquipe,
   createPartie,
+  DeleteTeam,
 } from "../apiVue.js";
 export default {
   name: "TournoiView",
@@ -187,6 +210,7 @@ export default {
   data() {
     return {
       isOwner: false,
+      isVisible: false,
       Tournoi: "",
       Parties: "",
       Equipes: [],
@@ -200,6 +224,9 @@ export default {
         IdTournoi: "",
         DateDebut: "",
         Heure: "",
+      },
+      form3: {
+        IdEquipe: "",
       },
       options: [
         { value: null, text: "Please select an option" },
@@ -293,6 +320,24 @@ export default {
         console.error(e);
       }
     },
+    async deleteTeamFromTournament({ IdEquipe }) {
+      try {
+        this.form3.IdEquipe = IdEquipe;
+        await DeleteTeam(this.form3).then((response) => {
+          alert(response);
+          this.$router.go();
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    toggleEdit() {
+      if (this.isVisible == false) {
+        this.isVisible = true;
+      } else {
+        this.isVisible = false;
+      }
+    },
   },
 
   created() {
@@ -301,4 +346,60 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+body {
+  margin-top: 20px;
+  color: #1a202c;
+  text-align: left;
+  background-color: #e2e8f0;
+}
+.main-body {
+  padding: 15px;
+}
+.card {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 0 solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
+
+.card-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1rem;
+}
+
+.gutters-sm {
+  margin-right: -8px;
+  margin-left: -8px;
+}
+
+.gutters-sm > .col,
+.gutters-sm > [class*="col-"] {
+  padding-right: 8px;
+  padding-left: 8px;
+}
+.mb-3,
+.my-3 {
+  margin-bottom: 1rem !important;
+}
+
+.bg-gray-300 {
+  background-color: #e2e8f0;
+}
+.h-100 {
+  height: 100% !important;
+}
+.shadow-none {
+  box-shadow: none !important;
+}
+</style>
