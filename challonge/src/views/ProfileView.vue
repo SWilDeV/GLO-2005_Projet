@@ -130,9 +130,14 @@
 </template>
 
 <script>
+import EquipeComponent from "../components/EquipeComponent.vue";
+// import MatchComponent from "../components/MatchComponent.vue";
 import { getUserDataByUserID } from "../apiVue.js";
 export default {
   name: "ProfileView",
+  components: {
+    EquipeComponent,
+  },
   data() {
     return {
       user: "",

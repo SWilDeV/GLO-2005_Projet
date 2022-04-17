@@ -45,7 +45,29 @@
                   </div>
                 </div>
               </div>
+              <div class="col-md-12 mb-3 mt-1">
+                <div class="row gutters-sm">
+                  <div class="col-sm-12 mb-3">
+                    <AjoutEquipe
+                      v-if="isOwner"
+                      :AllTeams="AllTeamsDictionary"
+                      :EquipesInscrites="Equipes"
+                      :IdTournoi="Tournoi.IdTournoi"
+                      @add-team-to-tournament="addTeamToTournament($event)"
+                    />
+                    <div class="col-sm-12 mb-3">
+                      <AjoutMatch
+                        v-if="isOwner"
+                        :EquipesInscrites="Equipes"
+                        :IdTournoi="Tournoi.IdTournoi"
+                        @add-match-to-tournament="addMatchToTournament($event)"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+
             <div class="col-md-8">
               <div class="card mb-3">
                 <div class="card-body">
@@ -97,27 +119,7 @@
                 </div>
               </div>
               <div class="row gutters-sm">
-                <div class="col-sm-6 mb-3">
-                  <AjoutEquipe
-                    v-if="isOwner"
-                    :AllTeams="AllTeamsDictionary"
-                    :EquipesInscrites="Equipes"
-                    :IdTournoi="Tournoi.IdTournoi"
-                    @add-team-to-tournament="addTeamToTournament($event)"
-                  />
-                </div>
-                <div class="col-sm-6 mb-3">
-                  <AjoutMatch
-                    v-if="isOwner"
-                    :EquipesInscrites="Equipes"
-                    :IdTournoi="Tournoi.IdTournoi"
-                    @add-match-to-tournament="addMatchToTournament($event)"
-                  />
-                </div>
-              </div>
-
-              <div class="row gutters-sm">
-                <div class="col-sm-6 mb-3">
+                <div class="col-sm-4 mb-3">
                   <div class="card h-100">
                     <div class="card-body">
                       <h6 class="d-flex align-items-center mb-3">
@@ -133,12 +135,16 @@
                           :key="equipe.idEquipe"
                           :nom-equipe="equipe.nomEquipe"
                           :IdEquipe="equipe.idEquipe"
+                          :isOwner="isOwner"
+                          @delete-team-from-tournament="
+                            deleteTeamFromTournament($event)
+                          "
                         />
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-6 mb-3">
+                <div class="col-sm-8 mb-3">
                   <div class="card h-100">
                     <div class="card-body">
                       <h6 class="d-flex align-items-center mb-3">
@@ -176,6 +182,7 @@ import {
   getTeams,
   InscriptionEquipe,
   createPartie,
+  DeleteTeam,
 } from "../apiVue.js";
 export default {
   name: "TournoiView",
@@ -201,6 +208,9 @@ export default {
         IdTournoi: "",
         DateDebut: "",
         Heure: "",
+      },
+      form3: {
+        IdEquipe: "",
       },
       options: [
         { value: null, text: "Please select an option" },
@@ -287,6 +297,17 @@ export default {
         this.form2.Heure = Heure;
         this.form2.IdTournoi = IdTournoi;
         await createPartie(this.form2).then((response) => {
+          alert(response);
+          this.$router.go();
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    async deleteTeamFromTournament({ IdEquipe }) {
+      try {
+        this.form3.IdEquipe = IdEquipe;
+        await DeleteTeam(this.form3).then((response) => {
           alert(response);
           this.$router.go();
         });

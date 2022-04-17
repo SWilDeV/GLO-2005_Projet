@@ -74,6 +74,7 @@
                           :avatar="joueur.Svatar"
                           :ville="joueur.Ville"
                           :id-joueur="joueur.IdJoueur"
+                          :IdEquipeOwner="Equipe.IdOwner"
                         />
                       </div>
                     </div>
@@ -217,7 +218,7 @@ export default {
           for (const user of AllUsers) {
             this.AllUsersDictionary.push({
               id: user.IdJoueur,
-              name: user.Nom,
+              name: user.Username,
             });
           }
         });

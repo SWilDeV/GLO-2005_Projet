@@ -1,8 +1,11 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-sm-11">{{ NomTournoi }}-> {{ NomJeu }}</div>
-      <div class="col-sm-1">
+      <b-link v-on:click="goToTournoi" class="text-decoration-none">
+        <div class="col-sm-11">{{ NomTournoi }}-> {{ NomJeu }}</div>
+      </b-link>
+
+      <!-- <div class="col-sm-1">
         <b-button
           class="p-1"
           type="button"
@@ -10,7 +13,7 @@
           v-on:click="goToTournoi"
           >+</b-button
         >
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
