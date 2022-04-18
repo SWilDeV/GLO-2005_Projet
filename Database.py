@@ -403,3 +403,16 @@ class Database:
         else:
             print("Le joueur a bien quitté l'équipe")  
             return "Le joueur a bien quitté l'équipe"
+        
+        def desinscrire(self, IdTeam, IdTournoi):
+        try:
+            sql = "DELETE FROM Inscription WHERE IdEquipe = %s AND IdTournoi = %s"
+            self.cur.execute(sql, (IdTeam, IdTournoi))
+            self.con.commit()
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with desinscrire")
+            return "error with desinscrire"
+        else:
+            print("L'équipe a été désinscrite")  
+            return "L'équipe a été désinscrite"

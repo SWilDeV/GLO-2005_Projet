@@ -408,6 +408,26 @@ def deleteTeam():
     else:
         return jsonify(res)
 
+@app.route('/desinscrire', methods=['POST'])
+def desinscrire():
+    try:
+        db=Database()
+        data =request.json["data"]
+        
+        if type(data)!= dict:
+            dataJSON = dict(json.loads(data))
+        else:
+            dataJSON =data
+        IdTournoi = dataJSON["IdTournoi"]
+        IdEquipe = dataJSON["IdEquipe"]
+        match = db.leaveTeam(IdEquipe, IdTournoi)
+    except:
+        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("error with desinscrire")
+        return "error with desinscrire"
+    else:
+        return jsonify(match)
+
 ################################ Parties #####################################
 
 
