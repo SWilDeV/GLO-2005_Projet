@@ -333,13 +333,13 @@ Insert into MembresEquipe (IdJoueur, IdEquipe, DateJoined, DateLeft) values (12,
 Insert into MembresEquipe (IdJoueur, IdEquipe, DateJoined, DateLeft) values (16, 6, '5/28/2021', '9/2/2021');
 Insert into MembresEquipe (IdJoueur, IdEquipe, DateJoined, DateLeft) values (18, 2, '6/10/2021', null);
 Insert into MembresEquipe (IdJoueur, IdEquipe, DateJoined, DateLeft) values (20, 8, '11/29/2021', '1/4/2022');
-Insert into MembresEquipe (IdJoueur, IdEquipe, DateJoined, DateLeft) values (30, 9, '7/22/2021', '7/28/2021');
+Insert into MembresEquipe (IdJoueur, IdEquipe, DateJoined, DateLeft) values (30, 9, '03/02/2021', '28/08/2023');
 Insert into MembresEquipe (IdJoueur, IdEquipe, DateJoined, DateLeft) values (52, 4, '12/8/2021', null);
 Insert into MembresEquipe (IdJoueur, IdEquipe, DateJoined, DateLeft) values (54, 1, '12/17/2021', null);
 Insert into MembresEquipe (IdJoueur, IdEquipe, DateJoined, DateLeft) values (55, 1, '2/24/2022', '2/29/2022');
 Insert into MembresEquipe (IdJoueur, IdEquipe, DateJoined, DateLeft) values (16, 4, '10/8/2021', null);
 Insert into MembresEquipe (IdJoueur, IdEquipe, DateJoined, DateLeft) values (20, 5, '1/5/2022', null);
-Insert into MembresEquipe (IdJoueur, IdEquipe, DateJoined, DateLeft) values (30, 7, '11/8/2021', null);
+Insert into MembresEquipe (IdJoueur, IdEquipe, DateJoined, DateLeft) values (30, 7, '11/08/2021', '11/01/2022');
 
 
 Insert into Inscription (IdEquipe, IdTournoi) values (4, 6);

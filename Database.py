@@ -72,6 +72,18 @@ class Database:
             result = self.cur.fetchmany(5)
             return result
 
+    def getUserTournament(self, IdUser):
+        try:
+            sql ="SELECT Tournoi.*, Game.nom as nomJeu FROM Tournoi LEFT JOIN Game ON Game.IdGame = Tournoi.IdGame INNER JOIN Inscription I ON I.IdTournoi = Tournoi.IdTournoi INNER JOIN MembresEquipe ME ON ME.IdEquipe = I.IdEquipe WHERE ME.IdJoueur = %s"
+             self.cur.execute(sql,(idUser))
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with getUserTournament")
+            return "error with getUserTournament"
+        else:
+            result = self.cur.fetchall()
+            return result
+
     def register_User(self,Username,Password,Courriel,FirstName,LastName,Ville,IdJoueur,Presentation,Avatar,IdPays,IdGame,DateJoined):
         try:
             sql = "insert into Utilisateur (IdJoueur, Username, Password, Courriel, Prenom, Nom, Ville, Presentation, Avatar, IdPays, IdGame, DateJoined) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"

@@ -112,12 +112,13 @@ def getUser():
         joueur = db.find_User_by_ID(IdJoueur)
         equipes = db.getTeamsByUsers(IdJoueur)
         parties = db.getUpcomingMatchesByUsers(IdJoueur)
+        tournois = db.getUserTournament(IdJoueur)
     except:
         print("Oops!", sys.exc_info()[0], "occurred.")
         print("error with getUser")
         return "error with getUser"
     else:
-        return jsonify({"User": joueur, "Equipes": equipes, "Parties": parties})
+        return jsonify({"User": joueur, "Equipes": equipes, "Parties": parties, "Tournois": tournois})
 
 @app.route('/editUser', methods=['PUT'])
 def editUser():
