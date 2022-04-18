@@ -112,12 +112,13 @@ def getUser():
         joueur = db.find_User_by_ID(IdJoueur)
         equipes = db.getTeamsByUsers(IdJoueur)
         parties = db.getUpcomingMatchesByUsers(IdJoueur)
+        tournois = db.getUserTournament(IdJoueur)
     except:
         print("Oops!", sys.exc_info()[0], "occurred.")
         print("error with getUser")
         return "error with getUser"
     else:
-        return jsonify({"User": joueur, "Equipes": equipes, "Parties": parties})
+        return jsonify({"User": joueur, "Equipes": equipes, "Parties": parties, "Tournois": tournois})
 
 @app.route('/editUser', methods=['PUT'])
 def editUser():
@@ -407,6 +408,26 @@ def deleteTeam():
         return "error with deleteTeam"
     else:
         return jsonify(res)
+
+@app.route('/desinscrire', methods=['POST'])
+def desinscrire():
+    try:
+        db=Database()
+        data =request.json["data"]
+        
+        if type(data)!= dict:
+            dataJSON = dict(json.loads(data))
+        else:
+            dataJSON =data
+        IdTournoi = dataJSON["IdTournoi"]
+        IdEquipe = dataJSON["IdEquipe"]
+        match = db.leaveTeam(IdEquipe, IdTournoi)
+    except:
+        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("error with desinscrire")
+        return "error with desinscrire"
+    else:
+        return jsonify(match)
 
 ################################ Parties #####################################
 
