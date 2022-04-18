@@ -11,7 +11,7 @@
         <div class="col-sm-2">
           <b-button
             v-if="isVisible"
-            class="px-1"
+            class="px-1 py-0"
             type="button"
             variant="danger"
             v-on:click="onClickDeleteMember"
@@ -58,7 +58,6 @@ export default {
     onClickDeleteMember() {
       const IdUser = this.IdJoueur;
       this.$emit("delete-user-from-team", { IdUser });
-      // this.form.IdEquipe = "";
     },
   },
 };

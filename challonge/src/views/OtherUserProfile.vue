@@ -113,6 +113,7 @@
                         :NomEquipeA="match.nomEquipe1"
                         :NomEquipeB="match.nomEquipe2"
                         :dateMatch="match.dateMatch"
+                        :heureMatch="match.heureMatch"
                       />
                     </div>
                   </div>

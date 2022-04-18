@@ -6,13 +6,12 @@
           v-on:click="onClickEditMatch"
           class="text-decoration-none text-center"
         >
-          <div>
-            {{ NomEquipeA }} 4 {{ scoreEquipe1 }} - 3{{ scoreEquipe2 }}
+          <h5>
+            {{ NomEquipeA }} {{ this.form.scoreEquipe1 }} -
+            {{ this.form.scoreEquipe2 }}
             {{ NomEquipeB }}
-          </div>
-          <div>
-            {{ dateMatch }}
-          </div>
+          </h5>
+          <p>{{ dateMatch }} : {{ heureMatch }}</p>
         </b-link>
       </div>
 
@@ -33,7 +32,7 @@
           <div>
             <b-form-input
               id="input-2"
-              v-model="form.score1"
+              v-model="form.scoreEquipe1"
               placeholder="score equipe 1"
               required
             ></b-form-input>
@@ -46,7 +45,7 @@
           <div>
             <b-form-input
               id="input-3"
-              v-model="form.score2"
+              v-model="form.scoreEquipe2"
               placeholder="score equipe 2"
               required
             ></b-form-input>
@@ -92,24 +91,66 @@ export default {
     NomEquipeA: String,
     NomEquipeB: String,
     dateMatch: String,
+    heureMatch: String,
     scoreEquipe1: Number,
     scoreEquipe2: Number,
     isVisible: Boolean,
+    IdMatch: Number,
+    IdEquipe1: Number,
+    IdEquipe2: Number,
+    IdTournoi: Number,
   },
   data() {
     return {
       isEditable: false,
       form: {
-        score1: "",
-        score2: "",
+        scoreEquipe1: 0,
+        scoreEquipe2: 0,
         DateDebut: "",
         Heure: "",
+        IdMatch: "",
+        IdEquipe1: "",
+        IdEquipe2: "",
+        IdTournoi: "",
       },
     };
   },
+  created() {
+    this.setValues();
+  },
   methods: {
+    setValues() {
+      const DateMatch = this.dateMatch;
+      const heure = this.heureMatch;
+      const IdEquipe1 = this.IdEquipe1;
+      const IdEquipe2 = this.IdEquipe2;
+      const IdTournoi = this.IdTournoi;
+      const IdMatch = this.IdMatch;
+      let score1 = this.scoreEquipe1;
+      let score2 = this.scoreEquipe2;
+      if (this.form.Heure == "") {
+        this.form.Heure = heure;
+      }
+      if (this.form.DateDebut == "") {
+        this.form.DateDebut = DateMatch;
+      }
+      if (score1 != null) {
+        this.form.scoreEquipe1 = score1;
+      }
+      if (score2 != null) {
+        this.form.scoreEquipe2 = score2;
+      }
+
+      this.form.IdEquipe1 = IdEquipe1;
+      this.form.IdEquipe2 = IdEquipe2;
+      this.form.IdTournoi = IdTournoi;
+      this.form.IdMatch = IdMatch;
+    },
     onClickEditMatch() {
-      alert("edit match");
+      if (this.isEditable) {
+        const form = this.form;
+        this.$emit("edit-match", { form });
+      }
     },
     toggleEdit() {
       if (this.isEditable == false) {
@@ -122,4 +163,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+h5,
+p {
+  color: rgb(40, 98, 153);
+}
+</style>

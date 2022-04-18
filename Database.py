@@ -72,10 +72,10 @@ class Database:
             result = self.cur.fetchmany(5)
             return result
 
-    def getUserTournament(self, IdUser):
+    def getUserTournament(self, idUser):
         try:
             sql ="SELECT Tournoi.*, Game.nom as nomJeu FROM Tournoi LEFT JOIN Game ON Game.IdGame = Tournoi.IdGame INNER JOIN Inscription I ON I.IdTournoi = Tournoi.IdTournoi INNER JOIN MembresEquipe ME ON ME.IdEquipe = I.IdEquipe WHERE ME.IdJoueur = %s"
-             self.cur.execute(sql,(idUser))
+            self.cur.execute(sql,(idUser))
         except:
             print("Oops!", sys.exc_info()[0], "occurred.")
             print("error with getUserTournament")
@@ -416,7 +416,7 @@ class Database:
             print("Le joueur a bien quitté l'équipe")  
             return "Le joueur a bien quitté l'équipe"
         
-        def desinscrire(self, IdTeam, IdTournoi):
+    def desinscrire(self, IdTeam, IdTournoi):
         try:
             sql = "DELETE FROM Inscription WHERE IdEquipe = %s AND IdTournoi = %s"
             self.cur.execute(sql, (IdTeam, IdTournoi))

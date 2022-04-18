@@ -51,14 +51,6 @@
                       v-on:click="deleteTeam"
                       >Supprimer</b-button
                     >
-                    <b-button
-                      v-if="isVisible"
-                      class="ms-auto"
-                      type="button"
-                      variant="primary"
-                      v-on:click="editTeam"
-                      >Modifier</b-button
-                    >
                   </div>
                 </div>
               </div>
@@ -127,7 +119,7 @@
               </div>
 
               <div class="row gutters-sm">
-                <div class="col-sm-6 mb-3">
+                <div class="col-sm-4 mb-3">
                   <div class="card h-100">
                     <div class="card-body">
                       <h6 class="d-flex align-items-center mb-3">
@@ -149,7 +141,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-6 mb-3">
+                <div class="col-sm-8 mb-3">
                   <div class="card h-100">
                     <div class="card-body">
                       <h6 class="d-flex align-items-center mb-3">
@@ -163,8 +155,12 @@
                           :NomEquipeA="match.nomEquipe1"
                           :NomEquipeB="match.nomEquipe2"
                           :dateMatch="match.dateMatch"
+                          :heureMatch="match.heureMatch"
                           :scoreEquipe1="match.scoreEquipe1"
                           :scoreEquipe2="match.scoreEquipe2"
+                          :IdEquipe1="match.idEquipe1"
+                          :IdEquipe2="match.idEquipe2"
+                          :IdTournoi="match.idTournoi"
                         />
                       </div>
                     </div>
@@ -220,6 +216,7 @@ export default {
   methods: {
     async getTeamInfo() {
       const team = await getTeamByTeamID(localStorage.getItem("equipe"));
+      console.log(team);
       this.Tournoi = team.Tournoi;
       this.Parties = team.Parties;
       this.Equipe = team.Equipes;
