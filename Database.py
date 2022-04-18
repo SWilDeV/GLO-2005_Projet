@@ -50,7 +50,7 @@ class Database:
 
     def getTeamsByUsers(self, idUser):
         try:
-            sql ="SELECT E.*, G.nom AS nomJeu, P.NomPays FROM Equipe E LEFT JOIN Pays P ON E.idPays = P.IdPays LEFT JOIN Game G ON E.idGame = G.IdGame JOIN MembresEquipe ME ON ME.idEquipe = E.idEquipe WHERE ME.idJoueur = %s"
+            sql ="SELECT E.*, G.nom AS nomJeu, P.NomPays FROM Equipe E LEFT JOIN Pays P ON E.idPays = P.IdPays LEFT JOIN Game G ON E.idGame = G.IdGame JOIN MembresEquipe ME ON ME.idEquipe = E.idEquipe WHERE ME.idJoueur = %s AND ME.DateLeft IS NULL"
             self.cur.execute(sql,(idUser))
         except:
             print("Oops!", sys.exc_info()[0], "occurred.")
@@ -236,7 +236,7 @@ class Database:
 
     def getPlayersByTeam(self, IdEquipe):
         try:
-            sql ="SELECT U.*, P.nomPays, G.nom AS nomJeu FROM Utilisateur U LEFT JOIN Pays P ON P.IdPays = U.IdPays LEFT JOIN Game G ON G.idGame = U.idGame INNER JOIN MembresEquipe M ON M.IdJoueur = U.IdJoueur WHERE M.IdEquipe = %s"
+            sql ="SELECT U.*, P.nomPays, G.nom AS nomJeu FROM Utilisateur U LEFT JOIN Pays P ON P.IdPays = U.IdPays LEFT JOIN Game G ON G.idGame = U.idGame INNER JOIN MembresEquipe M ON M.IdJoueur = U.IdJoueur WHERE M.IdEquipe = %s AND M.DateLeft IS NULL"
             self.cur.execute(sql,(IdEquipe))
         except:
             print("Oops!", sys.exc_info()[0], "occurred.")
