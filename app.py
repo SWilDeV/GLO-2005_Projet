@@ -419,6 +419,7 @@ def desinscrire():
             dataJSON = dict(json.loads(data))
         else:
             dataJSON =data
+        print(dataJSON)
         IdTournoi = dataJSON["IdTournoi"]
         IdEquipe = dataJSON["IdEquipe"]
         match = db.leaveTeam(IdEquipe, IdTournoi)
@@ -485,11 +486,11 @@ def editMatch():
             dataJSON = dict(json.loads(data))
         else:
             dataJSON =data
-        dateMatch = dataJSON["dateMatch"]
-        heureMatch = dataJSON["heureMatch"]
-        idEquipe1 = dataJSON["idEquipe1"]
-        idEquipe2 = dataJSON["idEquipe2"]
-        idTournoi = dataJSON["idTournoi"]
+        dateMatch = dataJSON["DateDebut"]
+        heureMatch = dataJSON["Heure"]
+        idEquipe1 = dataJSON["IdEquipe1"]
+        idEquipe2 = dataJSON["IdEquipe2"]
+        idTournoi = dataJSON["IdTournoi"]
         IdMatch = dataJSON["IdMatch"]
         scoreEquipe1 = dataJSON["scoreEquipe1"]
         scoreEquipe2 = dataJSON["scoreEquipe2"]

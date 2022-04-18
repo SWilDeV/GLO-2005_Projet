@@ -176,9 +176,15 @@
                           :NomEquipeA="match.nomEquipe1"
                           :NomEquipeB="match.nomEquipe2"
                           :dateMatch="match.dateMatch"
+                          :heureMatch="match.heureMatch"
                           :scoreEquipe1="match.scoreEquipe1"
                           :scoreEquipe2="match.scoreEquipe2"
+                          :IdEquipe1="match.idEquipe1"
+                          :IdEquipe2="match.idEquipe2"
+                          :IdTournoi="match.idTournoi"
                           :isVisible="isVisible"
+                          :IdMatch="match.IdMatch"
+                          @edit-match="editMatch($event)"
                         />
                       </div>
                     </div>
@@ -203,7 +209,8 @@ import {
   getTeams,
   InscriptionEquipe,
   createPartie,
-  // DeleteTeam,
+  DeleteTeamFromTournament,
+  EditPartie,
 } from "../apiVue.js";
 export default {
   name: "TournoiView",
@@ -233,6 +240,7 @@ export default {
       },
       form3: {
         IdEquipe: "",
+        IdTournoi: "",
       },
       options: [
         { value: null, text: "Please select an option" },
@@ -274,8 +282,15 @@ export default {
         this.isOwner = true;
       }
     },
-    addMatch() {
-      alert("newMatch");
+    async editMatch({ form }) {
+      try {
+        await EditPartie(form).then((response) => {
+          alert(response);
+          this.$router.go();
+        });
+      } catch (e) {
+        console.error(e);
+      }
     },
     getEquipes() {
       try {
@@ -329,11 +344,11 @@ export default {
     async deleteTeamFromTournament({ IdEquipe }) {
       try {
         this.form3.IdEquipe = IdEquipe;
-        alert("deleteTeam");
-        // await DeleteTeam(this.form3).then((response) => {
-        //   alert(response);
-        //   this.$router.go();
-        // });
+        this.form3.IdTournoi = this.Tournoi.IdTournoi;
+        await DeleteTeamFromTournament(this.form3).then((response) => {
+          alert(response);
+          this.$router.go();
+        });
       } catch (e) {
         console.error(e);
       }
