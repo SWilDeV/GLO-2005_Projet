@@ -6,10 +6,10 @@ import random
 from flask_bcrypt import Bcrypt
 import sys
 from datetime import date
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 from Database import Database
 import json
-load_dotenv()
+#load_dotenv()
 import os
 
 

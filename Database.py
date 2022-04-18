@@ -5,14 +5,14 @@ import pymysql, pymysql.cursors
 from flask_bcrypt import Bcrypt
 import sys
 from datetime import date
-from dotenv import load_dotenv
-load_dotenv()
+#from dotenv import load_dotenv
+#load_dotenv()
 import os
 
 class Database:
     def __init__(self):
         db=os.environ.get('DB')
-        self.con = pymysql.connect(host='localhost',user=os.environ.get('USER'), password=os.environ.get('PASSWORD'),db=os.environ.get('DB'))
+        self.con = pymysql.connect(host='localhost',user="root", password="F3l1xJ1688!",db="ChallongeII")
         self.cur=self.con.cursor(pymysql.cursors.DictCursor)
 
 
@@ -62,7 +62,7 @@ class Database:
 
     def getUpcomingMatchesByUsers(self, idUser):
         try:
-            sql ="SELECT P.*, E1.nomEquipe AS nomEquipe1, E2.nomEquipe as nomEquipe2, EG.nomEquipe as nomGagnant FROM Partie P LEFT JOIN Equipe E1 ON P.IdEquipe1 = E1.IdEquipe LEFT JOIN Equipe E2 ON P.IdEquipe2 = E2.IdEquipe LEFT JOIN Equipe EG ON P.IdGagnant = EG.IdEquipe INNER JOIN Equipe E ON P.idEquipe1 = E.idEquipe OR P.idEquipe2 = E.idEquipe JOIN MembresEquipe ME ON ME.idEquipe = E.idEquipe WHERE ME.idJoueur = %s AND ME.dateLeft IS NULL AND P.scoreEquipe1 IS NULL ORDER BY P.dateMatch"
+            sql ="SELECT P.*, E1.nomEquipe AS nomEquipe1, E2.nomEquipe as nomEquipe2, EG.nomEquipe as nomGagnant FROM Partie P LEFT JOIN Equipe E1 ON P.IdEquipe1 = E1.IdEquipe LEFT JOIN Equipe E2 ON P.IdEquipe2 = E2.IdEquipe LEFT JOIN Equipe EG ON P.IdGagnant = EG.IdEquipe INNER JOIN Equipe E ON P.idEquipe1 = E.idEquipe OR P.idEquipe2 = E.idEquipe JOIN MembresEquipe ME ON ME.idEquipe = E.idEquipe WHERE ME.idJoueur = %s AND ME.dateLeft IS NULL ORDER BY P.dateMatch"
             self.cur.execute(sql,(idUser))
         except:
             print("Oops!", sys.exc_info()[0], "occurred.")
@@ -206,7 +206,7 @@ class Database:
 
     def getTeamById(self, IdEquipe):
         try:
-            sql ="SELECT Equipe.*, Game.nom AS nomJeu FROM Equipe LEFT JOIN Game ON Game.IdGame = Equipe.IdGame WHERE Equipe.IdEquipe = %s"
+            sql ="SELECT Equipe.*, Game.nom AS nomJeu, pays.NomPays FROM Equipe LEFT JOIN Game ON Game.IdGame = Equipe.IdGame LEFT JOIN Pays ON Pays.IdPays = Equipe.IdPays WHERE Equipe.IdEquipe = %s"
             self.cur.execute(sql,(IdEquipe))
         except:
             print("Oops!", sys.exc_info()[0], "occurred.")
@@ -260,14 +260,14 @@ class Database:
 
     def getUpcomingMatchesByTeam(self, IdEquipe):
         try:
-            sql = "SELECT P.*, E1.nomEquipe AS nomEquipe1, E2.nomEquipe as nomEquipe2, EG.nomEquipe as nomGagnant FROM Partie P LEFT JOIN Equipe E1 ON P.IdEquipe1 = E1.IdEquipe LEFT JOIN Equipe E2 ON P.IdEquipe2 = E2.IdEquipe LEFT JOIN Equipe EG ON P.IdGagnant = EG.IdEquipe WHERE (IdEquipe1 = %s OR IdEquipe2 = %s) AND scoreEquipe1 IS NULL ORDER BY dateMatch"
+            sql = "SELECT P.*, E1.nomEquipe AS nomEquipe1, E2.nomEquipe as nomEquipe2, EG.nomEquipe as nomGagnant FROM Partie P LEFT JOIN Equipe E1 ON P.IdEquipe1 = E1.IdEquipe LEFT JOIN Equipe E2 ON P.IdEquipe2 = E2.IdEquipe LEFT JOIN Equipe EG ON P.IdGagnant = EG.IdEquipe WHERE (IdEquipe1 = %s OR IdEquipe2 = %s) ORDER BY dateMatch"
             self.cur.execute(sql,(IdEquipe, IdEquipe))
         except:
-            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("Oops!", sys.exc_info(), "occurred.")
             print("error with getUpcomingMatchesByTeam")
             return "error with getUpcomingMatchesByTeam"
         else:
-            result = self.cur.fetchmany(5)
+            result = self.cur.fetchall()
             return result
 
     def EditEquipe(self, IdEquipe, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame):
