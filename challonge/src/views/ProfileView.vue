@@ -77,11 +77,35 @@
             </div>
 
             <div class="row gutters-sm">
-              <div class="col-sm-6 mb-3">
+              <div class="col-sm-4 mb-3">
                 <div class="card h-100">
                   <div class="card-body">
                     <h6 class="d-flex align-items-center mb-3">
-                      <i class="material-icons text-info mr-2">Equipes</i>
+                      <i class="material-icons text-info mr-2"
+                        >Tournois inscrits</i
+                      >
+                    </h6>
+
+                    <div>
+                      <TournoiComponent
+                        class="card h-100 m-1"
+                        v-for="tournoi in Tournois"
+                        :key="tournoi.IdTournoi"
+                        :nom-tournoi="tournoi.nomTournoi"
+                        :IdTournoi="tournoi.IdTournoi"
+                        :nom-jeu="tournoi.nomJeu"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4 mb-3">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h6 class="d-flex align-items-center mb-3">
+                      <i class="material-icons text-info mr-2"
+                        >Equipes dont je fais parti</i
+                      >
                     </h6>
 
                     <div>
@@ -96,7 +120,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-6 mb-3">
+              <div class="col-sm-4 mb-3">
                 <div class="card h-100">
                   <div class="card-body">
                     <h6 class="d-flex align-items-center mb-3">
@@ -110,6 +134,7 @@
                         :NomEquipeA="match.nomEquipe1"
                         :NomEquipeB="match.nomEquipe2"
                         :dateMatch="match.dateMatch"
+                        :heureMatch="match.heureMatch"
                       />
                     </div>
                   </div>
@@ -126,18 +151,21 @@
 <script>
 import EquipeComponent from "../components/EquipeComponent.vue";
 import MatchComponent from "../components/MatchComponent.vue";
+import TournoiComponent from "../components/TournoiComponent.vue";
 import { getUserDataByUserID } from "../apiVue.js";
 export default {
   name: "ProfileView",
   components: {
     EquipeComponent,
     MatchComponent,
+    TournoiComponent,
   },
   data() {
     return {
       user: "",
       Parties: "",
       Equipes: "",
+      Tournois: "",
     };
   },
   async created() {
@@ -148,6 +176,7 @@ export default {
         this.user = response.User;
         this.Parties = response.Parties;
         this.Equipes = response.Equipes;
+        this.Tournois = response.Tournois;
       }
     });
   },

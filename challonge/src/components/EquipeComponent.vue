@@ -9,7 +9,7 @@
       <div class="col-sm-1">
         <b-button
           v-if="isVisible"
-          class="p-1"
+          class="px-1 py-0"
           type="button"
           variant="danger"
           v-on:click="onClickDeleteTeam"

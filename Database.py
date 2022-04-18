@@ -50,7 +50,7 @@ class Database:
 
     def getTeamsByUsers(self, idUser):
         try:
-            sql ="SELECT E.*, G.nom AS nomJeu, P.NomPays FROM Equipe E LEFT JOIN Pays P ON E.idPays = P.IdPays LEFT JOIN Game G ON E.idGame = G.IdGame JOIN MembresEquipe ME ON ME.idEquipe = E.idEquipe WHERE ME.idJoueur = %s"
+            sql ="SELECT E.*, G.nom AS nomJeu, P.NomPays FROM Equipe E LEFT JOIN Pays P ON E.idPays = P.IdPays LEFT JOIN Game G ON E.idGame = G.IdGame JOIN MembresEquipe ME ON ME.idEquipe = E.idEquipe WHERE ME.idJoueur = %s AND ME.DateLeft IS NULL"
             self.cur.execute(sql,(idUser))
         except:
             print("Oops!", sys.exc_info()[0], "occurred.")
@@ -70,6 +70,18 @@ class Database:
             return "error with getUpcomingMatchesByUsers"
         else:
             result = self.cur.fetchmany(5)
+            return result
+
+    def getUserTournament(self, idUser):
+        try:
+            sql ="SELECT Tournoi.*, Game.nom as nomJeu FROM Tournoi LEFT JOIN Game ON Game.IdGame = Tournoi.IdGame INNER JOIN Inscription I ON I.IdTournoi = Tournoi.IdTournoi INNER JOIN MembresEquipe ME ON ME.IdEquipe = I.IdEquipe WHERE ME.IdJoueur = %s"
+            self.cur.execute(sql,(idUser))
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with getUserTournament")
+            return "error with getUserTournament"
+        else:
+            result = self.cur.fetchall()
             return result
 
     def register_User(self,Username,Password,Courriel,FirstName,LastName,Ville,IdJoueur,Presentation,Avatar,IdPays,IdGame,DateJoined):
@@ -224,7 +236,7 @@ class Database:
 
     def getPlayersByTeam(self, IdEquipe):
         try:
-            sql ="SELECT U.*, P.nomPays, G.nom AS nomJeu FROM Utilisateur U LEFT JOIN Pays P ON P.IdPays = U.IdPays LEFT JOIN Game G ON G.idGame = U.idGame INNER JOIN MembresEquipe M ON M.IdJoueur = U.IdJoueur WHERE M.IdEquipe = %s"
+            sql ="SELECT U.*, P.nomPays, G.nom AS nomJeu FROM Utilisateur U LEFT JOIN Pays P ON P.IdPays = U.IdPays LEFT JOIN Game G ON G.idGame = U.idGame INNER JOIN MembresEquipe M ON M.IdJoueur = U.IdJoueur WHERE M.IdEquipe = %s AND M.DateLeft IS NULL"
             self.cur.execute(sql,(IdEquipe))
         except:
             print("Oops!", sys.exc_info()[0], "occurred.")
@@ -403,3 +415,16 @@ class Database:
         else:
             print("Le joueur a bien quitté l'équipe")  
             return "Le joueur a bien quitté l'équipe"
+        
+    def desinscrire(self, IdTeam, IdTournoi):
+        try:
+            sql = "DELETE FROM Inscription WHERE IdEquipe = %s AND IdTournoi = %s"
+            self.cur.execute(sql, (IdTeam, IdTournoi))
+            self.con.commit()
+        except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("error with desinscrire")
+            return "error with desinscrire"
+        else:
+            print("L'équipe a été désinscrite")  
+            return "L'équipe a été désinscrite"
