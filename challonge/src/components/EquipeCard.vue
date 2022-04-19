@@ -1,16 +1,20 @@
 <template>
-  <div class="card mb-3" style="max-width: 540px">
-    <div class="row g-0">
-      <div class="col-md-4">
-        <img v-bind:src="Logo" class="img-fluid rounded-start" />
+  <div class="card shadow sm-4 m-3" style="max-width: 20rem">
+    <div class="col">
+      <div class="card">
+        <img v-bind:src="Logo" class="card-img-top" />
       </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h3 class="card-title">{{ NomEquipe }}</h3>
-          <h4 class="card-title">{{ jeu }}</h4>
-
+      <div class="col-sm-12">
+        <div class="card-body d-flex justify-content-between">
+          <div>
+            <h3 class="card-title">{{ NomEquipe }}</h3>
+            <h4 class="card-title">{{ jeu }}</h4>
+          </div>
+        </div>
+        <div>
           <b-button
-            class="ms-4"
+            class="d-flex justify-content-between m-1"
+            style="max-height: 3rem"
             type="button"
             variant="primary"
             v-on:click="goToTeam"

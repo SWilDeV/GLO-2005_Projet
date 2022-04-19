@@ -13,7 +13,7 @@
       :min-equipe="tournament.minEquipe"
       :min-joueur="tournament.minJoueur"
       :nom-tournoi="tournament.nomTournoi"
-      :logo="tournament.Logo"
+      :Logo="tournament.Logo"
     />
   </div>
 </template>
