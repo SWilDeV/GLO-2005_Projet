@@ -330,8 +330,7 @@ def createEquipe():
         IdOwner = dataJSON["IdOwner"] 
         IdPays = dataJSON["IdPays"] 
         IdGame = dataJSON["IdGame"] 
-        Logo = dataJSON["Logo"]
-        equipe = db.CreateEquipe(NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame, Logo)
+        equipe = db.CreateEquipe(NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame)
     except:
         print("Oops!", sys.exc_info(), "occurred.")
         print("error with createEquipe")

@@ -288,10 +288,10 @@ class Database:
             equipe = self.getTeamById(IdEquipe)
             return equipe
 
-    def CreateEquipe(self, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame, Logo):
+    def CreateEquipe(self, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame):
         try:
-            sql ="INSERT INTO Equipe (NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame, Logo) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-            self.cur.execute(sql, (NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame, Logo))
+            sql ="INSERT INTO Equipe (NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame) VALUES (%s, %s, %s, %s, %s, %s)"
+            self.cur.execute(sql, (NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame))
             self.con.commit()
         except:
             print("Oops!", sys.exc_info()[1], "occurred.")
