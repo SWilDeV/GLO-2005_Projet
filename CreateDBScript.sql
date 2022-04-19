@@ -1,9 +1,9 @@
 USE sys;
 
-DROP DATABASE IF EXISTS ChallongeII;
-Create database if not exists ChallongeII;
+DROP DATABASE IF EXISTS MadaTournoi;
+Create database if not exists MadaTournoi;
 
-Use ChallongeII;
+Use MadaTournoi;
 
 Create table if not exists Pays(
 IdPays int NOT NULL auto_increment,
@@ -24,10 +24,10 @@ PRIMARY KEY(idGame)
 
 
 CREATE TABLE IF NOT EXISTS Utilisateur (
-	IdJoueur INT,
-	Username VARCHAR(50),
+	IdJoueur INT auto_increment,
+	Username VARCHAR(50) UNIQUE,
 	Password VARCHAR(100),
-	Courriel VARCHAR(50),
+	Courriel VARCHAR(50) UNIQUE,
 	Prenom VARCHAR(50),
 	Nom VARCHAR(50),
 	Ville VARCHAR(50),
@@ -63,9 +63,9 @@ CREATE TABLE IF NOT EXISTS Utilisateur (
 
 Create table if not exists Equipe(
 IdEquipe int NOT NULL auto_increment,
-NomEquipe varchar(100) NOT NULL,
+NomEquipe varchar(100) NOT NULL UNIQUE,
 Presentation varchar(1000),
-Logo varchar(100),
+Logo varchar(1000),
 IdOwner int NOT NULL,
 IdPays int,
 IdGame int,
@@ -86,6 +86,7 @@ minJoueur int,
 maxJoueur int,
 IdGame int,
 IdOwner int NOT NULL,
+Logo varchar(1000),
 PRIMARY KEY (IdTournoi),
 FOREIGN KEY (IdOwner) REFERENCES Utilisateur (IdJoueur),
 FOREIGN KEY (IdGame) REFERENCES Game (IdGame)
