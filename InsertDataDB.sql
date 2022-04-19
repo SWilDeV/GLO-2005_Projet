@@ -1,3 +1,5 @@
+use MadaTournoi;
+
 Insert into Pays (IdPays, NomPays, Drapeau) values (1, 'France', null);
 Insert into Pays (IdPays, NomPays, Drapeau) values (2, 'Japon', null);
 Insert into Pays (IdPays, NomPays, Drapeau) values (3, 'Espagne', null);
@@ -449,10 +451,10 @@ insert into Utilisateur (IdJoueur, Username, Password, Courriel, Prenom, Nom, Vi
 
 
 
-Insert into Equipe (IdEquipe, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame) values (1, 'SFShock', 'Maecenas sollicitudin, sapien in tincidunt porttitor, velit elit tincidunt quam, non lobortis nibh turpis non est. Maecenas egestas odio felis, eget mattis lacus placerat et. Morbi tincidunt eu erat quis vestibulum.', null, 7, 1, 2);
-Insert into Equipe (IdEquipe, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame) values (2, 'LAGladiators', 'Sed porta lobortis consequat. In pellentesque rhoncus ante, eu varius tortor pharetra auctor.', null, 6, 7, 2);
-Insert into Equipe (IdEquipe, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame) values (3, 'PAEternal', 'Maecenas dapibus bibendum congue. Etiam odio libero, porttitor eget auctor eget, cursus ut leo. Sed tempor rhoncus tempus.', null, 10, 6, 2);
-Insert into Equipe (IdEquipe, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame) values (4, 'NYExcelsior', 'Donec congue nibh sed velit eleifend porttitor. Cras finibus tempor bibendum. Aliquam at dolor nulla.', null, 9, 9, 2);
+Insert into Equipe (IdEquipe, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame) values (1, 'SFShock', 'Maecenas sollicitudin, sapien in tincidunt porttitor, velit elit tincidunt quam, non lobortis nibh turpis non est. Maecenas egestas odio felis, eget mattis lacus placerat et. Morbi tincidunt eu erat quis vestibulum.', 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/San_Francisco_Shock_logo.svg/1200px-San_Francisco_Shock_logo.svg.png', 7, 1, 2);
+Insert into Equipe (IdEquipe, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame) values (2, 'LAGladiators', 'Sed porta lobortis consequat. In pellentesque rhoncus ante, eu varius tortor pharetra auctor.', 'https://i0.wp.com/thegamehaus.com/wp-content/uploads/2019/02/eB1_wFIo_400x400.jpg?fit=400%2C400&ssl=1', 6, 7, 2);
+Insert into Equipe (IdEquipe, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame) values (3, 'PAEternal', 'Maecenas dapibus bibendum congue. Etiam odio libero, porttitor eget auctor eget, cursus ut leo. Sed tempor rhoncus tempus.', 'https://liquipedia.net/commons/images/e/e9/Paris_Eternal_allmode_full.png', 10, 6, 2);
+Insert into Equipe (IdEquipe, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame) values (4, 'NYExcelsior', 'Donec congue nibh sed velit eleifend porttitor. Cras finibus tempor bibendum. Aliquam at dolor nulla.', 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/New_York_Excelsior_%28logo%29.svg/1200px-New_York_Excelsior_%28logo%29.svg.png', 9, 9, 2);
 Insert into Equipe (IdEquipe, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame) values (5, 'SEDynasty', 'Mauris efficitur felis eget enim elementum, sit amet iaculis felis luctus.', null, 17, 9, 2);
 Insert into Equipe (IdEquipe, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame) values (6, 'LAValiant', 'Etiam dapibus, felis quis venenatis tincidunt, mi sapien ornare felis, et fermentum eros orci eu enim.', null, 52, 4, 2);
 Insert into Equipe (IdEquipe, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame) values (7, 'GZCharge', 'Suspendisse lectus orci, hendrerit ac aliquet sed, dictum molestie diam.', null, 16, 2, 2);
@@ -460,7 +462,7 @@ Insert into Equipe (IdEquipe, NomEquipe, Presentation, Logo, IdOwner, IdPays, Id
 Insert into Equipe (IdEquipe, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame) values (9, 'LDSpitfire', 'Nullam ornare, augue non blandit porta, est magna cursus dui, id viverra risus dui vitae risus.', null, 1, 1, 2);
 Insert into Equipe (IdEquipe, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame) values (10, 'Dream Team', 'Nullam ornare, augue non blandit porta, est magna cursus dui, id viverra risus dui vitae risus.', null, 34, 6, 1);
 Insert into Equipe (IdEquipe, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame) values (11, 'Creeper Team', 'Nullam ornare, augue non blandit porta, est magna cursus dui, id viverra risus dui vitae risus.', null, 79, 4, 1);
-Insert into Equipe (IdEquipe, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame) values (12, 'Minr Team', 'Nullam ornare, augue non blandit porta, est magna cursus dui, id viverra risus dui vitae risus.', null, 26, 3, 1);
+Insert into Equipe (IdEquipe, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame) values (12, 'Minr Team', 'Nullam ornare, augue non blandit porta, est magna cursus dui, id viverra risus dui vitae risus.', 'https://wiki.minr.org/resources/assets/wiki.png', 26, 3, 1);
 Insert into Equipe (IdEquipe, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame) values (13, 'Ventry', 'Nullam ornare, augue non blandit porta, est magna cursus dui, id viverra risus dui vitae risus.', null, 27, 6, 2);
 Insert into Equipe (IdEquipe, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame) values (14, 'MadaGo', 'Nullam ornare, augue non blandit porta, est magna cursus dui, id viverra risus dui vitae risus.', null, 68, 4, 2);
 Insert into Equipe (IdEquipe, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame) values (15, 'ChatSGO', 'Nullam ornare, augue non blandit porta, est magna cursus dui, id viverra risus dui vitae risus.', null, 36, 3, 2);
