@@ -495,15 +495,15 @@ Insert into Equipe (IdEquipe, NomEquipe, Presentation, Logo, IdOwner, IdPays, Id
 
 
 
-Insert into Tournoi (IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, IdGame, IdOwner) values (1, 'MCC', '2022-02-26', 2, 8, 3, 8, 1, 12);
-Insert into Tournoi (IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, IdGame, IdOwner) values (2, 'CS:GO Invitational', '2022-04-01', 4, 16, 5, 10, 4, 58);
-Insert into Tournoi (IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, IdGame, IdOwner) values (3, 'AFO', '2022-04-28', 2, 12, 5, 8, 3, 7);
-Insert into Tournoi (IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, IdGame, IdOwner) values (4, 'Fortnite championship', '2022-01-30', 2, 25, 1, 4, 6, 69);
-Insert into Tournoi (IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, IdGame, IdOwner) values (5, 'The big WOW', '2022-04-19', 10, 50, 4, 10, 5, 36);
-Insert into Tournoi (IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, IdGame, IdOwner) values (6, '1v1 widow', '2022/06/03', 1, 1, 40, 80, 6, 44);
-Insert into Tournoi (IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, IdGame, IdOwner) values (7, 'AHHHHHH', '2022/05/01', 2, 4, 20, 40, 1, 46);
-Insert into Tournoi (IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, IdGame, IdOwner) values (8, 'egg hunt', '2022/06/24', 4, 6, 30, 50, 9, 6);
-Insert into Tournoi (IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, IdGame, IdOwner) values (9, 'OWL', '2022-05-01', 2, 30, 6, 12, 2, 17);
+Insert into Tournoi (IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, IdGame, IdOwner, Logo) values (1, 'MCC', '2022-02-26', 2, 8, 3, 8, 1, 12, null);
+Insert into Tournoi (IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, IdGame, IdOwner, Logo) values (2, 'CS:GO Invitational', '2022-04-01', 4, 16, 5, 10, 4, 58, null);
+Insert into Tournoi (IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, IdGame, IdOwner, Logo) values (3, 'AFO', '2022-04-28', 2, 12, 5, 8, 3, 7, null);
+Insert into Tournoi (IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, IdGame, IdOwner, Logo) values (4, 'Fortnite championship', '2022-01-30', 2, 25, 1, 4, 6, 69, null);
+Insert into Tournoi (IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, IdGame, IdOwner, Logo) values (5, 'The big WOW', '2022-04-19', 10, 50, 4, 10, 5, 36, null);
+Insert into Tournoi (IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, IdGame, IdOwner, Logo) values (6, '1v1 widow', '2022/06/03', 1, 1, 40, 80, 6, 44, null);
+Insert into Tournoi (IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, IdGame, IdOwner, Logo) values (7, 'AHHHHHH', '2022/05/01', 2, 4, 20, 40, 1, 46, null);
+Insert into Tournoi (IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, IdGame, IdOwner, Logo) values (8, 'egg hunt', '2022/06/24', 4, 6, 30, 50, 9, 6, null);
+Insert into Tournoi (IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, IdGame, IdOwner, Logo) values (9, 'OWL', '2022-05-01', 2, 30, 6, 12, 2, 17, null);
 
 
 Insert into MembresEquipe (IdJoueur, IdEquipe, DateJoined, DateLeft) values (1, 1, '2021-04-03', null);

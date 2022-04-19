@@ -3,7 +3,7 @@ USE sys;
 DROP DATABASE IF EXISTS MadaTournoi;
 Create database if not exists MadaTournoi;
 
-Use ChallongeII;
+Use MadaTournoi;
 
 Create table if not exists Pays(
 IdPays int NOT NULL auto_increment,
@@ -65,7 +65,7 @@ Create table if not exists Equipe(
 IdEquipe int NOT NULL auto_increment,
 NomEquipe varchar(100) NOT NULL UNIQUE,
 Presentation varchar(1000),
-Logo varchar(100),
+Logo varchar(1000),
 IdOwner int NOT NULL,
 IdPays int,
 IdGame int,
@@ -86,6 +86,7 @@ minJoueur int,
 maxJoueur int,
 IdGame int,
 IdOwner int NOT NULL,
+Logo varchar(1000),
 PRIMARY KEY (IdTournoi),
 FOREIGN KEY (IdOwner) REFERENCES Utilisateur (IdJoueur),
 FOREIGN KEY (IdGame) REFERENCES Game (IdGame)
