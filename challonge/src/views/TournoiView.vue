@@ -14,7 +14,7 @@
                     class="d-flex flex-column align-items-center text-center"
                   >
                     <img
-                      v-bind:src="logo"
+                      v-bind:src="Tournoi.Logo"
                       alt="Admin"
                       class="rounded-circle"
                       width="150"

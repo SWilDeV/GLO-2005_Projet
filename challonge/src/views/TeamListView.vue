@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="container">
     <h1>Liste des Equipes</h1>
-    <div class="row">
+    <div class="row row-cols-1 row-cols-md-3 p-5 m-5 g-5">
       <EquipeCard
         v-for="equipe in equipes"
         :key="equipe.IdEquipe"
