@@ -6,11 +6,13 @@
           v-on:click="onClickEditMatch"
           class="text-decoration-none text-center"
         >
+          <h6>{{ NomTournoi }}</h6>
           <h5>
             {{ NomEquipeA }} {{ this.form.scoreEquipe1 }} -
             {{ this.form.scoreEquipe2 }}
             {{ NomEquipeB }}
           </h5>
+
           <p>{{ dateMatch }} : {{ heureMatch }}</p>
         </b-link>
       </div>
@@ -92,6 +94,7 @@ export default {
     NomEquipeB: String,
     dateMatch: String,
     heureMatch: String,
+    NomTournoi: String,
     scoreEquipe1: Number,
     scoreEquipe2: Number,
     isVisible: Boolean,

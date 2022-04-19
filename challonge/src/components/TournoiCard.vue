@@ -3,11 +3,7 @@
     <div class="card">
       <div class="row">
         <div class="col-md-2">
-          <img
-            src="../assets/xbox.png"
-            class="img-fluid rounded-start"
-            alt="..."
-          />
+          <img v-bind:src="Logo" class="img-fluid rounded-start" alt="..." />
         </div>
         <div class="col-md-10">
           <div class="card-body row">
@@ -49,6 +45,7 @@ export default {
     MinEquipe: Number,
     MinJoueur: Number,
     NomTournoi: String,
+    Logo: String,
   },
   methods: {
     goToTournament() {

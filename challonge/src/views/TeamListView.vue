@@ -8,6 +8,7 @@
         :id-equipe="equipe.IdEquipe"
         :nom-equipe="equipe.nomEquipe"
         :jeu="equipe.nomJeu"
+        :Logo="equipe.Logo"
       />
     </div>
   </div>

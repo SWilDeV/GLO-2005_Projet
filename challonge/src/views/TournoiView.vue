@@ -14,7 +14,7 @@
                     class="d-flex flex-column align-items-center text-center"
                   >
                     <img
-                      src="../assets/xbox.png"
+                      v-bind:src="logo"
                       alt="Admin"
                       class="rounded-circle"
                       width="150"
@@ -175,6 +175,7 @@
                           :key="match.IdMatch"
                           :NomEquipeA="match.nomEquipe1"
                           :NomEquipeB="match.nomEquipe2"
+                          :NomTournoi="match.nomTournoi"
                           :dateMatch="match.dateMatch"
                           :heureMatch="match.heureMatch"
                           :scoreEquipe1="match.scoreEquipe1"
