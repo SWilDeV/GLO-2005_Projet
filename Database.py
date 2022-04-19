@@ -13,7 +13,7 @@ class Database:
     def __init__(self):
         db=os.environ.get('DB')
         self.con = pymysql.connect(host='localhost',user=os.environ.get('USER'), password=os.environ.get('PASSWORD'),db=os.environ.get('DB'))
-        #self.con = pymysql.connect(host='localhost',user="root", password="F3l1xJ1688!",db="ChallongeII")
+        #self.con = pymysql.connect(host='localhost',user="root", password="F3l1xJ1688!",db="MadaTournoi")
         self.cur=self.con.cursor(pymysql.cursors.DictCursor)
 
 
@@ -288,10 +288,10 @@ class Database:
             equipe = self.getTeamById(IdEquipe)
             return equipe
 
-    def CreateEquipe(self, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame):
+    def CreateEquipe(self, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame, Logo):
         try:
-            sql ="INSERT INTO Equipe (NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame) VALUES (%s, %s, %s, %s, %s, %s)"
-            self.cur.execute(sql, (NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame))
+            sql ="INSERT INTO Equipe (NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame, Logo) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+            self.cur.execute(sql, (NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame, Logo))
             self.con.commit()
         except:
             print("Oops!", sys.exc_info()[1], "occurred.")
