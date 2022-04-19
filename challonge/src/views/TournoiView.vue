@@ -14,7 +14,7 @@
                     class="d-flex flex-column align-items-center text-center"
                   >
                     <img
-                      src="../assets/xbox.png"
+                      v-bind:src="logo"
                       alt="Admin"
                       class="rounded-circle"
                       width="150"

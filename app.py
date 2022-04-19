@@ -419,7 +419,7 @@ def desinscrire():
         print(dataJSON)
         IdTournoi = dataJSON["IdTournoi"]
         IdEquipe = dataJSON["IdEquipe"]
-        match = db.leaveTeam(IdEquipe, IdTournoi)
+        match = db.desinscrire(IdEquipe, IdTournoi)
     except:
         print("Oops!", sys.exc_info()[1], "occurred.")
         print("error with desinscrire")
