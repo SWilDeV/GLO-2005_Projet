@@ -36,19 +36,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-12 mb-3 mt-1">
-              <div class="row gutters-sm">
-                <div class="col-sm-12">
-                  <b-button
-                    v-if="isVisible"
-                    class="ms-auto"
-                    type="button"
-                    variant="danger"
-                    >Supprimer</b-button
-                  >
-                </div>
-              </div>
-            </div>
+
             <div class="col-md-12 mb-3 mt-1">
               <div class="row gutters-sm">
                 <div class="col-sm-12 mb-3">

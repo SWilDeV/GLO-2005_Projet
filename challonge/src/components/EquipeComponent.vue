@@ -47,24 +47,7 @@ export default {
     },
     onClickDeleteTeam() {
       const IdEquipe = this.IdEquipe;
-      // this.form.IdEquipe = IdEquipe;
-      // console.log(this.form.IdEquipe);
       this.$emit("delete-team-from-tournament", { IdEquipe });
-      // this.form.IdEquipe = "";
-    },
-    async deleteTeam() {
-      const IdEquipe = this.IdEquipe;
-      this.form.IdEquipe = IdEquipe;
-      // console.log(this.form.IdEquipe);
-      console.log(IdEquipe);
-      try {
-        // await DeleteTeam(this.form).then((response) => {
-        //   alert(response);
-        //   this.$router.go();
-        // });
-      } catch (e) {
-        console.error(e);
-      }
     },
   },
 };
