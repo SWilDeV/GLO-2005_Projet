@@ -117,7 +117,7 @@ class Database:
             return User
     
     def getAllTournaments(self):
-        self.cur.execute("SELECT IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, nom AS nomJeu FROM Tournoi LEFT JOIN Game ON Game.IdGame = Tournoi.IdGame")
+        self.cur.execute("SELECT IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, Logo, nom AS nomJeu FROM Tournoi LEFT JOIN Game ON Game.IdGame = Tournoi.IdGame")
         result = self.cur.fetchall()
         return result
 
