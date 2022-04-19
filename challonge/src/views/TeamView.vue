@@ -15,7 +15,7 @@
                   >
                     <img
                       v-bind:src="Equipe.Logo"
-                      alt="Admin"
+                      alt="https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png"
                       class="rounded-circle"
                       width="150"
                     />
@@ -343,6 +343,10 @@ export default {
       this.Tournoi = team.Tournoi;
       this.Parties = team.Parties;
       this.Equipe = team.Equipes;
+      if (this.Equipe.Logo == null) {
+        this.Equipe.Logo =
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Xbox_one_logo.svg/768px-Xbox_one_logo.svg.png";
+      }
       this.Joueurs = team.Joueurs;
       this.checkIfUserIsOwner();
       if (this.isOwner) {
@@ -443,7 +447,13 @@ export default {
       this.formEdit.IdGame = this.Equipe.IdGame;
       this.formEdit.IdPays = this.Equipe.IdPays;
     },
+    aVueFunctionThatChangesTheSrc() {
+      // var images = require.context("../assets/", false, /\.png$/);
+      // return images("./" + pic + ".png");
+      return "../assets/xbox.png";
+    },
   },
+
   created() {
     this.getTeamInfo();
   },

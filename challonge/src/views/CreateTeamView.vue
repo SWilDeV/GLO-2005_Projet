@@ -89,7 +89,7 @@ export default {
       form: {
         NomEquipe: "",
         Presentation: "",
-        Logo: null,
+        Logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Xbox_one_logo.svg/768px-Xbox_one_logo.svg.png",
         IdPays: "",
         IdOwner: "",
         IdGame: null,
