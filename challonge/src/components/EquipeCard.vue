@@ -10,7 +10,7 @@
           <h4 class="card-title">{{ jeu }}</h4>
 
           <b-button
-            class="ms-auto"
+            class="ms-4"
             type="button"
             variant="primary"
             v-on:click="goToTeam"
