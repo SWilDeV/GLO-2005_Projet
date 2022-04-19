@@ -89,7 +89,7 @@ FOR EACH ROW
 BEGIN
 DECLARE dateDebut varchar(50);
 SET dateDebut = (Select dateDebut FROM Tournoi WHERE IdTournoi = NEW.IdTournoi);
-IF (STR_TO_DATE(NEW.dateMatch, "%d/%c/%Y") < STR_TO_DATE(dateDebut, "%d/%c/%Y")) THEN
+IF (STR_TO_DATE(NEW.dateMatch, "%Y-%c-%d") < STR_TO_DATE(dateDebut, "%Y-%c-%d")) THEN
 SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La date du match ne peut pas être avant le début du tournoi';
 END IF;
 END;//
