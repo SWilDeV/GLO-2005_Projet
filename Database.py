@@ -13,7 +13,7 @@ class Database:
     def __init__(self):
         db=os.environ.get('DB')
         self.con = pymysql.connect(host='localhost',user=os.environ.get('USER'), password=os.environ.get('PASSWORD'),db=os.environ.get('DB'))
-        # self.con = pymysql.connect(host='localhost',user="root", password="F3l1xJ1688!",db="ChallongeII")
+        #self.con = pymysql.connect(host='localhost',user="root", password="F3l1xJ1688!",db="ChallongeII")
         self.cur=self.con.cursor(pymysql.cursors.DictCursor)
 
 
@@ -63,7 +63,7 @@ class Database:
 
     def getUpcomingMatchesByUsers(self, idUser):
         try:
-            sql ="SELECT P.*, E1.nomEquipe AS nomEquipe1, E2.nomEquipe as nomEquipe2, EG.nomEquipe as nomGagnant FROM Partie P LEFT JOIN Equipe E1 ON P.IdEquipe1 = E1.IdEquipe LEFT JOIN Equipe E2 ON P.IdEquipe2 = E2.IdEquipe LEFT JOIN Equipe EG ON P.IdGagnant = EG.IdEquipe INNER JOIN Equipe E ON P.idEquipe1 = E.idEquipe OR P.idEquipe2 = E.idEquipe JOIN MembresEquipe ME ON ME.idEquipe = E.idEquipe WHERE ME.idJoueur = %s AND ME.dateLeft IS NULL ORDER BY P.dateMatch"
+            sql ="SELECT P.*, E1.nomEquipe AS nomEquipe1, E2.nomEquipe as nomEquipe2, EG.nomEquipe as nomGagnant, T.nomTournoi FROM Partie P LEFT JOIN Tournoi T ON T.IdTournoi = P.idTournoi LEFT JOIN Equipe E1 ON P.IdEquipe1 = E1.IdEquipe LEFT JOIN Equipe E2 ON P.IdEquipe2 = E2.IdEquipe LEFT JOIN Equipe EG ON P.IdGagnant = EG.IdEquipe INNER JOIN Equipe E ON P.idEquipe1 = E.idEquipe OR P.idEquipe2 = E.idEquipe JOIN MembresEquipe ME ON ME.idEquipe = E.idEquipe WHERE ME.idJoueur = %s AND ME.dateLeft IS NULL ORDER BY P.dateMatch"
             self.cur.execute(sql,(idUser))
         except:
             print("Oops!", sys.exc_info()[1], "occurred.")
@@ -87,11 +87,11 @@ class Database:
 
     def register_User(self,Username,Password,Courriel,FirstName,LastName,Ville,IdJoueur,Presentation,Avatar,IdPays,IdGame,DateJoined):
         try:
-            # sql = "insert into Utilisateur (Username, Password, Courriel, Prenom, Nom, Ville, Presentation, Avatar, IdPays, IdGame, DateJoined) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-            # self.cur.execute(sql, (Username, Password, Courriel, FirstName, LastName, Ville, Presentation, Avatar, IdPays, IdGame, DateJoined))
+            sql = "insert into Utilisateur (Username, Password, Courriel, Prenom, Nom, Ville, Presentation, Avatar, IdPays, IdGame, DateJoined) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            self.cur.execute(sql, (Username, Password, Courriel, FirstName, LastName, Ville, Presentation, Avatar, IdPays, IdGame, DateJoined))
 
-            sql = "insert into Utilisateur (IdJoueur, Username, Password, Courriel, Prenom, Nom, Ville, Presentation, Avatar, IdPays, IdGame, DateJoined) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-            self.cur.execute(sql, (IdJoueur, Username, Password, Courriel, FirstName, LastName, Ville, Presentation, Avatar, IdPays, IdGame, DateJoined))
+            #sql = "insert into Utilisateur (IdJoueur, Username, Password, Courriel, Prenom, Nom, Ville, Presentation, Avatar, IdPays, IdGame, DateJoined) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            #self.cur.execute(sql, (IdJoueur, Username, Password, Courriel, FirstName, LastName, Ville, Presentation, Avatar, IdPays, IdGame, DateJoined))
             
             self.con.commit()
         except:
@@ -99,7 +99,7 @@ class Database:
             print("problem with register_User")
         else:
             print("User added") 
-            User = self.find_User_by_ID(IdJoueur)
+            User = self.getUserByUserName(Username)
             return User
 
     def editUser(self,FirstName,LastName,Ville,IdJoueur,Presentation,IdPays):
@@ -165,7 +165,7 @@ class Database:
 
     def getMatchesByTournament(self, IdTournoi):
         try:
-            sql ="SELECT P.*, E1.nomEquipe AS nomEquipe1, E2.nomEquipe as nomEquipe2, EG.nomEquipe as nomGagnant FROM Partie P LEFT JOIN Equipe E1 ON P.IdEquipe1 = E1.IdEquipe LEFT JOIN Equipe E2 ON P.IdEquipe2 = E2.IdEquipe LEFT JOIN Equipe EG ON P.IdGagnant = EG.IdEquipe WHERE P.idTournoi = %s"
+            sql ="SELECT P.*, E1.nomEquipe AS nomEquipe1, E2.nomEquipe as nomEquipe2, EG.nomEquipe as nomGagnant, T.nomTournoi FROM Partie P LEFT JOIN Tournoi T ON T.IdTournoi = P.idTournoi LEFT JOIN Equipe E1 ON P.IdEquipe1 = E1.IdEquipe LEFT JOIN Equipe E2 ON P.IdEquipe2 = E2.IdEquipe LEFT JOIN Equipe EG ON P.IdGagnant = EG.IdEquipe WHERE P.idTournoi = %s"
             self.cur.execute(sql,(IdTournoi))
         except:
             print("Oops!", sys.exc_info()[1], "occurred.")
@@ -320,6 +320,9 @@ class Database:
             sql = "INSERT INTO Partie (dateMatch, heureMatch, idEquipe1, idEquipe2, idTournoi) VALUES (%s, %s, %s, %s, %s)"
             self.cur.execute(sql, (dateMatch, heureMatch, idEquipe1, idEquipe2, idTournoi))
             self.con.commit()
+        except self.con.Error as e:
+            print(e)
+            return("Erreur avec la création de la partie: {}".format(e))
         except:
             print("Oops!", sys.exc_info()[1], "occurred.")
             print("error with CreateGame")
@@ -347,6 +350,9 @@ class Database:
             sql = "INSERT INTO Inscription (IdEquipe, IdTournoi) VALUES (%s, %s)"
             self.cur.execute(sql, (IdEquipe, IdTournoi))
             self.con.commit()
+        except self.con.Error as e:
+            print(e)
+            return("Erreur avec l'inscription: {}".format(e))
         except:
             print("Oops!", sys.exc_info()[1], "occurred.")
             print("error with Inscription")

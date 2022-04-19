@@ -6,10 +6,10 @@ import random
 from flask_bcrypt import Bcrypt
 import sys
 from datetime import date
-#from dotenv import load_dotenv
+from dotenv import load_dotenv
 from Database import Database
 import json
-#load_dotenv()
+load_dotenv()
 import os
 
 
@@ -161,6 +161,7 @@ def leaveTeam():
         IdJoueur = dataJSON["IdJoueur"]
         IdEquipe = dataJSON["IdEquipe"]
         Date = date.today()
+        print(Date)
         match = db.leaveTeam(IdEquipe, IdJoueur, Date)
     except:
         print("Oops!", sys.exc_info()[1], "occurred.")
@@ -253,7 +254,6 @@ def inscription():
             dataJSON = dict(json.loads(data))
         else:
             dataJSON =data
-        print(dataJSON)
         IdTournoi = dataJSON["IdTournoi"]
         IdEquipe = dataJSON["IdEquipe"]
         match = db.Inscription(IdTournoi, IdEquipe)

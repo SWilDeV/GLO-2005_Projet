@@ -1,3 +1,5 @@
+USE MadaTournoi;
+
 DELIMITER //
 CREATE TRIGGER gagnantMatch
 BEFORE UPDATE ON Partie
