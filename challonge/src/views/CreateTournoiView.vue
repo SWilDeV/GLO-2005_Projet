@@ -131,6 +131,7 @@ export default {
         maxJoueur: null,
         idOwner: "",
         idGame: null,
+        Logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Xbox_one_logo.svg/768px-Xbox_one_logo.svg.png",
       },
       options: [
         { value: null, text: "Please select an option" },

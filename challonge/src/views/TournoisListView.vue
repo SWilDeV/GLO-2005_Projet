@@ -36,6 +36,10 @@ export default {
       try {
         getTournaments().then((response) => {
           this.tournaments = response;
+          if (this.tournaments.Logo == null) {
+            this.tournaments.Logo =
+              "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Xbox_one_logo.svg/768px-Xbox_one_logo.svg.png";
+          }
         });
       } catch (e) {
         console.log(e);

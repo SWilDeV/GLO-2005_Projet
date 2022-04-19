@@ -265,6 +265,10 @@ export default {
         localStorage.getItem("tournoi")
       );
       this.Tournoi = tournament.Tournoi;
+      if (this.Tournoi.Logo == null) {
+        this.Tournoi.Logo =
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Xbox_one_logo.svg/768px-Xbox_one_logo.svg.png";
+      }
       this.Parties = tournament.Parties;
       this.Equipes = tournament.Equipes;
       this.checkIfUserIsOwner();
