@@ -13,7 +13,6 @@ class Database:
     def __init__(self):
         db=os.environ.get('DB')
         self.con = pymysql.connect(host='localhost',user=os.environ.get('USER'), password=os.environ.get('PASSWORD'),db=os.environ.get('DB'))
-        #self.con = pymysql.connect(host='localhost',user="root", password="F3l1xJ1688!",db="MadaTournoi")
         self.cur=self.con.cursor(pymysql.cursors.DictCursor)
 
 
@@ -89,9 +88,6 @@ class Database:
         try:
             sql = "insert into Utilisateur (Username, Password, Courriel, Prenom, Nom, Ville, Presentation, Avatar, IdPays, IdGame, DateJoined) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
             self.cur.execute(sql, (Username, Password, Courriel, FirstName, LastName, Ville, Presentation, Avatar, IdPays, IdGame, DateJoined))
-
-            #sql = "insert into Utilisateur (IdJoueur, Username, Password, Courriel, Prenom, Nom, Ville, Presentation, Avatar, IdPays, IdGame, DateJoined) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-            #self.cur.execute(sql, (IdJoueur, Username, Password, Courriel, FirstName, LastName, Ville, Presentation, Avatar, IdPays, IdGame, DateJoined))
             
             self.con.commit()
         except:

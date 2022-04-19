@@ -300,9 +300,6 @@ export default {
     async editMatch({ form }) {
       try {
         await EditPartie(form);
-        // await EditPartie(form).then(() => {
-        //   this.$router.go();
-        // });
       } catch (e) {
         console.error(e);
       }
