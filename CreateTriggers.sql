@@ -70,7 +70,7 @@ CREATE TRIGGER deleteEquipe
 BEFORE DELETE ON Equipe
 FOR EACH ROW
 BEGIN
-DELETE FROM INSCRIPTION WHERE IdEquipe = OLD.IdEquipe;
+DELETE FROM Inscription WHERE IdEquipe = OLD.IdEquipe;
 DELETE FROM MembresEquipe WHERE IdEquipe = OLD.IdEquipe;
 DELETE FROM Partie WHERE IdEquipe1 = OLD.IdEquipe OR IdEquipe2 = OLD.IdEquipe;
 END;//
@@ -79,7 +79,7 @@ CREATE TRIGGER deleteTournoi
 BEFORE DELETE ON Tournoi
 FOR EACH ROW
 BEGIN
-DELETE FROM INSCRIPTION WHERE IdTournoi = OLD.IdTournoi;
+DELETE FROM Inscription WHERE IdTournoi = OLD.IdTournoi;
 DELETE FROM Partie WHERE IdTournoi= OLD.IdTournoi;
 END;//
 

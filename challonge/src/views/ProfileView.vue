@@ -22,10 +22,115 @@
                       {{ user.Presentation }}
                     </p>
                   </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <b-button
+                        class="ms-auto"
+                        type="button"
+                        variant="info"
+                        v-on:click="toggleEdit"
+                        >Edit</b-button
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 mb-3 mt-1">
+              <div class="row gutters-sm">
+                <div class="col-sm-12">
+                  <b-button
+                    v-if="isVisible"
+                    class="ms-auto"
+                    type="button"
+                    variant="danger"
+                    >Supprimer</b-button
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 mb-3 mt-1">
+              <div class="row gutters-sm">
+                <div class="col-sm-12 mb-3">
+                  <div class="col-sm-12 mb-3">
+                    <b-form>
+                      <b-form-group
+                        v-if="isVisible"
+                        id="input-group-4"
+                        label="Prenom:"
+                        label-for="input-4"
+                      >
+                        <b-form-input
+                          v-model="form.Prenom"
+                          id="input-4"
+                        ></b-form-input>
+                      </b-form-group>
+
+                      <b-form-group
+                        v-if="isVisible"
+                        id="input-group-5"
+                        label="Nom:"
+                        label-for="input-5"
+                      >
+                        <b-form-input
+                          v-model="form.Nom"
+                          id="input-5"
+                        ></b-form-input>
+                      </b-form-group>
+
+                      <b-form-group
+                        v-if="isVisible"
+                        id="input-group-6"
+                        label="Ville:"
+                        label-for="input-6"
+                      >
+                        <b-form-input
+                          v-model="form.Ville"
+                          id="input-6"
+                        ></b-form-input>
+                      </b-form-group>
+
+                      <b-form-group
+                        v-if="isVisible"
+                        id="input-group-8"
+                        label="Pays:"
+                        label-for="input-7"
+                      >
+                        <b-form-select
+                          :options="options2"
+                          size=""
+                          v-model="form.IdPays"
+                          class="m-1"
+                        ></b-form-select>
+                      </b-form-group>
+
+                      <b-form-group
+                        v-if="isVisible"
+                        id="input-group-7"
+                        label="Presentation:"
+                        label-for="input-6"
+                      >
+                        <b-form-input
+                          v-model="form.Presentation"
+                          id="input-7"
+                        ></b-form-input>
+                      </b-form-group>
+
+                      <b-button
+                        v-if="isVisible"
+                        type="button"
+                        class="mt-2"
+                        variant="success"
+                        v-on:click="onSubmit"
+                        >OK</b-button
+                      >
+                    </b-form>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
           <div class="col-md-8">
             <div class="card mb-3">
               <div class="card-body">
@@ -135,6 +240,11 @@
                         :NomEquipeB="match.nomEquipe2"
                         :dateMatch="match.dateMatch"
                         :heureMatch="match.heureMatch"
+                        :scoreEquipe1="match.scoreEquipe1"
+                        :scoreEquipe2="match.scoreEquipe2"
+                        :IdEquipe1="match.idEquipe1"
+                        :IdEquipe2="match.idEquipe2"
+                        :IdTournoi="match.idTournoi"
                       />
                     </div>
                   </div>
@@ -152,7 +262,7 @@
 import EquipeComponent from "../components/EquipeComponent.vue";
 import MatchComponent from "../components/MatchComponent.vue";
 import TournoiComponent from "../components/TournoiComponent.vue";
-import { getUserDataByUserID } from "../apiVue.js";
+import { getUserDataByUserID, EditUser } from "../apiVue.js";
 export default {
   name: "ProfileView",
   components: {
@@ -162,10 +272,31 @@ export default {
   },
   data() {
     return {
+      isVisible: false,
       user: "",
       Parties: "",
       Equipes: "",
       Tournois: "",
+      form: {
+        Nom: "",
+        Prenom: "",
+        Ville: "",
+        IdPays: "",
+        Presentation: "",
+        IdJoueur: "",
+      },
+      options2: [
+        { value: null, text: "Please select an option" },
+        { value: "1", text: "France" },
+        { value: "2", text: "Japon" },
+        { value: "3", text: "Espagne" },
+        { value: "4", text: "Italie" },
+        { value: "5", text: "Canada" },
+        { value: "6", text: "Allemagne" },
+        { value: "7", text: "Russie" },
+        { value: "8", text: "Chine" },
+        { value: "9", text: "Corée" },
+      ],
     };
   },
   async created() {
@@ -179,6 +310,28 @@ export default {
         this.Tournois = response.Tournois;
       }
     });
+  },
+  methods: {
+    async onSubmit() {
+      try {
+        this.form.IdJoueur = this.user.IdJoueur;
+        await EditUser(this.form);
+        // .then((response) => {
+
+        // alert(response);
+        this.$router.go();
+        // });
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    toggleEdit() {
+      if (this.isVisible == false) {
+        this.isVisible = true;
+      } else {
+        this.isVisible = false;
+      }
+    },
   },
 };
 </script>

@@ -33,6 +33,7 @@ def registerpage():
             dataJSON = dict(json.loads(data))
         else:
             dataJSON =data
+        
         Username = dataJSON['Username']
         Password = bcrypt.generate_password_hash(dataJSON["Password"])
         Courriel = dataJSON['Courriel']
@@ -45,10 +46,11 @@ def registerpage():
         IdPays = dataJSON['IdPays'] 
         IdGame = None
         DateJoined = date.today()
+        print(dataJSON)
         db=Database()
         Reg = db.register_User(Username,Password,Courriel,FirstName,LastName,Ville,IdJoueur,Presentation,Avatar,IdPays,IdGame,DateJoined)
     except:
-        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("Oops!", sys.exc_info()[1], "occurred.")
         print("error with registerpage")
         return "error with registerpage"
     else:
@@ -114,7 +116,7 @@ def getUser():
         parties = db.getUpcomingMatchesByUsers(IdJoueur)
         tournois = db.getUserTournament(IdJoueur)
     except:
-        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("Oops!", sys.exc_info()[1], "occurred.")
         print("error with getUser")
         return "error with getUser"
     else:
@@ -130,22 +132,17 @@ def editUser():
             dataJSON = dict(json.loads(data))
         else:
             dataJSON =data
-        Username = dataJSON['Username']
-        Password = bcrypt.generate_password_hash(dataJSON["Password"])
-        Courriel = dataJSON['Courriel']
         FirstName = dataJSON['Prenom']
         LastName = dataJSON['Nom']
         Ville = dataJSON['Ville']
         IdJoueur = dataJSON['IdJoueur']
         Presentation = dataJSON['Presentation']
-        Avatar = dataJSON['Avatar']
         IdPays = dataJSON['IdPays'] 
-        IdGame = dataJSON['IdGame']
         
         db=Database()
-        Reg = db.editUser(Username, Password, Courriel, FirstName, LastName, Ville, IdJoueur, Presentation, Avatar, IdPays, IdGame)
+        Reg = db.editUser(FirstName, LastName, Ville, IdJoueur, Presentation, IdPays)
     except:
-        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("Oops!", sys.exc_info()[1], "occurred.")
         print("error with editUser")
         return "error with editUser"
     else:
@@ -166,7 +163,7 @@ def leaveTeam():
         Date = date.today()
         match = db.leaveTeam(IdEquipe, IdJoueur, Date)
     except:
-        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("Oops!", sys.exc_info()[1], "occurred.")
         print("error with leaveTeam")
         return "error with leaveTeam"
     else:
@@ -194,7 +191,7 @@ def getTournamentById():
         equipes = db.getTeamsByTournament(idTournoi)
         parties = db.getMatchesByTournament(idTournoi)
     except:
-        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("Oops!", sys.exc_info()[1], "occurred.")
         print("error with getTournamentById")
         return "error with getTournamentById"
     else:
@@ -220,7 +217,7 @@ def editTournament():
         idOwner = dataJSON["idOwner"]
         tournament = db.editTournament(IdTournoi, nomTournoi, dateDebut, minEquipe, maxEquipe, minJoueur, maxJoueur, idGame, idOwner)
     except:
-        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("Oops!", sys.exc_info()[1], "occurred.")
         print("error with editTournament")
         return "error with editTournament"
     else:
@@ -256,11 +253,12 @@ def inscription():
             dataJSON = dict(json.loads(data))
         else:
             dataJSON =data
+        print(dataJSON)
         IdTournoi = dataJSON["IdTournoi"]
         IdEquipe = dataJSON["IdEquipe"]
         match = db.Inscription(IdTournoi, IdEquipe)
     except:
-        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("Oops!", sys.exc_info()[1], "occurred.")
         print("error with inscription")
         return "error with inscription"
     else:
@@ -309,7 +307,7 @@ def getEquipeById():
         tournoi = db.getTournamentsByTeam(IdEquipe)
         parties = db.getUpcomingMatchesByTeam(IdEquipe)
     except:
-        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("Oops!", sys.exc_info()[1], "occurred.")
         print("error with getEquipeById")
         return "error with getEquipeById"
     else:
@@ -355,12 +353,11 @@ def editEquipe():
         NomEquipe = dataJSON["NomEquipe"]
         Presentation = dataJSON["Presentation"] 
         Logo = dataJSON["Logo"] 
-        IdOwner = dataJSON["IdOwner"] 
         IdPays = dataJSON["IdPays"] 
         IdGame = dataJSON["IdGame"] 
-        equipe = db.EditEquipe(IdEquipe, NomEquipe, Presentation, Logo, IdOwner, IdPays, IdGame)
+        equipe = db.EditEquipe(IdEquipe, NomEquipe, Presentation, Logo, IdPays, IdGame)
     except:
-        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("Oops!", sys.exc_info()[1], "occurred.")
         print("error with editEquipe")
         return "error with editEquipe"
     else:
@@ -382,7 +379,7 @@ def addTeamMember():
         DateJoined = date.today()
         match = db.addTeamMember(IdJoueur, IdEquipe, DateJoined)
     except:
-        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("Oops!", sys.exc_info()[1], "occurred.")
         print("error with addTeamMember")
         return "error with addTeamMember"
     else:
@@ -403,7 +400,7 @@ def deleteTeam():
         IdEquipe = dataJSON["IdEquipe"]
         res = db.deleteTeam(IdEquipe)
     except:
-        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("Oops!", sys.exc_info(), "occurred.")
         print("error with deleteTeam")
         return "error with deleteTeam"
     else:
@@ -424,7 +421,7 @@ def desinscrire():
         IdEquipe = dataJSON["IdEquipe"]
         match = db.leaveTeam(IdEquipe, IdTournoi)
     except:
-        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("Oops!", sys.exc_info()[1], "occurred.")
         print("error with desinscrire")
         return "error with desinscrire"
     else:
@@ -446,7 +443,7 @@ def getMatch():
         IdMatch = dataJSON["IdMatch"]
         match = db.getGameById(IdMatch)
     except:
-        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("Oops!", sys.exc_info()[1], "occurred.")
         print("error with getMatch")
         return "error with getMatch"
     else:
@@ -470,7 +467,7 @@ def createMatch():
         idTournoi = dataJSON["IdTournoi"]
         match = db.CreateGame(dateMatch, heureMatch, idEquipe1, idEquipe2, idTournoi)
     except:
-        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("Oops!", sys.exc_info()[1], "occurred.")
         print("error with createMatch")
         return "error with createMatch"
     else:
@@ -496,7 +493,7 @@ def editMatch():
         scoreEquipe2 = dataJSON["scoreEquipe2"]
         match = db.EditGame(IdMatch, dateMatch, heureMatch, idEquipe1, idEquipe2, scoreEquipe1, scoreEquipe2, idTournoi)
     except:
-        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("Oops!", sys.exc_info()[1], "occurred.")
         print("error with editMatch")
         return "error with editMatch"
     else:
@@ -516,7 +513,7 @@ def deleteMatch():
         IdMatch = dataJSON["IdMatch"]
         res = db.deleteMatch(IdMatch)
     except:
-        print("Oops!", sys.exc_info()[0], "occurred.")
+        print("Oops!", sys.exc_info()[1], "occurred.")
         print("error with deleteMatch")
         return "error with deleteMatch"
     else:
