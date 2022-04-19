@@ -165,7 +165,7 @@ class Database:
 
     def getMatchesByTournament(self, IdTournoi):
         try:
-            sql ="SELECT P.*, E1.nomEquipe AS nomEquipe1, E2.nomEquipe as nomEquipe2, EG.nomEquipe as nomGagnant, T.nomTournoi FROM Partie P LEFT JOIN Tournoi T ON T.IdTournoi = P.idTournoi LEFT JOIN Equipe E1 ON P.IdEquipe1 = E1.IdEquipe LEFT JOIN Equipe E2 ON P.IdEquipe2 = E2.IdEquipe LEFT JOIN Equipe EG ON P.IdGagnant = EG.IdEquipe WHERE P.idTournoi = %s"
+            sql ="SELECT P.*, E1.nomEquipe AS nomEquipe1, E2.nomEquipe as nomEquipe2, EG.nomEquipe as nomGagnant FROM Partie P LEFT JOIN Tournoi T ON T.IdTournoi = P.idTournoi LEFT JOIN Equipe E1 ON P.IdEquipe1 = E1.IdEquipe LEFT JOIN Equipe E2 ON P.IdEquipe2 = E2.IdEquipe LEFT JOIN Equipe EG ON P.IdGagnant = EG.IdEquipe WHERE P.idTournoi = %s"
             self.cur.execute(sql,(IdTournoi))
         except:
             print("Oops!", sys.exc_info()[1], "occurred.")
@@ -264,7 +264,7 @@ class Database:
 
     def getUpcomingMatchesByTeam(self, IdEquipe):
         try:
-            sql = "SELECT P.*, E1.nomEquipe AS nomEquipe1, E2.nomEquipe as nomEquipe2, EG.nomEquipe as nomGagnant FROM Partie P LEFT JOIN Equipe E1 ON P.IdEquipe1 = E1.IdEquipe LEFT JOIN Equipe E2 ON P.IdEquipe2 = E2.IdEquipe LEFT JOIN Equipe EG ON P.IdGagnant = EG.IdEquipe WHERE (IdEquipe1 = %s OR IdEquipe2 = %s) ORDER BY dateMatch"
+            sql = "SELECT P.*, E1.nomEquipe AS nomEquipe1, E2.nomEquipe as nomEquipe2, EG.nomEquipe as nomGagnant, T.nomTournoi FROM Partie P LEFT JOIN Tournoi T ON T.IdTournoi = P.idTournoi LEFT JOIN Equipe E1 ON P.IdEquipe1 = E1.IdEquipe LEFT JOIN Equipe E2 ON P.IdEquipe2 = E2.IdEquipe LEFT JOIN Equipe EG ON P.IdGagnant = EG.IdEquipe WHERE (IdEquipe1 = %s OR IdEquipe2 = %s) ORDER BY dateMatch"
             self.cur.execute(sql,(IdEquipe, IdEquipe))
         except:
             print("Oops!", sys.exc_info(), "occurred.")
