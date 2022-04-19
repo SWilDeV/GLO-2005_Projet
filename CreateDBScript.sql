@@ -46,7 +46,7 @@ Create table if not exists Equipe(
 IdEquipe int NOT NULL auto_increment,
 NomEquipe varchar(100) NOT NULL UNIQUE,
 Presentation varchar(1000),
-Logo varchar(1000),
+Logo varchar(2000),
 IdOwner int NOT NULL,
 IdPays int,
 IdGame int,
