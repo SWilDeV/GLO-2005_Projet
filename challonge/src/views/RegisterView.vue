@@ -70,6 +70,19 @@
         </b-form-group>
 
         <b-form-group
+          id="input-group-8"
+          label="* Indiquez votre pays:"
+          label-for="input-7"
+        >
+          <b-form-select
+            v-model="form.IdPays"
+            :options="options2"
+            size=""
+            class="m-1"
+          ></b-form-select>
+        </b-form-group>
+
+        <b-form-group
           id="input-group-7"
           label="Presentation:"
           label-for="input-6"
@@ -108,8 +121,20 @@ export default {
         Ville: "",
         Presentation: "",
         Avatar: null,
-        IdPays: 6,
+        IdPays: null,
       },
+      options2: [
+        { value: null, text: "Please select an option" },
+        { value: "1", text: "France" },
+        { value: "2", text: "Japon" },
+        { value: "3", text: "Espagne" },
+        { value: "4", text: "Italie" },
+        { value: "5", text: "Canada" },
+        { value: "6", text: "Allemagne" },
+        { value: "7", text: "Russie" },
+        { value: "8", text: "Chine" },
+        { value: "9", text: "Corée" },
+      ]
     };
   },
   props: {

@@ -112,7 +112,7 @@
                       <h6 class="mb-0">Pays</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      {{ Equipe.IdPays }}
+                      {{ Equipe.NomPays }}
                     </div>
                   </div>
                 </div>
