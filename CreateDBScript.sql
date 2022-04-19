@@ -24,7 +24,7 @@ PRIMARY KEY(idGame)
 
 
 CREATE TABLE IF NOT EXISTS Utilisateur (
-	IdJoueur INT auto_increment,
+	IdJoueur INT,
 	Username VARCHAR(50),
 	Password VARCHAR(100),
 	Courriel VARCHAR(50),

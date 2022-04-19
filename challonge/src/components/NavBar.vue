@@ -4,7 +4,7 @@
       <b-navbar-nav>
         <!-- Home-->
         <b-nav-item
-          ><router-link to="/" class="nav-link"> Mata </router-link></b-nav-item
+          ><router-link to="/" class="nav-link"> Mada </router-link></b-nav-item
         >
       </b-navbar-nav>
 

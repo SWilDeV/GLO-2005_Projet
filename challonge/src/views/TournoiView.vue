@@ -211,6 +211,7 @@ import {
   createPartie,
   DeleteTeamFromTournament,
   EditPartie,
+  DeleteTournament,
 } from "../apiVue.js";
 export default {
   name: "TournoiView",
@@ -270,8 +271,17 @@ export default {
         this.getEquipes();
       }
     },
-    deleteTournoi() {
-      alert("Delete tournoi");
+    async deleteTournoi() {
+      try {
+        const IdTournoi = this.Tournoi.IdTournoi;
+        const dat = { IdTournoi: IdTournoi };
+        await DeleteTournament(dat).then((response) => {
+          alert(response);
+          this.$router.push({ name: "tournoisList" });
+        });
+      } catch (e) {
+        console.error(e);
+      }
     },
     editTournoi() {
       this.$router.push({ name: "editTournoi" });
@@ -284,10 +294,10 @@ export default {
     },
     async editMatch({ form }) {
       try {
-        await EditPartie(form).then((response) => {
-          alert(response);
-          this.$router.go();
-        });
+        await EditPartie(form);
+        // await EditPartie(form).then(() => {
+        //   this.$router.go();
+        // });
       } catch (e) {
         console.error(e);
       }

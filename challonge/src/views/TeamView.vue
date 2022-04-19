@@ -40,7 +40,94 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-12 mb-3 mt-1">
+              <div class="col-md-12">
+                <template v-if="isVisible">
+                  <div class="card mt-2">
+                    <div class="card-body">
+                      <div class="d-flex flex-column">
+                        <div class="mt-1">
+                          <div class="d-inline-flex gutters-sm">
+                            <div class="d-flex align-items-center">
+                              <h6 class="material-icons text-info mr-2">
+                                Modifier les infos de l'equipe
+                              </h6>
+                            </div>
+                            <div class="me-auto">
+                              <b-button
+                                v-if="isVisible"
+                                class="px-1 py-0 mx-3"
+                                type="button"
+                                variant="success"
+                                v-on:click="teamInfoEditables"
+                                >+</b-button
+                              >
+                            </div>
+                          </div>
+
+                          <b-form-group
+                            v-if="TeamInfoEditable"
+                            id="input-group-10"
+                            label-for="input-10"
+                          >
+                            <b-form-input
+                              v-model="formEdit.NomEquipe"
+                              id="input-10"
+                              placeholder="NomEquipe"
+                            ></b-form-input>
+                          </b-form-group>
+                          <b-form-group
+                            v-if="TeamInfoEditable"
+                            id="input-group-9"
+                            label-for="input-9"
+                          >
+                            <b-form-input
+                              v-model="formEdit.Presentation"
+                              id="input-9"
+                              placeholder="Presentation"
+                            ></b-form-input>
+                          </b-form-group>
+
+                          <b-form-group
+                            v-if="TeamInfoEditable"
+                            id="input-group-11"
+                            label="Pays"
+                            label-for="input-11"
+                          >
+                            <b-form-select
+                              :options="options2"
+                              size=""
+                              v-model="formEdit.IdPays"
+                              class="m-1"
+                            ></b-form-select>
+                          </b-form-group>
+                          <b-form-group
+                            v-if="TeamInfoEditable"
+                            id="input-group-12"
+                            label="TopGame"
+                            label-for="input-12"
+                          >
+                            <b-form-select
+                              v-model="formEdit.IdGame"
+                              :options="options"
+                              size=""
+                              class="m-1"
+                            ></b-form-select>
+                          </b-form-group>
+                          <b-button
+                            v-if="TeamInfoEditable"
+                            type="button"
+                            class="mt-2"
+                            variant="success"
+                            v-on:click="editTeam"
+                            >OK</b-button
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+              </div>
+              <div class="col-md-12 mb-3 mt-3">
                 <div class="row gutters-sm">
                   <div class="col-sm-12">
                     <b-button
@@ -49,12 +136,13 @@
                       type="button"
                       variant="danger"
                       v-on:click="deleteTeam"
-                      >Supprimer</b-button
+                      >Supprimer Equipe</b-button
                     >
                   </div>
                 </div>
               </div>
-              <div class="col-md-12 mb-3 mt-1">
+
+              <div class="col-md-12 mb-3 mt-3">
                 <div class="row gutters-sm">
                   <div class="col-sm-12 mb-3">
                     <AjoutMember
@@ -185,6 +273,8 @@ import {
   getUsers,
   InscriptionMembre,
   LeaveTeam,
+  DeleteTeam,
+  EditEquipe,
 } from "../apiVue.js";
 export default {
   name: "TeamView",
@@ -198,6 +288,7 @@ export default {
     return {
       isOwner: false,
       isVisible: false,
+      TeamInfoEditable: false,
       Tournoi: "",
       Parties: "",
       Equipe: "",
@@ -211,12 +302,43 @@ export default {
         IdEquipe: "",
         IdJoueur: "",
       },
+      formEdit: {
+        Presentation: "",
+        IdPays: "",
+        IdGame: "",
+        IdEquipe: "",
+        Logo: "",
+        NomEquipe: "",
+      },
+      options: [
+        { value: null, text: "Please select an option" },
+        { value: "1", text: "Minecraft" },
+        { value: "2", text: "Overwatch" },
+        { value: "3", text: "League Of Legends" },
+        { value: "4", text: "Counter Strike" },
+        { value: "5", text: "World Of Warcraft" },
+        { value: "6", text: "Fortnite" },
+        { value: "7", text: "Apex Legends" },
+        { value: "8", text: "Valorant" },
+        { value: "9", text: "Echecs" },
+      ],
+      options2: [
+        { value: null, text: "Please select an option" },
+        { value: "1", text: "France" },
+        { value: "2", text: "Japon" },
+        { value: "3", text: "Espagne" },
+        { value: "4", text: "Italie" },
+        { value: "5", text: "Canada" },
+        { value: "6", text: "Allemagne" },
+        { value: "7", text: "Russie" },
+        { value: "8", text: "Chine" },
+        { value: "9", text: "Corée" },
+      ],
     };
   },
   methods: {
     async getTeamInfo() {
       const team = await getTeamByTeamID(localStorage.getItem("equipe"));
-      console.log(team);
       this.Tournoi = team.Tournoi;
       this.Parties = team.Parties;
       this.Equipe = team.Equipes;
@@ -226,12 +348,32 @@ export default {
         this.getAllUsers();
       }
     },
-    deleteTeam() {
-      alert("Delete tournoi");
+    async deleteTeam() {
+      try {
+        const IdEquipe = this.Equipe.IdEquipe;
+        const dat = { IdEquipe: IdEquipe };
+        await DeleteTeam(dat).then((response) => {
+          alert(response);
+          this.$router.push({ name: "equipes" });
+        });
+      } catch (e) {
+        console.error(e);
+      }
     },
-    editTeam() {
-      // const userId = JSON.parse(localStorage.getItem("tournoi")).IdTournoi;
-      this.$router.push({ name: "editTournoi" });
+    async editTeam() {
+      try {
+        this.formEdit.IdEquipe = this.Equipe.IdEquipe;
+        await EditEquipe(this.formEdit);
+        // .then((response) => {
+        //   alert(response);
+        this.$router.go();
+        // });
+        console.log(this.formEdit);
+      } catch (e) {
+        console.error(e);
+      }
+
+      // this.$router.push({ name: "editTournoi" });
     },
     checkIfUserIsOwner() {
       const userId = JSON.parse(localStorage.getItem("user")).IdJoueur;
@@ -280,11 +422,25 @@ export default {
       }
     },
     toggleEdit() {
+      this.fillInfo();
       if (this.isVisible == false) {
         this.isVisible = true;
       } else {
         this.isVisible = false;
       }
+    },
+    teamInfoEditables() {
+      if (this.TeamInfoEditable == false) {
+        this.TeamInfoEditable = true;
+      } else {
+        this.TeamInfoEditable = false;
+      }
+    },
+    fillInfo() {
+      this.formEdit.Presentation = this.Equipe.Presentation;
+      this.formEdit.NomEquipe = this.Equipe.NomEquipe;
+      this.formEdit.IdGame = this.Equipe.IdGame;
+      this.formEdit.IdPays = this.Equipe.IdPays;
     },
   },
   created() {

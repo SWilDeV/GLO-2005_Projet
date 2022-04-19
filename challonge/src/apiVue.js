@@ -26,6 +26,35 @@ export async function getUserDataByUserID(data) {
       });
   });
 }
+export async function EditUser(data) {
+  return new Promise((resolve, reject) => {
+    axios
+      .put(`${process.env.VUE_APP_API_BASE_URL}/editUser`, {
+        data,
+      })
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+
+export async function EditEquipe(data) {
+  return new Promise((resolve, reject) => {
+    axios
+      .put(`${process.env.VUE_APP_API_BASE_URL}/editEquipe`, {
+        data,
+      })
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
 
 export async function getTournaments() {
   return new Promise((resolve, reject) => {
@@ -112,6 +141,20 @@ export async function DeleteTeam(data) {
   return new Promise((resolve, reject) => {
     axios
       .post(`${process.env.VUE_APP_API_BASE_URL}/deleteTeam`, {
+        data,
+      })
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+export async function DeleteTournament(data) {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(`${process.env.VUE_APP_API_BASE_URL}/deleteTournament`, {
         data,
       })
       .then((res) => {

@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <div class="jumbotron text-center">
-      <h1>Mata Tournois</h1>
-      <p class="lead">Bienvenue sur Mata Tournois</p>
+      <h1>Mada Tournois</h1>
+      <p class="lead">Bienvenue sur Mada Tournois</p>
       <div></div>
     </div>
   </div>

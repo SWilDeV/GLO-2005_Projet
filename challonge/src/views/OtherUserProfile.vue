@@ -114,6 +114,11 @@
                         :NomEquipeB="match.nomEquipe2"
                         :dateMatch="match.dateMatch"
                         :heureMatch="match.heureMatch"
+                        :scoreEquipe1="match.scoreEquipe1"
+                        :scoreEquipe2="match.scoreEquipe2"
+                        :IdEquipe1="match.idEquipe1"
+                        :IdEquipe2="match.idEquipe2"
+                        :IdTournoi="match.idTournoi"
                       />
                     </div>
                   </div>

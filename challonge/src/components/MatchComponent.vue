@@ -150,6 +150,7 @@ export default {
       if (this.isEditable) {
         const form = this.form;
         this.$emit("edit-match", { form });
+        this.isEditable = false;
       }
     },
     toggleEdit() {
