@@ -88,6 +88,7 @@ def authenticateUser():
             }
             print(user)
             return jsonify(user),{"Content-Type": "application/json"}
+            
 
 ################################ USER #####################################
 @app.route('/Utilisateurs', methods=['GET'])

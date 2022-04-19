@@ -13,7 +13,6 @@ import ProfileSettingsView from "../views/ProfileSettingsView.vue";
 import RegisterView from "../views/RegisterView.vue";
 import LoginView from "../views/LoginView.vue";
 import TeamListView from "../views/TeamListView.vue";
-// import SignInView from "../views/SignInView.vue";
 
 Vue.use(VueRouter);
 

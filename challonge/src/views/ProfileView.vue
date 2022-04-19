@@ -305,11 +305,7 @@ export default {
       try {
         this.form.IdJoueur = this.user.IdJoueur;
         await EditUser(this.form);
-        // .then((response) => {
-
-        // alert(response);
         this.$router.go();
-        // });
       } catch (e) {
         console.error(e);
       }

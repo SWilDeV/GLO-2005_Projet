@@ -3,7 +3,6 @@
     <h2 class="d-flex page-header justify-content-center">
       Modifier un tournoi
     </h2>
-    <!-- <b-button type="button" variant="primary" v-on:click="test">Test</b-button> -->
 
     <div class="d-flex justify-content-center flex-wrap">
       <b-form>

@@ -123,9 +123,6 @@ export default {
       this.$router.push({ name: "home" });
     },
   },
-  // mounted() {
-  //   this.user = JSON.parse(localStorage.getItem("user").Username);
-  // },
 };
 </script>
 

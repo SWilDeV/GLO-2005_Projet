@@ -369,16 +369,12 @@ export default {
       try {
         this.formEdit.IdEquipe = this.Equipe.IdEquipe;
         await EditEquipe(this.formEdit);
-        // .then((response) => {
-        //   alert(response);
         this.$router.go();
-        // });
         console.log(this.formEdit);
       } catch (e) {
         console.error(e);
       }
 
-      // this.$router.push({ name: "editTournoi" });
     },
     checkIfUserIsOwner() {
       const userId = JSON.parse(localStorage.getItem("user")).IdJoueur;
@@ -415,7 +411,6 @@ export default {
     },
     async deleteUserFromTeam({ IdUser }) {
       try {
-        // this.form2.IdEquipe = IdEquipe;
         this.form2.IdJoueur = IdUser;
         this.form2.IdEquipe = this.Equipe.IdEquipe;
         await LeaveTeam(this.form2).then((response) => {
@@ -448,8 +443,6 @@ export default {
       this.formEdit.IdPays = this.Equipe.IdPays;
     },
     aVueFunctionThatChangesTheSrc() {
-      // var images = require.context("../assets/", false, /\.png$/);
-      // return images("./" + pic + ".png");
       return "../assets/xbox.png";
     },
   },

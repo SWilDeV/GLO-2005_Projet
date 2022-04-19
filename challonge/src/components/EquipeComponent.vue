@@ -21,7 +21,6 @@
 </template>
 
 <script>
-// import { DeleteTeam } from "../apiVue.js";
 export default {
   name: "EquipeComponent",
   date() {

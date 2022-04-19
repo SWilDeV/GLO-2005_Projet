@@ -147,7 +147,6 @@ export default {
         console.log(response);
         if (response != null) {
           this.IdEquipe = response.IdEquipe;
-          //   this.goToTeam();
         } else {
           this.erreur = response;
           throw new Error("HTTP error " + response.status);
